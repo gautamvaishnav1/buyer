@@ -1,0 +1,197 @@
+.inquiry-mgmt {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+    animation: fadeIn 0.4s ease-out;
+    margin-left: var(--sp-6);
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--sp-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-medium);
+}
+
+.search-box input {
+    width: 100%;
+    padding: var(--sp-2) var(--sp-3) var(--sp-2) var(--sp-9);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    outline: none;
+    font-size: var(--fs-sm);
+}
+
+.lead-filters {
+    display: flex;
+    gap: var(--sp-2);
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--sp-2);
+    overflow-x: auto;
+}
+
+.filter-tab {
+    background: none;
+    border: none;
+    padding: var(--sp-2) var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--text-medium);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+}
+
+.filter-tab.active {
+    background-color: var(--bg);
+    color: var(--primary-red);
+    font-weight: var(--fw-6);
+}
+
+.filter-btn {
+    background: none;
+    border: 1px solid var(--border);
+    padding: var(--sp-2) var(--sp-4);
+    font-size: var(--fs-xs);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inquiry-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+}
+
+.inquiry-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition: all 0.2s;
+}
+
+.inquiry-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-color: var(--primary-red-light);
+}
+
+.card-main {
+    display: flex;
+    gap: var(--sp-5);
+    flex: 1;
+}
+
+.buyer-avatar {
+    width: 48px;
+    height: 48px;
+    background-color: var(--primary-red);
+    color: #ffffff;
+    border-radius: var(--radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: var(--fw-7);
+    flex-shrink: 0;
+}
+
+.inquiry-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.details-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.buyer-name { font-weight: var(--fw-7); color: var(--text-heading); }
+.company-name { font-size: var(--fs-xs); color: var(--text-medium); }
+
+.status-tag {
+    font-size: 10px;
+    font-weight: var(--fw-7);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+}
+
+.status-tag.new { background: #e3f2fd; color: #1976d2; }
+.status-tag.negotiation { background: #fff3e0; color: #ef6c00; }
+.status-tag.confirmed { background: #e8f5e9; color: #2e7d32; }
+.status-tag.closed { background: #f5f5f5; color: #757575; }
+
+.details-mid {
+    display: flex;
+    gap: var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--text-medium);
+}
+
+.details-bottom {
+    margin-top: 4px;
+}
+
+.last-message {
+    font-size: var(--fs-sm);
+    color: var(--text);
+    font-style: italic;
+    background: var(--bg);
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--border);
+}
+
+.card-actions {
+    display: flex;
+    gap: var(--sp-2);
+}
+
+.action-btn {
+    background: none;
+    border: 1px solid var(--border);
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-6);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.action-btn.reply {
+    background-color: var(--primary-red);
+    color: #ffffff;
+    border-color: var(--primary-red);
+}
+
+.action-btn:hover:not(.reply) { background-color: var(--bg); }
+
+@media (max-width: 768px) {
+    .inquiry-card {
+        flex-direction: column;
+        gap: var(--sp-4);
+    }
+    .card-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

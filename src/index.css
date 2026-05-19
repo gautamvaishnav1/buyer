@@ -1,9 +1,61 @@
 :root {
   /* === Colors === */
-  --text: #6b6375;
+--text: #6b6375;
   --text-h: #08060d;
   --text-heading: #08060d;
+  --text-white:#fff;
+  --text-danger: #c0392b;
+  --text-danger-hover: #a93226;
+  --text-success: #27ae60;
+  --text-success-hover: #229954;
+  --text-info: #3498db;
+  --text-info-hover: #2980b9;
+  --text-warning: #f39c12;
+  --text-warning-hover: #d35400;
+  --text-light: #ecf0f1;
+  --text-light-hover: #bdc3c7;
+  --text-dark: #34495e;
+  --text-dark-hover: #2c3e50;
+  --text-gray: #7f8c8d;
+  --text-gray-hover: #95a5a6;
+  --text-black: #000000;
+  --text-black-hover:#333333;
+
+  /* colors */
+--white: #ffffff;
+  --black: #000000;
+ 
+  /* --bg: #f5f5f5; */
+  /* box shadow */
+  --box-shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px; 
+  --box-shadow-hover: rgba(0, 0, 0, 0.15) 0 10px 20px, rgba(0, 0, 0, 0.1) 0 4px 6px; 
+
+
+/* Table colors */
+    --table-card-title:#1e293b;
+    --table-card-subTitle:#64748b;  
+
+
+  /* --bg-light: #ecf0f1; */
+  --bg-dark: #08060d;
+  --bg-danger: #e74c3c;
+  --bg-danger-hover: #c0392b;
+  --bg-success: #2ecc71;
+  --bg-success-hover: #27ae60;
+  --bg-info: #3498db;
+  --bg-info-hover: #2980b9;
+  --bg-warning: #f39c12;
+  --bg-warning-hover: #d35400;
+  --bg-light: #ecf0f1;
+  --bg-light-hover: #bdc3c7;
+  --bg-dark: #34495e;
+  --bg-dark-hover: #2c3e50;
+
+  --transparent: transparent;
+  --border-gray: #eee;
+
   --bg: #fff;
+
   --transparent: transparent;
   --border-gray: #eee;
   --dot-color: rgba(255, 255, 255, 0.55);
@@ -20,43 +72,24 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
   --primary-green: #228B22;
-  --primary-red: #e64545;
-  --primary-green-light: #5eb85e;
-  --primary-green-hover: #4cae4c;
-
-  /* === Cart Colors === */
-  --primary-blue: #2874f0;
-  --primary-orange: #fb641b;
-  --text-dark: #212121;
-  --text-medium: #757575;
-  --border-light: #f0f0f0;
-  --bg-light: #f1f3f6;
-  --success-green: #388e3c;
-  --error-red: #d32f2f;
-
-  /* === Status Colors === */
-  --status-pending-bg: #fef3c7;
-  --status-pending-text: #d97706;
-  --status-processing-bg: #dbeafe;
-  --status-processing-text: #2563eb;
-  --status-shipped-bg: #f3e8ff;
-  --status-shipped-text: #7c3aed;
-  --status-delivered-bg: #d1fae5;
-  --status-delivered-text: #059669;
-  --status-cancelled-bg: #fee2e2;
-  --status-cancelled-text: #dc2626;
-
-  /* === Danger === */
-  --danger: #dc2626;
-  --danger-hover: #b91c1c;
+  --primary-red: #c0392b;
+  --primary-red-dark: #922b21;
+  --primary-red-light: #e6b0aa;
+  --primary-red-hover: #a93226;
+  --danger: #c0392b;
+  --danger-hover: #a93226;
 
   /* === Header === */
-  --header-bg: linear-gradient(to right, #f5f5f5, #ffffff);
-  --header-shadow: rgba(0, 0, 0, 0.08) 0 2px 4px;
-  --header-text: #262626;
-  --header-border: #e8e8e8;
-  --header-logo-bg: linear-gradient(135deg, #ff7043, #ff5722);
-  --header-logo-text: #ffffff;
+  --header-bg: #c0392b;
+  --header-shadow: rgba(0, 0, 0, 0.15) 0 2px 8px;
+  --header-text: #ffffff;
+  --header-border: rgba(255, 255, 255, 0.1);
+  --header-logo-bg: #ffffff;
+  --header-logo-text: #c0392b;
+  --header-btn-color: #ffffff;
+  --header-btn-hover: rgba(255, 255, 255, 0.1);
+  --header-search-bg: #ffffff;
+
   --header-btn-color: #262626;
   --header-btn-hover: #ff7043;
   --header-search-bg: #ffffff;
@@ -132,6 +165,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --table-header-bg: #f8f9fc;
+  --table-header-text: #5e6e82;
+  --table-border: #edf2f9;
+  --table-row-hover: #f1f4f8;
+  --table-text: #4d5e7a;
 
   @media (max-width: 1024px) {
     font-size: 16px;
@@ -596,4 +635,8 @@ html {
 
 .nowrap {
   white-space: nowrap;
+}
+input{
+  color:var(--text-black);
+  background:var(--bg)
 }

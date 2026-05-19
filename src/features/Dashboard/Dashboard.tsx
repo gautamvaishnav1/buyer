@@ -1,11 +1,16 @@
 import Sidebar from "./sidebar/Sidebar"
+import "../../styles/dashboard_home.css"
 
-const Dashboard = () => {
+interface DashboardProps {
+  isSidebarOpen: boolean
+  onClose: () => void
+}
+
+const Dashboard = ({ isSidebarOpen, onClose }: DashboardProps) => {
   return (
-    <>
-    <Sidebar/>
-    
-    </>
+    <div className="dashboard-app">
+      <Sidebar isOpen={isSidebarOpen} onClose={onClose} />
+    </div>
   )
 }
 

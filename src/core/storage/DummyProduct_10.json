@@ -1,0 +1,662 @@
+[
+    {
+        "id": 1,
+        "title": "Executive Office Chair",
+        "slug": "executive-office-chair",
+        "category": "Office Furniture",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "Premium ergonomic office chair with adjustable height...",
+            "long": "Premium ergonomic office chair with adjustable height, lumbar support, and breathable mesh back. Perfect for executive offices and long work sessions."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 300,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 10,
+                "pricePerUnit": 270
+            },
+            {
+                "minQty": 25,
+                "pricePerUnit": 255
+            },
+            {
+                "minQty": 50,
+                "pricePerUnit": 240
+            }
+        ],
+        "inventory": {
+            "sku": "OFFI-001",
+            "totalStock": 150,
+            "minOrderQty": 5
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 4,
+            "dimensions": {
+                "length": 60,
+                "breadth": 35,
+                "height": 17
+            },
+            "dispatchTimeDays": 4
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9400",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-01",
+        "updatedAt": "2026-03-01",
+        "subcategory": "Chairs"
+    },
+    {
+        "id": 2,
+        "title": "Wireless Keyboard and Mouse Combo",
+        "slug": "wireless-keyboard-and-mouse-combo",
+        "category": "IT Equipment",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "Professional wireless keyboard and mouse set with...",
+            "long": "Professional wireless keyboard and mouse set with ergonomic design, 2.4GHz wireless technology, and 24-month battery life."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 8999,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 25,
+                "pricePerUnit": 8279
+            },
+            {
+                "minQty": 50,
+                "pricePerUnit": 7919
+            },
+            {
+                "minQty": 100,
+                "pricePerUnit": 7379
+            }
+        ],
+        "inventory": {
+            "sku": "ITXE-002",
+            "totalStock": 300,
+            "minOrderQty": 10
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 18,
+            "dimensions": {
+                "length": 55,
+                "breadth": 40,
+                "height": 18
+            },
+            "dispatchTimeDays": 1
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9401",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-02",
+        "updatedAt": "2026-03-02",
+        "subcategory": "Computers"
+    },
+    {
+        "id": 3,
+        "title": "Safety Hard Hat",
+        "slug": "safety-hard-hat",
+        "category": "Safety Equipment",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "ANSI Z89.1 certified safety hard hat with adjustable...",
+            "long": "ANSI Z89.1 certified safety hard hat with adjustable suspension system and vented design for maximum comfort and protection."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 2499,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 50,
+                "pricePerUnit": 2199
+            },
+            {
+                "minQty": 100,
+                "pricePerUnit": 2049
+            },
+            {
+                "minQty": 250,
+                "pricePerUnit": 1874
+            }
+        ],
+        "inventory": {
+            "sku": "SAFE-003",
+            "totalStock": 500,
+            "minOrderQty": 25
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 19,
+            "dimensions": {
+                "length": 23,
+                "breadth": 34,
+                "height": 28
+            },
+            "dispatchTimeDays": 1
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9402",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-03",
+        "updatedAt": "2026-03-03",
+        "subcategory": "Gloves"
+    },
+    {
+        "id": 4,
+        "title": "Conference Room Projector",
+        "slug": "conference-room-projector",
+        "category": "AV Equipment",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "4K UHD projector with 3000 lumens brightness, wire...",
+            "long": "4K UHD projector with 3000 lumens brightness, wireless connectivity, and built-in speakers. Ideal for corporate presentations."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 900,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 5,
+                "pricePerUnit": 828
+            },
+            {
+                "minQty": 10,
+                "pricePerUnit": 765
+            },
+            {
+                "minQty": 20,
+                "pricePerUnit": 702
+            }
+        ],
+        "inventory": {
+            "sku": "AVXE-004",
+            "totalStock": 45,
+            "minOrderQty": 2
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 21,
+            "dimensions": {
+                "length": 47,
+                "breadth": 48,
+                "height": 39
+            },
+            "dispatchTimeDays": 3
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9403",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-04",
+        "updatedAt": "2026-03-04",
+        "subcategory": "Speakers"
+    },
+    {
+        "id": 5,
+        "title": "Premium Bond Paper (500 sheets)",
+        "slug": "premium-bond-paper-500-sheets",
+        "category": "Office Supplies",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "High-quality 24lb bond paper, 92 brightness, acid-...",
+            "long": "High-quality 24lb bond paper, 92 brightness, acid-free. Perfect for professional documents, reports, and presentations."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 1999,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 50,
+                "pricePerUnit": 1799
+            },
+            {
+                "minQty": 100,
+                "pricePerUnit": 1639
+            },
+            {
+                "minQty": 250,
+                "pricePerUnit": 1499
+            }
+        ],
+        "inventory": {
+            "sku": "OFFI-005",
+            "totalStock": 2000,
+            "minOrderQty": 20
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 15,
+            "dimensions": {
+                "length": 47,
+                "breadth": 19,
+                "height": 40
+            },
+            "dispatchTimeDays": 4
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9404",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-05",
+        "updatedAt": "2026-03-05",
+        "subcategory": "Pens"
+    },
+    {
+        "id": 6,
+        "title": "Network Security Camera System",
+        "slug": "network-security-camera-system",
+        "category": "Security Systems",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "4MP IP camera with night vision, motion detection,...",
+            "long": "4MP IP camera with night vision, motion detection, and cloud storage. Complete surveillance solution for business premises."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 450,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 10,
+                "pricePerUnit": 396
+            },
+            {
+                "minQty": 25,
+                "pricePerUnit": 369
+            },
+            {
+                "minQty": 50,
+                "pricePerUnit": 337
+            }
+        ],
+        "inventory": {
+            "sku": "SECU-006",
+            "totalStock": 120,
+            "minOrderQty": 3
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 15,
+            "dimensions": {
+                "length": 11,
+                "breadth": 21,
+                "height": 47
+            },
+            "dispatchTimeDays": 2
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9405",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-06",
+        "updatedAt": "2026-03-06",
+        "subcategory": "Alarms"
+    },
+    {
+        "id": 7,
+        "title": "Standing Desk Converter",
+        "slug": "standing-desk-converter",
+        "category": "Office Furniture",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "Height-adjustable standing desk converter with mem...",
+            "long": "Height-adjustable standing desk converter with memory presets and cable management. Transform any desk into a standing workstation."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 200,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 15,
+                "pricePerUnit": 180
+            },
+            {
+                "minQty": 30,
+                "pricePerUnit": 170
+            },
+            {
+                "minQty": 60,
+                "pricePerUnit": 160
+            }
+        ],
+        "inventory": {
+            "sku": "OFFI-007",
+            "totalStock": 200,
+            "minOrderQty": 8
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 14,
+            "dimensions": {
+                "length": 40,
+                "breadth": 36,
+                "height": 24
+            },
+            "dispatchTimeDays": 3
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9406",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-07",
+        "updatedAt": "2026-03-07",
+        "subcategory": "Chairs"
+    },
+    {
+        "id": 8,
+        "title": "Wireless Charging Station",
+        "slug": "wireless-charging-station",
+        "category": "IT Equipment",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "Multi-device wireless charging dock supporting iPh...",
+            "long": "Multi-device wireless charging dock supporting iPhone, Android, and AirPods. Fast charging with LED indicators."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 7999,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 30,
+                "pricePerUnit": 7359
+            },
+            {
+                "minQty": 60,
+                "pricePerUnit": 7039
+            },
+            {
+                "minQty": 120,
+                "pricePerUnit": 6559
+            }
+        ],
+        "inventory": {
+            "sku": "ITXE-008",
+            "totalStock": 400,
+            "minOrderQty": 15
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 5,
+            "dimensions": {
+                "length": 40,
+                "breadth": 40,
+                "height": 48
+            },
+            "dispatchTimeDays": 4
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9407",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-08",
+        "updatedAt": "2026-03-08",
+        "subcategory": "Computers"
+    },
+    {
+        "id": 9,
+        "title": "Industrial Safety Gloves (Box of 100)",
+        "slug": "industrial-safety-gloves-box-of-100",
+        "category": "Safety Equipment",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "Heavy-duty nitrile safety gloves, chemical resista...",
+            "long": "Heavy-duty nitrile safety gloves, chemical resistant, ANSI cut level 3. Perfect for manufacturing and industrial environments."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 150,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 25,
+                "pricePerUnit": 127
+            },
+            {
+                "minQty": 50,
+                "pricePerUnit": 117
+            },
+            {
+                "minQty": 100,
+                "pricePerUnit": 105
+            }
+        ],
+        "inventory": {
+            "sku": "SAFE-009",
+            "totalStock": 800,
+            "minOrderQty": 10
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 17,
+            "dimensions": {
+                "length": 19,
+                "breadth": 23,
+                "height": 51
+            },
+            "dispatchTimeDays": 3
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9408",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-09",
+        "updatedAt": "2026-03-09",
+        "subcategory": "Helmets"
+    },
+    {
+        "id": 10,
+        "title": "Bluetooth Conference Speaker",
+        "slug": "bluetooth-conference-speaker",
+        "category": "AV Equipment",
+        "status": "active",
+        "featured": true,
+        "description": {
+            "short": "360-degree wireless conference speaker with echo c...",
+            "long": "360-degree wireless conference speaker with echo cancellation, 12-hour battery, and USB-C charging. Perfect for hybrid meetings."
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=300&fit=crop"
+        ],
+        "thumbnail": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=300&fit=crop",
+        "pricing": {
+            "basePrice": 250,
+            "currency": "INR",
+            "gst": 18
+        },
+        "bulkPricing": [
+            {
+                "minQty": 10,
+                "pricePerUnit": 225
+            },
+            {
+                "minQty": 20,
+                "pricePerUnit": 212
+            },
+            {
+                "minQty": 40,
+                "pricePerUnit": 200
+            }
+        ],
+        "inventory": {
+            "sku": "AVXE-010",
+            "totalStock": 300,
+            "minOrderQty": 5
+        },
+        "supplier": {
+            "name": "OfficePro Supplies",
+            "companyName": "OfficePro Supplies",
+            "location": "Delhi"
+        },
+        "shipping": {
+            "weight": 18,
+            "dimensions": {
+                "length": 24,
+                "breadth": 29,
+                "height": 22
+            },
+            "dispatchTimeDays": 3
+        },
+        "returnPolicy": {
+            "returnable": true,
+            "returnDays": 7
+        },
+        "compliance": {
+            "hsnCode": "9409",
+            "gstRate": 18,
+            "countryOfOrigin": "India"
+        },
+        "createdAt": "2026-01-01",
+        "updatedAt": "2026-03-01",
+        "subcategory": "Speakers"
+    }
+]

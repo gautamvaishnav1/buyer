@@ -1,124 +1,115 @@
-
 import { useState } from 'react'
-import { TiLocationArrowOutline } from 'react-icons/ti'
-import { FaHome, FaShoppingBag, FaBox, FaComments, FaChartBar, FaUsers, FaBullhorn, FaClipboardList, FaQuestionCircle, FaEllipsisH, FaChevronRight, FaBars, FaTimes } from 'react-icons/fa'
+import { 
+  FaHome, 
+   
+  FaComments, 
+  FaFileInvoiceDollar, 
+  FaClipboardList, 
+  FaCreditCard, 
+  FaChartLine, 
+  FaCheckCircle,
+  FaSignOutAlt
+} from 'react-icons/fa'
+
+import { AiFillProduct } from "react-icons/ai";
 import './sidebar.css'
 
+// Module Components
 import DashboardHome from '../DashboardHome'
-import DashboardShop from '../DashboardShop'
-import ProductCatalog from '../ProductCatalog'
-import Alerts from '../Alerts'
-import Analytics from '../Analytics'
-import ContactManagement from '../ContactManagement'
-import CampaignTool from '../CampaignTool'
-import OrderDetail from '../OrderDetail'
+import ProductManagement from '../ProductManagement/ProductManagement'
+import InquiryManagement from '../InquiryManagement'
+import SupplierProfile from '../SupplierProfile'
 
-import QuickEntry from '../QuickEntry'
-import HelpCenter from '../HelpCenter'
+const ModulePlaceholder = ({ title }: { title: string }) => (
+  <div className="module-placeholder">
+    <div className="placeholder-content">
+       <FaChartLine className="placeholder-icon" />
+       <h2>{title} Module</h2>
+       <p>This section is under development. Soon you will be able to manage your {title.toLowerCase()} here.</p>
+       <button className="placeholder-btn">Learn More</button>
+    </div>
+  </div>
+)
 
 interface MenuItem {
   id: string
   label: string
   icon: React.ReactNode
-  active?: boolean
-  hasIndicator?: boolean
   content?: React.ReactNode
 }
 
-const Sidebar = () => {
-  const [openPanel, setOpenPanel] = useState<string | null>(null)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-  const togglePanel = (itemId: string) => { 
-    setOpenPanel(openPanel === itemId ? null : itemId)
-  }
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const [activeItem, setActiveItem] = useState<string | null>('dashboard')
 
   const menuItems: MenuItem[] = [
-    {id: 'quick-entry', label: 'Quick Entry', icon: <TiLocationArrowOutline />, content: <QuickEntry />},
-    { id: 'home', label: 'Home', icon: <FaHome />, active: true, hasIndicator: true, content: <DashboardHome/> },
-    { id: 'shop', label: 'Shop', icon: <FaShoppingBag />, content: <DashboardShop/> },
-    { id: 'products', label: 'Products', icon: <FaBox />, hasIndicator: true, content: <ProductCatalog/> },
-    // { id: 'communications', label: 'Communications', icon: <FaComments />, content: <Alerts/> },
-    { id: 'analytics', label: 'Analytics', icon: <FaChartBar />, hasIndicator: true, content: <Analytics/> },
-    { id: 'contacts', label: 'Contacts', icon: <FaUsers />, content: <ContactManagement/> },
-    { id: 'campaigns', label: 'Campaigns', icon: <FaBullhorn />, content: <CampaignTool/> },
-    { id: 'orders', label: 'Orders', icon: <FaClipboardList />, hasIndicator: true, content: <OrderDetail/> },
-    { id: 'help-center', label: 'Help Center', icon: <FaQuestionCircle />, content: <HelpCenter/> },
+    { id: 'dashboard', label: 'Dashboard', icon: <FaHome />, content: <DashboardHome /> },
+    { id: 'products', label: 'Products', icon: <AiFillProduct />, content: <ProductManagement /> },
+    { id: 'inquiries', label: 'Inquiries', icon: <FaComments />, content: <InquiryManagement /> },
+    { id: 'rfq', label: 'RFQ', icon: <FaFileInvoiceDollar />, content: <ModulePlaceholder title="RFQ Responses" /> },
+    { id: 'orders', label: 'Orders', icon: <FaClipboardList />, content: <ModulePlaceholder title="Order Management" /> },
+    { id: 'payments', label: 'Payments', icon: <FaCreditCard />, content: <ModulePlaceholder title="Payment Tracking" /> },
+    { id: 'analytics', label: 'Analytics', icon: <FaChartLine />, content: <ModulePlaceholder title="Analytics" /> },
+    { id: 'verification', label: 'Verify', icon: <FaCheckCircle />, content: <SupplierProfile /> },
   ]
 
+  const handleMenuClick = (itemId: string) => {
+    setActiveItem(itemId)
+    if (window.innerWidth <= 768) {
+      onClose()
+    }
+  }
+
   return (
-    <div className="sidebar-container">
-      {/* Mobile Hamburger Button */}
-      <button 
-        className="sidebar-hamburger"
-        onClick={toggleMobileMenu}
-      >
-        {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-      </button>
+    <>
+      <div 
+        className={`sidebar-overlay ${isOpen ? 'show' : ''}`} 
+        onClick={onClose}
+      ></div>
 
-      {/* Sidebar Overlay for Mobile */}
-      {isMobileMenuOpen && (
-        <div 
-          className="sidebar-overlay"
-          onClick={toggleMobileMenu}
-        ></div>
-      )}
-
-      <aside className={`sidebar ${isMobileMenuOpen ? 'sidebar-open' : ''}`}>
-        <nav className="sidebar-nav">
-          <ul className="sidebar-menu">
-            {menuItems.map((item) => (
-              <li key={item.id} className={`sidebar-menu-item ${openPanel === item.id ? 'active' : ''}`}>
-                <div className="sidebar-menu-row">
-                  <button className="sidebar-menu-btn" onClick={() => togglePanel(item.id)}>
-                    <span className="sidebar-menu-icon">{item.icon}</span>
-                    <span className="sidebar-menu-label">{item.label}</span>
-                    {/* {item.hasIndicator && <span className="sidebar-indicator"></span>} */}
+      <div className="sidebar-container">
+        <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+          <div className="sidebar-logo">
+            <img src="/logo.png" alt="Logo" className="sidebar-logo-img" />
+          </div>
+          <nav className="sidebar-nav">
+            <ul className="sidebar-menu">
+              {menuItems.map((item) => (
+                <li key={item.id}>
+                  <button
+                    className={`sidebar-menu-item ${activeItem === item.id ? 'active' : ''}`}
+                    onClick={() => handleMenuClick(item.id)}
+                    title={item.label}
+                  >
+                    <span className="menu-icon">{item.icon}</span>
+                    <span className="menu-text">{item.label}</span>
                   </button>
-                  {item.content && (
-                    <button 
-                      className={`sidebar-arrow-btn ${openPanel === item.id ? 'open' : ''}`}
-                      onClick={() => togglePanel(item.id)}
-                    >
-                      {/* <FaChevronRight /> */}
-                    </button>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="sidebar-bottom">
-          <button className="sidebar-menu-btn">
-            <span className="sidebar-menu-icon"><FaEllipsisH /></span>
-            <span className="sidebar-menu-label">More Function</span>
-            <span className="sidebar-indicator"></span>
-          </button>
-        </div>
-      </aside>
-
-      {openPanel && (
-        <div className="sidebar-panel">
-          {openPanel === 'quick-entry' ? (
-            <QuickEntry />
-          ) : (
-            <div className="sidebar-panel-content">
-              <h3 className="sidebar-panel-title">
-                {menuItems.find(item => item.id === openPanel)?.label}
-              </h3>
-              <div className="sidebar-panel-body">
-                {menuItems.find(item => item.id === openPanel)?.content}
-              </div>
+                </li>
+              ))}
+            </ul>
+            
+            <div className="sidebar-bottom-menu">
+               <button className="sidebar-menu-item logout" title="Logout">
+                  <span className="menu-icon"><FaSignOutAlt /></span>
+                  <span className="menu-text">Logout</span>
+               </button>
             </div>
+          </nav>
+        </aside>
+
+        <main className="sidebar-content">
+          {activeItem && (
+             <div className="content-body">
+                {menuItems.find(item => item.id === activeItem)?.content}
+             </div>
           )}
-        </div>
-      )}
-    </div>
+        </main>
+      </div>
+    </>
   )
 }
 

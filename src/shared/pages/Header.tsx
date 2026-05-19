@@ -1,105 +1,62 @@
 import { useState } from 'react'
-import './header.css'
-import { FaSearch, FaBell, FaUser, FaBars, FaTimes } from 'react-icons/fa'
-import { MdOutlineHelpCenter } from "react-icons/md";
+import '../../styles/header.css'
+import { MdVerified } from "react-icons/md";
+import { FaSearch, FaBell, FaBars } from 'react-icons/fa'
+import StarRating from '../../features/Dashboard/StarRating';
 
-const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+interface HeaderProps {
+  onMenuClick?: () => void;
+}
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+const Header = ({ onMenuClick }: HeaderProps) => {
+  const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <>
-      <header className="header">
-        {/* Left Section - Logo and Brand (Desktop) */}
-        <div className="header-left">
-          <div className="logo">
-            <img src="/logo.png" className='logo-text' alt="" />
-          </div>
-          <div className="brand-text">My Seller</div>
-        </div>
-
-        {/* Center Section - Search Bar (Desktop) */}
-        <div className="header-center">
-          <div className="search-container">
-            <input 
-              type="text" 
-              placeholder="Search" 
-              className="search-input"
-            />
-            <button className="search-btn">
-              <FaSearch />
-            </button>
-          </div>
-        </div>
-
-        {/* Right Section - User Actions */}
-        <div className="header-right">
-          <button className="header-btn">
-            <FaUser /> <span>My Account</span>
-          </button>
-          <button className="header-btn">
-            <MdOutlineHelpCenter /> <span>Help</span>
-          </button>
-          <button className="header-btn notification-btn">
-            <FaBell /> <span>Notifications</span>
-          </button>
-          <select className="language-select">
-            <option>English</option>
-            <option>Español</option>
-            <option>中文</option>
-          </select>
-        </div>
-
-        {/* Hamburger Menu for Mobile - Left Side */}
-        <button 
-          className="hamburger-btn"
-          onClick={toggleMobileMenu}
-        >
-          {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+    <header className="header">
+      <div className="header-left">
+        <button className="hamburger-btn" onClick={onMenuClick}>
+          <FaBars />
         </button>
-
-        {/* Mobile Logo Center (Only visible on mobile) */}
-        <div className="header-logo-center">
-          <div className="logo">
-            <img src="/logo.png" className='logo-text' alt="" />
-          </div>
-          <div className="brand-text">My Seller</div>
+        <div className="header-brand">
+          <span className="header-company-name">B2B SELLER</span>
         </div>
-      </header>
+      </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="mobile-menu">
-          <div className="mobile-search-container">
-            <input 
-              type="text" 
-              placeholder="Search" 
-              className="mobile-search-input"
+      <div className="header-search">
+        <div className="search-container">
+          <span className="search-icon-left">
+            <FaSearch />
+          </span>
+          <input 
+            type="text" 
+            placeholder="Search for employees or actions" 
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="header-actions">
+
+        <StarRating rating={4.5} size={18} />
+
+<MdVerified size={24} color="#22c55e" />
+             <button className="header-btn notification-btn">
+          <FaBell />
+          <span className="notification-badge">3</span>
+        </button>
+        <button className="header-btn profile-btn">
+          <div className="profile-avatar">
+            <img 
+               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+               alt="User" 
+               className="profile-avatar-img" 
             />
-            <button className="mobile-search-btn">
-              <FaSearch />
-            </button>
           </div>
-          <button className="mobile-menu-btn">
-            <FaUser /> My Account
-          </button>
-          <button className="mobile-menu-btn">
-            <MdOutlineHelpCenter /> Help
-          </button>
-          <button className="mobile-menu-btn">
-            <FaBell /> Notifications
-          </button>
-          <select className="mobile-menu-select">
-            <option>English</option>
-            <option>Español</option>
-            <option>中文</option>
-          </select>
-        </div>
-      )}
-    </>
+        </button>
+      </div>
+    </header>
   )
 }
 

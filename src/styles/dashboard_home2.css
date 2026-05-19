@@ -1,0 +1,28 @@
+.welcome-banner{
+   
+   
+  
+    /* background-color: #f5f5f5; */
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.welcome-banner h2{
+    font-size: 24px;
+    margin: 0;
+}
+
+.welcome-banner p{
+    font-size: 16px;
+    margin: 0;
+}
+
+.welcome-banner img{
+    width: 80px;
+    height: 80px;
+    /* border-radius: 50%; */
+}
