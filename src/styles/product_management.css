@@ -1,9 +1,13 @@
 .product-mgmt {
-    margin-left: var(--sp-6);
+    /* margin-left: var(--sp-6); */
     display: flex;
     flex-direction: column;
     gap: var(--sp-6);
     animation: fadeIn 0.4s ease-out;
+    @media (min-width:768px) {
+        /* margin-left: 84px; */
+        
+    }
 }
 
 .mgmt-header {
@@ -15,7 +19,7 @@
 }
 
 .mgmt-header h1 {
-    font-size: var(--fs-xl);
+    font-size: var(--fs-lg);
     color: var(--text-heading);
     margin-bottom: var(--sp-1);
 }
@@ -103,6 +107,13 @@
 =====================Product Category Section========================================================
 =====================================================================================================
 ===================================================================================================== */
+.table-section{
+    background-color: var(--bg-light);
+    padding: var(--sp-2);
+}
+
+
+
 .category-section{
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -163,7 +174,8 @@
     border: 1px solid var(--border);
     padding: var(--sp-2);
     font-size: var(--fs-sm);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-sm); 
+    width: 100%;
 }
 .p-dropdown-filter{
     border: none;
@@ -176,16 +188,12 @@
     border-color: var(--primary-red);
     box-shadow: none;
 }
-.p-dropdown-filter-container{
+.p-dropdown-filter-container {
     border: 1px solid var(--border);
+    border-radius: 5px 5px 0px 0px;
+    padding: 5px;
 }
-
-/* Dropdown items */
-.category-dropdown {
-    color: #000000;
-    padding: var(--sp-2) var(--sp-3);
-    font-size: var(--fs-sm);
-}
+ 
 
 /* Hover effect for dropdown items */
 
@@ -199,7 +207,7 @@
 /* Responsive adjustments */
 @media (max-width:768px ){
     .category-section{
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 }
 @media (max-width:468px ){
@@ -220,11 +228,13 @@
 }
 
 /* Dropdown label text */
-.category-dropdown .p-dropdown-label {
+.category-dropdown .p-dropdown-label  {
   padding: 0 var(--sp-2);
-  color: #000000 !important;
+  color: var(--text-black) !important;
 }
-
+.p-dropdown-items{
+    background-color: var(--bg);
+}
 /* Dropdown trigger/arrow */
 .category-dropdown .p-dropdown-trigger {
   width: 2.5rem;
@@ -238,6 +248,10 @@
 }
 .p-dropdown-items-wrapper{
     border: 1px solid beige;
+      /* Hide scrollbar */
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE and Edge */
+    border-radius: 0px 0px 5px 5px;
 }
 
 /* Dropdown panel */
@@ -248,7 +262,7 @@
 }
 .p-dropdown-item{
     background: var(--bg);
-    padding-inline: var(--sp-2);  
+    padding: var(--sp-2);  
     color:var(--text-black);  
     font-size: var(--fs-sm);
 }
@@ -261,19 +275,13 @@
   padding: var(--sp-2);
   font-size: var(--fs-sm);
 }
-
-/* Dropdown items */
-.category-dropdown  {
-  color: #000000;
-  padding: var(--sp-2) var(--sp-3);
-  font-size: var(--fs-sm);
-}
-
+ 
 
 /* Hover effect for dropdown items */
 .category-dropdown .p-dropdown-item:hover {
   background: var(--bg-light);
   color: #000000;
+  width:100%;
 }
 
 .product-table {
@@ -394,9 +402,207 @@
     align-items: center;
     width: 75%;
     background-color: var(--bg);
-    /* Changed to Light Gray */
-    border-radius: var(--radius-full);
+    /* Changed to Light Gray */ 
+    border-radius: var(--radius-sm);
     padding: var(--sp-1) var(--sp-4);
     transition: all 0.2s ease;
     border: 1px solid var(--border);
+    @media (max-width:768px) {
+        width: 88%;
+        
+    }
+    @media (max-width:468px) {
+        width: 89%;
+        
+    }
+}
+
+.p-dropdown-clear-icon, .p-dropdown-filter-icon, .p-dropdown-filter-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5rem;
+    right: 10px;
+}
+
+
+.imageBodyTemplate-img{
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+}
+
+
+/* =============================================================================================================
+===================================Product Data Table=====================================================
+================================================================================================================
+ */
+
+ .p-datatable .p-column-header-content{
+    font-size: var(--fs-sm);
+    color: var(--text-black);
+ }
+h4{
+     font-size: var(--fs-xs);
+     color: #000000;
+  }
+  .btnEditDelete{
+     display: flex;
+     gap: var(--sp-2);
+  }
+
+/* ==================== Product Edit Page Styles ==================== */
+.product-edit-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-4);
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.edit-header h1 {
+  font-size: var(--fs-xl);
+  color: var(--text-heading);
+  margin-bottom: var(--sp-1);
+}
+
+.edit-tabs {
+  display: flex;
+  gap: var(--sp-2);
+  padding: var(--sp-2);
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.edit-tabs .p-button {
+  background: transparent;
+  border: none;
+  color: var(--text-medium);
+  padding: var(--sp-2) var(--sp-4);
+}
+
+.edit-tabs .tab-active {
+  background: var(--primary-red);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+}
+
+.edit-content {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: var(--sp-6);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--sp-6);
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  background: var(--bg-light);
+  border-radius: var(--radius-md);
+}
+
+.form-section h3 {
+  font-size: var(--fs-md);
+  color: var(--text-heading);
+  margin-bottom: var(--sp-2);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.form-group label {
+  font-size: var(--fs-sm);
+  color: var(--text-dark);
+  font-weight: var(--fw-6);
+}
+
+.bulk-tier {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--sp-2);
+  align-items: end;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+}
+
+.p-inputtext, .p-inputtextarea, .p-dropdown, .p-inputnumber-input {
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  background: #ffffff;
+  color: var(--text-black);
+}
+
+.p-inputtext:focus, .p-inputtextarea:focus, .p-dropdown:focus, .p-inputnumber-input:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 1px var(--primary-red);
+}
+
+.p-button-success {
+  background: var(--primary-red);
+  border: none;
+}
+
+.p-button-success:hover {
+  background: var(--primary-red-hover);
+}
+
+.p-button-outlined {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dark);
+}
+
+.p-button-danger {
+  background: var(--danger);
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .edit-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .bulk-tier {
+    grid-template-columns: 1fr;
+  }
 }

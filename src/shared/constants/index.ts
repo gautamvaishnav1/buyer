@@ -2,7 +2,7 @@ export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/supplier-dashboard',
   ADD_PRODUCTS: '/add-products',
-  EDIT_PRODUCTS: '/edit-products',
+  EDIT_PRODUCTS: '/dashboard/products/edit-products/:id',
   DELETE_PRODUCTS: '/delete-products',
   INQUIRIES: '/inquiries',
   RFQ: '/rfq',

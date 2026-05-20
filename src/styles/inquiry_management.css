@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: var(--sp-6);
     animation: fadeIn 0.4s ease-out;
-    margin-left: var(--sp-6);
+    /* margin-left: var(--sp-6); */
 }
 
 .search-box {
@@ -12,13 +12,13 @@
     max-width: 300px;
 }
 
-.search-icon {
+/* .search-icon {
     position: absolute;
     left: var(--sp-3);
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-medium);
-}
+} */
 
 .search-box input {
     width: 100%;

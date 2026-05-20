@@ -1,0 +1,32 @@
+[
+    {
+        "category": "Office Furniture",
+        "subCategory": ["Chairs", "Tables", "Desks", "Cabinets", "Shelves"],
+        "products": []
+    },
+    {
+        "category": "IT Equipment",
+        "subCategory": ["Computers", "Laptops", "Printers", "Scanners", "Servers"],
+        "products": []
+    },
+    {
+        "category": "Safety Equipment",
+        "subCategory": ["Gloves", "Helmets", "Goggles", "Masks", "Vests"],
+        "products": []
+    },
+    {
+        "category": "AV Equipment",
+        "subCategory": ["Speakers", "Microphones", "Projectors", "Screens", "Mixers"],
+        "products": []
+    },
+    {
+        "category": "Office Supplies",
+        "subCategory": ["Pens", "Notebooks", "Staplers", "Paper", "Folders"],
+        "products": []
+    },
+    {
+        "category": "Security Systems",
+        "subCategory": ["Alarms", "Cameras", "Sensors", "Locks", "Accessories"],
+        "products": []
+    }
+]

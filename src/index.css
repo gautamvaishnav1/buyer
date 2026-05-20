@@ -35,6 +35,11 @@
     --table-card-title:#1e293b;
     --table-card-subTitle:#64748b;  
 
+/* Link Button  */
+--link-green:#009A38;
+--link-red:#c0392b;
+
+
 
   /* --bg-light: #ecf0f1; */
   --bg-dark: #08060d;
@@ -639,4 +644,11 @@ html {
 input{
   color:var(--text-black);
   background:var(--bg)
+}
+
+/* === Responsive Grid Layout Utilities === */
+@media (max-width: 768px) {
+  .col-2, .col-3, .col-4, .cols-2-1, .cols-1-2 {
+    grid-template-columns: 1fr !important;
+  }
 }

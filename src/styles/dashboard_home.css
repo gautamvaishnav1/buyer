@@ -130,10 +130,19 @@
 
 /* --- Content Layout --- */
 .dashboard-content-integrated {
-    padding: 24px 32px;
+    /* padding: 24px 32px; */
     display: flex;
+    /* margin-left: var(--sp-9); */
     flex-direction: column;
     gap: 32px;
+    @media (max-width:468px) {
+        margin-left: 0;
+        
+    }
+}
+.dashboard-content{
+    margin-left: 89px;
+    margin-top: 82px;
 }
 
 .section-title-integrated h2 {

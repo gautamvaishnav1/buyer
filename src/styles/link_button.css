@@ -1,0 +1,22 @@
+.green-link{
+       background: var(--link-green);
+       text-decoration: none;
+    width: 25%;
+    font-size: var(--fs-xs);
+    padding-inline: var(--sp-2);
+    color: var(--text-white);
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: center;
+}
+.red-link{
+     background: var(--link-red);
+       text-decoration: none;
+       display: flex;
+       justify-content: center;
+    width: 25%;
+    font-size: var(--fs-xs);
+    padding-inline: var(--sp-2);
+    color: var(--text-white);
+    border-radius: var(--radius-sm);
+}
