@@ -1,22 +1,68 @@
-.green-link{
-       background: var(--link-green);
-       text-decoration: none;
-    width: 25%;
-    font-size: var(--fs-xs);
-    padding-inline: var(--sp-2);
-    color: var(--text-white);
-    border-radius: var(--radius-sm);
-    display: flex;
+ .red-link {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-}
-.red-link{
-     background: var(--link-red);
-       text-decoration: none;
-       display: flex;
-       justify-content: center;
-    width: 25%;
+    padding: 6px 16px;
     font-size: var(--fs-xs);
-    padding-inline: var(--sp-2);
+    font-weight: var(--fw-6);
     color: var(--text-white);
-    border-radius: var(--radius-sm);
+    border-radius: 0px 4px 4px 0px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    /* min-width: 70px; */
+    /* height: 32px; */
+}
+
+
+.green-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 16px;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-6);
+    color: var(--text-white);
+    /* border-radius: var(--radius-md); */
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: var(--bg-success);
+}
+
+.green-link:hover {
+    background: var(--bg-success-hover);
+    /* transform: translateY(-1px); */
+    box-shadow: 0 2px 4px rgba(46, 204, 113, 0.2);
+}
+
+.blue-link {
+    background: var(--link-blue);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    font-size: var(--fs-xs);
+    padding: 6px 12px;
+    color: var(--text-white);
+    border-radius: 4px 0px 0px 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.blue-link:hover {
+    background: var(--link-blue-hover);
+    /* transform: translateY(-1px); */
+    box-shadow: 0 2px 4px rgba(30, 144, 255, 0.2);
+}
+
+.red-link {
+    background: var(--bg-danger);
+}
+
+.red-link:hover {
+    background: var(--bg-danger-hover);
+    /* transform: translateY(-1px); */
+    box-shadow: 0 2px 4px rgba(231, 76, 60, 0.2);
 }

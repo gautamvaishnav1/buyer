@@ -1,6 +1,11 @@
 import { FaPlus, FaCloudUploadAlt } from 'react-icons/fa'
 import '../../../styles/product_management.css'
 import SearchBar from './SearchBar'
+import { LiaEdit } from "react-icons/lia";
+
+import { AiFillDelete } from "react-icons/ai";
+import { GrView } from "react-icons/gr";
+
 // import TypeFilter from './TypeFilter'
 
 import { DataTable } from 'primereact/datatable'
@@ -11,10 +16,9 @@ import { useState } from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import LinkButton from '../../../shared/LinkButton/LinkButton'
 
-
-
 const ProductManagement = () => {
   const productData = useSelector((state: any) => state.products.products)
+  console.log('Product ====>', productData)
   const productDataValue = productData
   // console.log(productData.map((Id)=>Id.category),'Product Data')
   const categoriesData = useSelector((state: any) => state.category.categories)
@@ -62,29 +66,43 @@ const ProductManagement = () => {
           : options.title}
       </h4>
     )
+  } 
+  const countFunction = (rowData: any, options: any) => {
+    return <span>{options.rowIndex + 1}</span>
   }
 
   const productCategory = (options: any) => {
     return <h4>{options.category}</h4>
   }
+  const status = (options: any) => {
+    return <h4>{options.status}</h4>
+  }
 
-  const productSubCategory = (options: any) => {
-    console.log(options.subcategory, 'options')
+  const productSubCategory = (options: any) => {  
     return <h4>{options.subcategory}</h4>
   }
 
-  const ProductTableActions=(options:any)=>{
-    
-    console.log(options.id,'options')
-    
+  const ProductTableActions = (options: any) => {
+    console.log(options.id, 'options')
+
     return (
       <div className='btnEditDelete'>
-      <LinkButton
-        styleName='green'
-        link={`edit-products/${options.id}`}
-        text={`Edit`}
-      ></LinkButton>
-      <LinkButton styleName='red' link={`delete-products/${options.id}`} text={`Delete`}></LinkButton></div>
+        <LinkButton
+          styleName='blue'
+          link={`view-products/${options.id}`}
+         
+        ><GrView/></LinkButton>
+        <LinkButton
+          styleName='green'
+          link={`edit-products/${options.id}`}
+          
+        ><LiaEdit/></LinkButton>
+        <LinkButton
+          styleName='red'
+          link={`delete-products/${options.id}`}
+          // text={`Delete`}
+        ><AiFillDelete/></LinkButton>
+      </div>
     )
   }
   return (
@@ -98,8 +116,9 @@ const ProductManagement = () => {
         </div>
         <div>
           {Array.isArray(productDataValue)
-            ? productDataValue.map((item: { products: { id?: string | number } & any }) =>
-                item.products
+            ? productDataValue.map(
+                (item: { products: { id?: string | number } & any }) =>
+                  item.products
               )
             : null}
         </div>
@@ -166,12 +185,14 @@ const ProductManagement = () => {
           {/* <TypeFilter /> */}
         </section>
         {/* Data table for items */}
-        <section>
+        <section className='mt-2'>
           <DataTable value={productData} tableStyle={{ minWidth: '60rem' }}>
+            <Column header='#' body={countFunction}></Column>
             <Column header='Name' body={nameOfProduct}></Column>
             <Column header='Image' body={imageBodyTemplate}></Column>
             <Column header='Category' body={productCategory}></Column>
             <Column header='Sub Category' body={productSubCategory}></Column>
+            <Column header='Status' body={status}></Column>
             <Column header='Actions' body={ProductTableActions}></Column>
           </DataTable>
         </section>

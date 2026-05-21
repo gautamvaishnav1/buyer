@@ -1,11 +1,21 @@
 import { useState } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS , CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend, } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import { MONTHLY_ANALYTICS } from './analyticsData';
 import '../../styles/dashboard_home.css';
 
 // Register ChartJS elements
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register( CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend);
 
 const Analytics = () => {
   const months = Object.keys(MONTHLY_ANALYTICS);
@@ -200,7 +210,7 @@ const Analytics = () => {
             </span>
           </div>
           <div style={{ height: '280px', width: '100%', position: 'relative' }}>
-            <Pie data={inquiryChartData} options={chartOptions} />
+            <Bar data={inquiryChartData} options={chartOptions} />
           </div>
         </div>
 
@@ -218,7 +228,7 @@ const Analytics = () => {
             </span>
           </div>
           <div style={{ height: '280px', width: '100%', position: 'relative' }}>
-            <Pie data={rfqChartData} options={chartOptions} />
+            <Bar data={rfqChartData} options={chartOptions} />
           </div>
         </div>
 
@@ -236,7 +246,7 @@ const Analytics = () => {
             </span>
           </div>
           <div style={{ height: '280px', width: '100%', position: 'relative' }}>
-            <Pie data={sellingChartData} options={chartOptions} />
+            <Bar data={sellingChartData} options={chartOptions} />
           </div>
         </div>
 
@@ -254,7 +264,7 @@ const Analytics = () => {
             </span>
           </div>
           <div style={{ height: '280px', width: '100%', position: 'relative' }}>
-            <Pie data={uploadChartData} options={chartOptions} />
+            <Bar data={uploadChartData} options={chartOptions} />
           </div>
         </div>
 

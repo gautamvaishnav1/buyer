@@ -143,6 +143,9 @@
 .dashboard-content{
     margin-left: 89px;
     margin-top: 82px;
+    @media (max-width:468px) {
+margin-left: 0;        
+    }
 }
 
 .section-title-integrated h2 {

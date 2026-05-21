@@ -110,6 +110,10 @@
 .table-section{
     background-color: var(--bg-light);
     padding: var(--sp-2);
+    @media (max-width:468px) {
+        padding: var(--sp-1);
+        
+    }
 }
 
 
@@ -433,22 +437,94 @@
 
 
 /* =============================================================================================================
-===================================Product Data Table=====================================================
+===================================Product Data Table Override=============================================
 ================================================================================================================
  */
 
- .p-datatable .p-column-header-content{
-    font-size: var(--fs-sm);
-    color: var(--text-black);
- }
-h4{
-     font-size: var(--fs-xs);
-     color: #000000;
-  }
-  .btnEditDelete{
-     display: flex;
-     gap: var(--sp-2);
-  }
+.product-mgmt .p-datatable {
+    background: #ffffff;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.product-mgmt .p-datatable-wrapper {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.product-mgmt .p-datatable-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.product-mgmt .p-datatable-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Premium Header styling */
+.product-mgmt .p-datatable .p-datatable-thead > tr > th {
+    background: var(--table-header-bg) !important;
+    color: var(--table-header-text) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    padding: 12px 18px !important;
+    border-bottom: 1px solid var(--table-border) !important;
+    border-top: 1px solid var(--table-border) !important;
+    text-align: left;
+    letter-spacing: 0.05em;
+}
+
+/* Premium Body cell styling */
+.product-mgmt .p-datatable .p-datatable-tbody > tr > td {
+    padding: var(--sp-2) 0 0 18px !important;
+    border-bottom: 1px solid var(--table-border) !important;
+    color: var(--table-text) !important;
+    font-size: 13px !important;
+    vertical-align: middle;
+    background: #ffffff !important;
+}
+
+/* Row Hover styling */
+.product-mgmt .p-datatable .p-datatable-tbody > tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+.product-mgmt .p-datatable .p-datatable-tbody > tr:hover > td {
+    background: var(--table-row-hover) !important;
+}
+
+.product-mgmt h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.imageBodyTemplate-img {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* .btnEditDelete {
+    display: flex;
+    gap: var(--sp-2);
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+} */
+
+/* Center actions column */
+.product-mgmt .p-datatable .p-datatable-tbody > tr > td:last-child {
+    text-align: center;
+}
+
 
 /* ==================== Product Edit Page Styles ==================== */
 .product-edit-page {
@@ -555,17 +631,17 @@ h4{
 .p-inputtext, .p-inputtextarea, .p-dropdown, .p-inputnumber-input {
   width: 100%;
   padding: var(--sp-2) var(--sp-3);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   border-radius: var(--radius-md);
   font-size: var(--fs-sm);
   background: #ffffff;
   color: var(--text-black);
 }
 
-.p-inputtext:focus, .p-inputtextarea:focus, .p-dropdown:focus, .p-inputnumber-input:focus {
+/* .p-inputtext:focus, .p-inputtextarea:focus, .p-dropdown:focus, .p-inputnumber-input:focus {
   border-color: var(--primary-red);
   box-shadow: 0 0 0 1px var(--primary-red);
-}
+} */
 
 .p-button-success {
   background: var(--primary-red);
@@ -605,4 +681,9 @@ h4{
   .bulk-tier {
     grid-template-columns: 1fr;
   }
+}
+.p-datatable .p-column-header-content{
+    /* display:  inline-table;       */
+    display: block;
+    text-align: center;
 }

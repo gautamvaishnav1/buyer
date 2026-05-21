@@ -131,7 +131,7 @@ const ProductEditPage = () => {
   const handleSave = () => {
     if (product) {
       dispatch(updateProduct({ ...product, bulkPricing }))
-      navigate('/dashboard/products')
+      navigate('/products')
     }
   }
 
