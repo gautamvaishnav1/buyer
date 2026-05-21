@@ -1,12 +1,12 @@
 
 import { Link } from 'react-router-dom'
 import '../../../src/styles/link_button.css'
-import { Children, type ReactElement, type ReactNode } from 'react'
+import {  type ReactElement, type ReactNode } from 'react'
 interface LinkButtonProps {
   link: string
   text?: string
   icon?:ReactElement
-  styleName: string
+  styleName?: string
   children?:ReactNode
 }
 const LinkButton = (props: LinkButtonProps) => {

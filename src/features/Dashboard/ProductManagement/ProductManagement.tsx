@@ -67,7 +67,7 @@ const ProductManagement = () => {
       </h4>
     )
   } 
-  const countFunction = (rowData: any, options: any) => {
+  const countFunction = ( options: any) => {
     return <span>{options.rowIndex + 1}</span>
   }
 
