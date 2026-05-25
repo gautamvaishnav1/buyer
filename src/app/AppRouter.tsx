@@ -9,6 +9,8 @@ import ProductEditPage from "../features/Dashboard/ProductManagement/ProductEdit
 import InquiryManagement from "../features/Dashboard/InquiryManagement"
 import SupplierProfile from "../features/Dashboard/SupplierProfile"
 import Analytics from "../features/Dashboard/Analytics"
+import ViewProduct from "../features/Dashboard/ProductManagement/ViewProduct"
+import AddProduct from "../features/Dashboard/AddProduct"
 
 const AppRouter = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -26,10 +28,12 @@ const AppRouter = () => {
         >
           <Route index element={<DashboardHome />} />
           <Route path="products" element={<ProductManagement />} />
-          <Route path="products/edit-products/:id" element={<ProductEditPage />} />
+          <Route path={ROUTES.EDIT_PRODUCTS} element={<ProductEditPage />} />
           <Route path="inquiries" element={<InquiryManagement />} />
           <Route path="verification" element={<SupplierProfile />} />
           <Route path={ROUTES.ANALYTICS} element={<Analytics/>} />
+          <Route path={ROUTES.VIEW_PRODUCT} element={<ViewProduct/>} />
+          <Route path={ROUTES.ADD_PRODUCTS} element={<AddProduct/>} />
           <Route path="*" element={<div>page not found</div>} />
         </Route>
       </Routes>

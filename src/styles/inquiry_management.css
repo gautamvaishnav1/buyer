@@ -7,9 +7,15 @@
 }
 
 .search-box {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  
+    display: flex;
     position: relative;
     width: 100%;
     max-width: 300px;
+    justify-content: center;
+    align-items: center;
 }
 
 /* .search-icon {
@@ -21,10 +27,11 @@
 } */
 
 .search-box input {
-    width: 100%;
+    width: 70%;
     padding: var(--sp-2) var(--sp-3) var(--sp-2) var(--sp-9);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    /* border: 1px solid var(--border);
+    border-radius: var(--radius-md); */
+    border: none;
     outline: none;
     font-size: var(--fs-sm);
 }
@@ -74,7 +81,7 @@
 }
 
 .inquiry-card {
-    background: #ffffff;
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--sp-5);
@@ -99,7 +106,7 @@
     width: 48px;
     height: 48px;
     background-color: var(--primary-red);
-    color: #ffffff;
+    color: var(--text-white);
     border-radius: var(--radius-circle);
     display: flex;
     align-items: center;
@@ -179,7 +186,7 @@
 
 .action-btn.reply {
     background-color: var(--primary-red);
-    color: #ffffff;
+    color: var(--text-white);
     border-color: var(--primary-red);
 }
 

@@ -1,9 +1,9 @@
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/supplier-dashboard',
-  ADD_PRODUCTS: '/add-products',
-  EDIT_PRODUCTS: '/dashboard/products/edit-products/:id',
-  DELETE_PRODUCTS: '/delete-products',
+  ADD_PRODUCTS: '/products/add-products',
+  EDIT_PRODUCTS: '/products/edit-products/:id',
+  DELETE_PRODUCTS: '/products/delete-products',
   INQUIRIES: '/inquiries',
   RFQ: '/rfq',
   ORDERS: '/orders',
@@ -11,7 +11,12 @@ export const ROUTES = {
   CHAT:'/chat',
   USER_CHAT:'/user-chat',
   ANALYTICS: '/analytics',
-  SETTINGS: '/settings'
+  SETTINGS: '/settings',
+  VIEW_PRODUCT:'/products/view-product/:id',
+  VIEW_INQUIRY:'/view-inquiry/:id',
+  VIEW_RFQ:'/view-rfq/:id',
+  VIEW_ORDER:'/view-order/:id',
+  VIEW_PAYMENT:'/view-payment/:id',
 }
 
 export const ERROR_MESSAGES = {

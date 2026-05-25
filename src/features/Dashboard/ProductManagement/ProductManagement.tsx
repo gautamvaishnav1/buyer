@@ -18,7 +18,7 @@ import LinkButton from '../../../shared/LinkButton/LinkButton'
 
 const ProductManagement = () => {
   const productData = useSelector((state: any) => state.products.products)
-  console.log('Product ====>', productData)
+  // console.log('Product ====>', productData)
   const productDataValue = productData
   // console.log(productData.map((Id)=>Id.category),'Product Data')
   const categoriesData = useSelector((state: any) => state.category.categories)
@@ -58,7 +58,7 @@ const ProductManagement = () => {
     )
   }
   const nameOfProduct = (options: any) => {
-    console.log(options, 'options')
+    // console.log(options, 'options')
     return (
       <h4>
         {options.title.length > 13
@@ -67,7 +67,8 @@ const ProductManagement = () => {
       </h4>
     )
   } 
-  const countFunction = ( options: any) => {
+  const countFunction = ( rowData:any,options: any) => {
+    console.log(options.rowIndex+1)
     return <span>{options.rowIndex + 1}</span>
   }
 
@@ -83,13 +84,13 @@ const ProductManagement = () => {
   }
 
   const ProductTableActions = (options: any) => {
-    console.log(options.id, 'options')
+    // console.log(options.id, 'options')
 
     return (
       <div className='btnEditDelete'>
         <LinkButton
           styleName='blue'
-          link={`view-products/${options.id}`}
+          link={`view-product/${options.id}`}
          
         ><GrView/></LinkButton>
         <LinkButton
@@ -145,7 +146,7 @@ const ProductManagement = () => {
 
           {/* ================= CATEGORY DROPDOWN ================= */}
 
-          <div className='card flex-center'>
+          <div className=''>
             <Dropdown
               value={category}
               onChange={e => {
@@ -165,7 +166,7 @@ const ProductManagement = () => {
 
           {/* ================= SUB CATEGORY DROPDOWN ================= */}
 
-          <div className='card flex-center'>
+          <div className=''>
             <Dropdown
               value={subCategory}
               onChange={e => {
@@ -186,7 +187,8 @@ const ProductManagement = () => {
         </section>
         {/* Data table for items */}
         <section className='mt-2'>
-          <DataTable value={productData} tableStyle={{ minWidth: '60rem' }}>
+          <DataTable value={productData} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink">
             <Column header='#' body={countFunction}></Column>
             <Column header='Name' body={nameOfProduct}></Column>
             <Column header='Image' body={imageBodyTemplate}></Column>

@@ -4,7 +4,7 @@
     justify-content: space-between;
     padding: 0 var(--sp-4);
     height: var(--sp-12);
-    background-color: #ffffff;
+    background-color: var(--bg);
     /* Changed to White */
     border-bottom: 1px solid var(--border);
     /* Added border for white bg */
@@ -162,7 +162,7 @@
     top: var(--sp-1);
     right: var(--sp-1);
     background-color: var(--primary-red);
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 10px;
     font-weight: var(--fw-7);
     padding: 2px 5px;

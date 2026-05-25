@@ -143,7 +143,8 @@
 .dashboard-content{
     margin-left: 89px;
     margin-top: 82px;
-    @media (max-width:468px) {
+   
+    @media (max-width:768px) {
 margin-left: 0;        
     }
 }
@@ -331,6 +332,13 @@ margin-left: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+    @media (max-width:468px) {
+        grid-template-columns: 1fr;
+        
+    }
+    @media (max-width:1024px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .table-card {

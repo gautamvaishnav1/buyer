@@ -1,6 +1,7 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+
+import { useDispatch } from 'react-redux'
 import { InputText } from 'primereact/inputtext'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { Dropdown } from 'primereact/dropdown'
@@ -8,9 +9,9 @@ import { InputNumber } from 'primereact/inputnumber'
 import { InputSwitch } from 'primereact/inputswitch'
 import { FileUpload } from 'primereact/fileupload'
 import { Button } from 'primereact/button'
-import dummyProducts from '../../../core/storage/DummyProduct_10.json'
-import { updateProduct } from './productStore'
-import '../../../styles/product_management.css'
+import dummyProducts from '../../core/storage/DummyProduct_10.json'
+import { addProducts } from './ProductManagement/productStore'
+import '../../styles/product_management.css'
 
 type Product = {
   id: number
@@ -64,41 +65,103 @@ type Product = {
   subcategory: string
 }
 
-const ProductEditPage = () => {
-  const { id } = useParams()
+const AddProduct = () => {
   const navigate = useNavigate()
+
   const dispatch = useDispatch()
 
-  const [product, setProduct] = useState<Product | null>(null)
+
   const [activeTab, setActiveTab] = useState('basic')
-  const [bulkPricing, setBulkPricing] = useState<Array<{ minQty: number; pricePerUnit: number }>>([])
 
-  type CategoryState = { categories: Array<{ category: string } & Record<string, unknown>> }
-  const categoriesData = useSelector((state: { category: CategoryState }) => state.category.categories)
-  const categoryValues = [...new Set(categoriesData.map((item) => item.category))]
+  const [product, setProduct] = useState<Product>(() => {
+    const today = new Date().toISOString().split('T')[0]
+    return {
+      id: Date.now(),
+      title: '',
+      slug: '',
+      category: '',
+      status: 'active',
+      featured: false,
+      description: {
+        short: '',
+        long: ''
+      },
+      images: [],
+      thumbnail: '',
+      pricing: {
+        basePrice: 0,
+        currency: 'INR',
+        gst: 18
+      },
+      bulkPricing: [{ minQty: 0, pricePerUnit: 0 }],
+      inventory: {
+        sku: '',
+        totalStock: 0,
+        minOrderQty: 1
+      },
+      supplier: {
+        name: '',
+        companyName: '',
+        location: ''
+      },
+      shipping: {
+        weight: 0,
+        dimensions: {
+          length: 0,
+          breadth: 0,
+          height: 0
+        },
+        dispatchTimeDays: 0
+      },
+      returnPolicy: {
+        returnable: true,
+        returnDays: 7
+      },
+      compliance: {
+        hsnCode: '',
+        gstRate: 18,
+        countryOfOrigin: 'India'
+      },
+      createdAt: today,
+      updatedAt: today,
+      subcategory: ''
+    }
+  })
 
-  useEffect(() => {
-    const foundProduct = dummyProducts.find((p: Product) => p.id === parseInt(id || '0'))
-    if (!foundProduct) return
-    setProduct(foundProduct)
-    setBulkPricing(foundProduct.bulkPricing || [])
-  }, [id])
+  const [bulkPricing, setBulkPricing] = useState<Array<{ minQty: number; pricePerUnit: number }>>([{ minQty: 0, pricePerUnit: 0 }])
 
-  const handleInputChange = <T,>(field: keyof Product, value: T) => {
+  const categoriesData = useMemo(() => {
+    const categories = (dummyProducts as Array<Partial<Product> & { category?: string }>).map((item) => item.category).filter(Boolean) as string[]
+    return [...new Set(categories)]
+  }, [])
+
+
+  const handleInputChange = <K extends keyof Product>(field: K, value: Product[K]) => {
     if (!product) return
-    setProduct({ ...product, [field]: value } as Product)
+    setProduct({ ...product, [field]: value })
   }
 
-  const handleNestedChange = <S extends keyof Product, F extends keyof Product[S]>(section: S, field: F, value: Product[S][F]) => {
+  const handleNestedChange = <S extends keyof Product, F extends keyof Product[S]>(
+    section: S,
+    field: F,
+    value: Product[S][F]
+  ) => {
     if (!product) return
+
+    const sectionValue = product[section]
+
+    if (typeof sectionValue !== 'object' || sectionValue === null) return
+
     setProduct({
       ...product,
       [section]: {
-        ...(product[section] as Product[S]),
-        [field]: value
-      }
-    } as Product)
+        ...(sectionValue as Record<string, unknown>),
+        [field as string]: value
+      } as Product[S]
+    })
   }
+
+
 
   const handleDimensionChange = (field: keyof Product['shipping']['dimensions'], value: number) => {
     if (!product) return
@@ -130,10 +193,20 @@ const ProductEditPage = () => {
   }
 
   const handleSave = () => {
-    if (product) {
-      dispatch(updateProduct({ ...product, bulkPricing }))
-      navigate('/products')
+    if (!product) {
+      return;
     }
+    // Prepare product data for saving
+    const productData = {
+      ...product,
+      bulkPricing: bulkPricing.filter(tier => tier.minQty > 0 && tier.pricePerUnit > 0)
+    }
+      
+    // Dispatch add product action
+    dispatch(addProducts(productData))
+      
+    // Navigate back to products list
+    navigate('/dashboard/products')
   }
 
   const statusOptions = [
@@ -151,18 +224,17 @@ const ProductEditPage = () => {
   if (!product) return <div className="p-6">Loading...</div>
 
   return (
-    <div className="product-mgmt">
-      <div className="edit-header pm-surface">
+    <div className="product-edit-page">
+      <div className="edit-header">
         <div>
-          <h1>Edit Product</h1>
-          {/* <p className="text-muted">Product ID: {product.id}</p> */}
+          <h1>Add Product</h1>
+          <p className="text-muted">Create a new product</p>
         </div>
         <div className="header-actions">
           <Button label="Cancel" className="p-button-outlined" onClick={() => navigate('/dashboard/products')} />
-          <Button label="Save Changes" className="p-button-success" onClick={handleSave} />
+          <Button label="Save Product" className="p-button-success" onClick={handleSave} />
         </div>
       </div>
-
 
       <div className="edit-tabs">
         <Button label="Basic Info" className={activeTab === 'basic' ? 'tab-active' : ''} onClick={() => setActiveTab('basic')} />
@@ -179,7 +251,7 @@ const ProductEditPage = () => {
               <h3>Product Information</h3>
               <div className="form-group">
                 <label>Title</label>
-                <InputText value={product.title} onChange={(e) => handleInputChange('title', e.target.value)} />
+                <InputText  value={product.title} onChange={(e) => handleInputChange('title', e.target.value)} />
               </div>
               <div className="form-group">
                 <label>Slug</label>
@@ -187,7 +259,7 @@ const ProductEditPage = () => {
               </div>
               <div className="form-group">
                 <label>Category</label>
-                <Dropdown value={product.category} options={categoryValues.map(c => ({ label: c, value: c }))}
+                <Dropdown value={product.category} options={categoriesData.map(c => ({ label: c, value: c }))}
                   onChange={(e) => handleInputChange('category', e.value)} placeholder="Select Category" />
               </div>
               <div className="form-group">
@@ -245,29 +317,37 @@ const ProductEditPage = () => {
               <div className="form-group">
                 <label>Base Price</label>
                 <InputNumber value={product.pricing.basePrice}
-                  onValueChange={(e) => handleNestedChange('pricing', 'basePrice', e.value)} mode="currency"
+                  onValueChange={(e) => handleNestedChange('pricing', 'basePrice', e.value ?? 0)} mode="currency"
                   currency={product.pricing.currency} />
               </div>
               <div className="form-group">
                 <label>GST Rate (%)</label>
-                <InputNumber value={product.pricing.gst}
-                  onValueChange={(e) => handleNestedChange('pricing', 'gst', e.value)} suffix="%" />
+                <InputNumber
+                  value={product.pricing.gst}
+                  onValueChange={(e) => handleNestedChange('pricing', 'gst', e.value ?? 0)}
+                  suffix="%"
+                />
               </div>
+
             </div>
 
             <div className="form-section">
               <h3>Bulk Pricing Tiers</h3>
               {bulkPricing.map((tier, index) => (
                 <div key={index} className="bulk-tier">
-                  <div className="form-group">
-                    <label>Min Quantity</label>
-                    <InputNumber value={tier.minQty}
-                      onValueChange={(e) => updateBulkPricing(index, 'minQty', e.value || 0)} />
-                  </div>
+              <div className="form-group">
+                <label>Min Quantity</label>
+                <InputNumber
+                  value={tier.minQty}
+                  onValueChange={(e) => updateBulkPricing(index, 'minQty', e.value ?? 0)}
+                />
+
+              </div>
+
                   <div className="form-group">
                     <label>Price Per Unit</label>
                     <InputNumber value={tier.pricePerUnit}
-                      onValueChange={(e) => updateBulkPricing(index, 'pricePerUnit', e.value || 0)}
+                    onValueChange={(e) => updateBulkPricing(index, 'pricePerUnit', e.value ?? 0)}
                       mode="currency" currency={product.pricing.currency} />
                   </div>
                   <Button icon="pi pi-trash" className="p-button-danger p-button-rounded"
@@ -292,12 +372,12 @@ const ProductEditPage = () => {
               <div className="form-group">
                 <label>Total Stock</label>
                 <InputNumber value={product.inventory.totalStock}
-                  onValueChange={(e) => handleNestedChange('inventory', 'totalStock', e.value)} />
+                  onValueChange={(e) => handleNestedChange('inventory', 'totalStock', e.value ?? 0)} />
               </div>
               <div className="form-group">
                 <label>Minimum Order Quantity</label>
                 <InputNumber value={product.inventory.minOrderQty}
-                  onValueChange={(e) => handleNestedChange('inventory', 'minOrderQty', e.value)} />
+                  onValueChange={(e) => handleNestedChange('inventory', 'minOrderQty', e.value ?? 0)} />
               </div>
             </div>
 
@@ -329,12 +409,12 @@ const ProductEditPage = () => {
               <div className="form-group">
                 <label>Weight (kg)</label>
                 <InputNumber value={product.shipping.weight}
-                  onValueChange={(e) => handleNestedChange('shipping', 'weight', e.value)} suffix=" kg" />
+                  onValueChange={(e) => handleNestedChange('shipping', 'weight', e.value ?? 0)} suffix=" kg" />
               </div>
               <div className="form-group">
                 <label>Dispatch Time (Days)</label>
                 <InputNumber value={product.shipping.dispatchTimeDays}
-                  onValueChange={(e) => handleNestedChange('shipping', 'dispatchTimeDays', e.value)} />
+                  onValueChange={(e) => handleNestedChange('shipping', 'dispatchTimeDays', e.value ?? 0)} />
               </div>
             </div>
 
@@ -344,17 +424,17 @@ const ProductEditPage = () => {
                 <div className="form-group">
                   <label>Length</label>
                   <InputNumber value={product.shipping.dimensions.length}
-                    onValueChange={(e) => handleDimensionChange('length', e.value)} />
+                    onValueChange={(e) => handleDimensionChange('length', e.value ?? 0)} />
                 </div>
                 <div className="form-group">
                   <label>Breadth</label>
                   <InputNumber value={product.shipping.dimensions.breadth}
-                    onValueChange={(e) => handleDimensionChange('breadth', e.value)} />
+                    onValueChange={(e) => handleDimensionChange('breadth', e.value ?? 0)} />
                 </div>
                 <div className="form-group">
                   <label>Height</label>
                   <InputNumber value={product.shipping.dimensions.height}
-                    onValueChange={(e) => handleDimensionChange('height', e.value)} />
+                    onValueChange={(e) => handleDimensionChange('height', e.value ?? 0)} />
                 </div>
               </div>
             </div>
@@ -373,7 +453,7 @@ const ProductEditPage = () => {
               <div className="form-group">
                 <label>GST Rate (%)</label>
                 <InputNumber value={product.compliance.gstRate}
-                  onValueChange={(e) => handleNestedChange('compliance', 'gstRate', e.value)} suffix="%" />
+                  onValueChange={(e) => handleNestedChange('compliance', 'gstRate', e.value ?? 0)} suffix="%" />
               </div>
               <div className="form-group">
                 <label>Country of Origin</label>
@@ -392,7 +472,7 @@ const ProductEditPage = () => {
               <div className="form-group">
                 <label>Return Days</label>
                 <InputNumber value={product.returnPolicy.returnDays}
-                  onValueChange={(e) => handleNestedChange('returnPolicy', 'returnDays', e.value)} />
+                  onValueChange={(e) => handleNestedChange('returnPolicy', 'returnDays', e.value ?? 0)} />
               </div>
             </div>
           </div>
@@ -402,4 +482,4 @@ const ProductEditPage = () => {
   )
 }
 
-export default ProductEditPage
+export default AddProduct

@@ -176,9 +176,9 @@ const Analytics = () => {
             onChange={(e) => setSelectedMonth(e.target.value)}
             className="p-2 text-sm font-semibold cursor-pointer"
             style={{
-              border: '1px solid var(--border)',
+              border: 'none',
               borderRadius: 'var(--radius-md)',
-              background: 'var(--white)',
+              background: 'var(--bg)',
               color: 'var(--text-dark)',
               outline: 'none',
               minWidth: '180px',
@@ -205,7 +205,7 @@ const Analytics = () => {
                 Lead generation, negotiations, and conversions distribution
               </span>
             </div>
-            <span className="qty-badge text-xs" style={{ background: '#eff6ff', color: '#3b82f6', fontWeight: 800 }}>
+            <span className="qty-badge text-xs" style={{ background: '', color: '', fontWeight: 800 }}>
               {totalInquiries} Total
             </span>
           </div>
