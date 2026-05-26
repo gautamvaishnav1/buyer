@@ -100,9 +100,9 @@
   --header-search-bg: #ffffff;
 
   /* === Typography === */
-  --sans: poppins, 'Segoe UI', Roboto, sans-serif;
-  --heading: poppins, 'Segoe UI', Roboto, sans-serif;
-  --mono: poppins, Consolas, monospace;
+  --sans:  'Segoe UI', Roboto, sans-serif;
+  --heading: 'Segoe UI', Roboto, sans-serif;
+  --mono:  Consolas, monospace;
   --table: Times New Roman --fw-1: 100;
   /* 100 font-weight  */
   --fw-2: 200;

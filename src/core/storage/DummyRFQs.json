@@ -1,0 +1,320 @@
+[
+  {
+    "id": "RFQ2001",
+    "date": "1/2/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 124,
+    "budget": "$1250.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2002",
+    "date": "2/3/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 89,
+    "budget": "$5940.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2003",
+    "date": "3/4/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 420,
+    "budget": "$1200.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2004",
+    "date": "4/5/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 15,
+    "budget": "$8900.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2005",
+    "date": "5/6/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 340,
+    "budget": "$450.00",
+    "status": "Open"
+  },
+  {
+    "id": "RFQ2006",
+    "date": "6/7/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 230,
+    "budget": "$3400.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2007",
+    "date": "7/8/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 95,
+    "budget": "$7800.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2008",
+    "date": "8/9/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 180,
+    "budget": "$2100.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2009",
+    "date": "9/10/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 60,
+    "budget": "$11500.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2010",
+    "date": "10/11/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 1100,
+    "budget": "$980.00",
+    "status": "Open"
+  },
+  {
+    "id": "RFQ2011",
+    "date": "11/12/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 450,
+    "budget": "$4900.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2012",
+    "date": "12/13/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 34,
+    "budget": "$3450.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2013",
+    "date": "1/14/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 680,
+    "budget": "$1890.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2014",
+    "date": "2/15/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 12,
+    "budget": "$9450.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2015",
+    "date": "3/16/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 900,
+    "buyerName": "Sarah Wilson",
+    "category": "Office Supplies",
+    "quantity": 900,
+    "budget": "$1250.00",
+    "status": "Open"
+  },
+  {
+    "id": "RFQ2016",
+    "date": "4/17/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 140,
+    "budget": "$2300.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2017",
+    "date": "5/18/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 56,
+    "budget": "$4900.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2018",
+    "date": "6/19/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 300,
+    "budget": "$1250.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2019",
+    "date": "7/20/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 25,
+    "budget": "$14500.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2020",
+    "date": "8/21/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 600,
+    "budget": "$780.00",
+    "status": "Open"
+  },
+  {
+    "id": "RFQ2021",
+    "date": "9/22/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 340,
+    "budget": "$4200.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2022",
+    "date": "10/23/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 120,
+    "budget": "$7890.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2023",
+    "date": "11/24/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 890,
+    "budget": "$2190.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2024",
+    "date": "12/25/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 18,
+    "budget": "$6780.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2025",
+    "date": "1/26/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 450,
+    "budget": "$340.00",
+    "status": "Open"
+  },
+  {
+    "id": "RFQ2026",
+    "date": "2/27/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 890,
+    "budget": "$8900.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2027",
+    "date": "3/28/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 110,
+    "budget": "$9450.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2028",
+    "date": "4/1/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 230,
+    "budget": "$2390.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2029",
+    "date": "5/2/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 30,
+    "budget": "$12450.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2030",
+    "date": "6/3/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 800,
+    "budget": "$670.00",
+    "status": "Open"
+  },
+  {
+    "id": "RFQ2031",
+    "date": "7/4/2024",
+    "buyer": "Acme Corp",
+    "category": "Electronics",
+    "quantity": 1200,
+    "budget": "$11900.00",
+    "status": "Quoted"
+  },
+  {
+    "id": "RFQ2032",
+    "date": "8/5/2024",
+    "buyer": "Global Traders",
+    "category": "Office Furniture",
+    "quantity": 78,
+    "budget": "$5600.00",
+    "status": "Negotiating"
+  },
+  {
+    "id": "RFQ2033",
+    "date": "9/6/2024",
+    "buyer": "TechSource Ltd",
+    "category": "Safety Equipment",
+    "quantity": 340,
+    "budget": "$2300.00",
+    "status": "Closed"
+  },
+  {
+    "id": "RFQ2034",
+    "date": "10/7/2024",
+    "buyer": "MegaBuy Inc",
+    "category": "IT Equipment",
+    "quantity": 14,
+    "budget": "$7890.00",
+    "status": "Expired"
+  },
+  {
+    "id": "RFQ2035",
+    "date": "11/8/2024",
+    "buyer": "ProImport Co",
+    "category": "Office Supplies",
+    "quantity": 560,
+    "budget": "$490.00",
+    "status": "Open"
+  }
+]

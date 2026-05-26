@@ -7,6 +7,9 @@ export const ROUTES = {
   INQUIRIES: '/inquiries',
   RFQ: '/rfq',
   ORDERS: '/orders',
+  ORDER_DETAILS: '/order/:id',
+  ORDER_STATUSES:'/order-statuses',
+  PAYMENT_METHODS:'/payment-methods',
   PAYMENTS: '/payments',
   CHAT:'/chat',
   USER_CHAT:'/user-chat',
@@ -17,6 +20,7 @@ export const ROUTES = {
   VIEW_RFQ:'/view-rfq/:id',
   VIEW_ORDER:'/view-order/:id',
   VIEW_PAYMENT:'/view-payment/:id',
+  PROFILE:'/profile'
 }
 
 export const ERROR_MESSAGES = {

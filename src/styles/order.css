@@ -1,0 +1,324 @@
+/* ============================================================
+   Order Management – Styles mirroring product_management.css
+   ============================================================ */
+
+/* ── Container ──────────────────────────────────────────────── */
+.order-mgmt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  animation: fadeIn 0.35s ease-out;
+  padding: var(--sp-4);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.order-mgmt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  background: linear-gradient(180deg, rgba(192, 57, 43, 0.06), rgba(192, 57, 43, 0));
+}
+
+.order-header-text h1 {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-7);
+  margin-bottom: var(--sp-1);
+  color: var(--text-heading);
+}
+
+.order-header-text p {
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+.order-header-actions {
+  display: flex;
+  gap: var(--sp-3);
+}
+
+.order-export-btn,
+.order-new-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-md);
+  font-weight: var(--fw-6);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.order-export-btn {
+  background: var(--bg);
+  color: var(--text-dark);
+  border: 1px solid var(--border);
+}
+
+.order-export-btn:hover {
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+}
+
+.order-new-btn {
+  background: var(--bg-danger);
+  color: #ffffff;
+  border: none;
+}
+
+.order-new-btn:hover {
+  background: var(--bg-danger-hover);
+}
+
+/* ── Table Section ──────────────────────────────────────────── */
+.order-table-section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+/* ── Filter Bar ─────────────────────────────────────────────── */
+.order-filter-bar {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--sp-6);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.order-search-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.order-search-input {
+  width: 100%;
+  font-size: var(--fs-xs);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg);
+  color: var(--text-black);
+  transition: border-color 0.2s ease;
+}
+
+.order-search-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 2px var(--primary-red-light);
+}
+
+.order-status-dropdown {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.order-status-dropdown .p-dropdown {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+}
+
+.order-status-dropdown .p-dropdown-label {
+  font-size: var(--fs-xs);
+  background-color: var(--bg);
+  color: var(--text-black);
+}
+
+/* ── DataTable ──────────────────────────────────────────────── */
+.order-data-table-wrap {
+  overflow: hidden;
+}
+
+.order-datatable {
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  overflow: hidden;
+}
+
+.order-datatable .p-datatable-wrapper {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.order-datatable .p-datatable-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* thead */
+.order-datatable .p-datatable-thead > tr > th {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  text-align: left;
+  background: var(--bg);
+  color: var(--text-heading);
+}
+
+/* tbody */
+.order-datatable .p-datatable-tbody > tr > td {
+  padding: 0 0 0 var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  vertical-align: middle;
+  color: var(--text);
+}
+
+.order-datatable .p-datatable-tbody > tr > td:last-child {
+  text-align: center;
+}
+
+.order-datatable .p-datatable-tbody > tr {
+  transition: background-color 0.15s ease-in-out;
+}
+
+.order-datatable .p-datatable-tbody > tr:hover {
+  background: rgba(192, 57, 43, 0.03);
+}
+
+/* column header center */
+.order-datatable .p-column-header-content {
+  display: block;
+  text-align: center;
+}
+
+/* ── Status Badges ──────────────────────────────────────────── */
+.order-status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.order-status-pending    { background: #fff3cd; color: #856404; }
+.order-status-processing { background: #cff4fc; color: #055160; }
+.order-status-shipped    { background: #d1ecf1; color: #0c5460; }
+.order-status-delivered  { background: #d4edda; color: #155724; }
+
+/* ── Action Buttons ─────────────────────────────────────────── */
+.order-btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.order-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  transition: opacity 0.2s;
+  color: #fff;
+}
+
+.order-action-btn:hover { opacity: 0.82; }
+
+.order-action-blue  { background: var(--link-blue); }
+.order-action-green { background: var(--link-green); }
+.order-action-red   { background: var(--link-red); }
+
+/* ── Paginator ──────────────────────────────────────────────── */
+.order-datatable .p-paginator {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  font-size: var(--fs-xs);
+  padding: var(--sp-3) var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+
+.order-datatable .p-paginator-element {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  padding: var(--sp-1) var(--sp-2);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  min-width: 32px;
+  text-align: center;
+  background: var(--bg);
+  color: var(--text-dark);
+}
+
+.order-datatable .p-paginator-element:hover {
+  background: var(--primary-red);
+  color: #fff;
+  border-color: var(--primary-red);
+}
+
+.order-datatable .p-paginator-element.p-paginator-page-active {
+  background: var(--primary-red);
+  color: var(--text-white);
+  border-color: var(--primary-red);
+  font-weight: 700;
+}
+
+.order-datatable .p-paginator .p-dropdown {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  height: 32px;
+}
+
+.order-datatable .p-paginator .p-dropdown .p-dropdown-label {
+  padding: 0 var(--sp-1);
+  font-size: var(--fs-xs);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .order-filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .order-mgmt-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .order-datatable .p-paginator {
+    justify-content: center;
+    padding: var(--sp-2);
+    gap: var(--sp-1);
+  }
+
+  .order-datatable .p-paginator-element {
+    padding: var(--sp-1) var(--sp-2);
+    min-width: 28px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 468px) {
+  .order-table-section {
+    padding: var(--sp-1);
+  }
+}

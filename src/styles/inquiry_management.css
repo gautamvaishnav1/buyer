@@ -1,204 +1,115 @@
+/* ============================================================
+   Inquiry Management – Extra styles on top of product_management.css
+   ============================================================ */
+
 .inquiry-mgmt {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-6);
-    animation: fadeIn 0.4s ease-out;
-    /* margin-left: var(--sp-6); */
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  animation: fadeIn 0.4s ease-out;
 }
 
-.search-box {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  
-    display: flex;
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-    justify-content: center;
-    align-items: center;
-}
-
-/* .search-icon {
-    position: absolute;
-    left: var(--sp-3);
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-medium);
-} */
-
-.search-box input {
-    width: 70%;
-    padding: var(--sp-2) var(--sp-3) var(--sp-2) var(--sp-9);
-    /* border: 1px solid var(--border);
-    border-radius: var(--radius-md); */
-    border: none;
-    outline: none;
-    font-size: var(--fs-sm);
-}
-
+/* ── Lead Tab Filters ───────────────────────────────────────── */
 .lead-filters {
-    display: flex;
-    gap: var(--sp-2);
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: var(--sp-2);
-    overflow-x: auto;
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--sp-2);
+  overflow-x: auto;
 }
 
 .filter-tab {
-    background: none;
-    border: none;
-    padding: var(--sp-2) var(--sp-4);
-    font-size: var(--fs-sm);
-    color: var(--text-medium);
-    cursor: pointer;
-    border-radius: var(--radius-md);
-    white-space: nowrap;
+  background: none;
+  border: none;
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.filter-tab:hover {
+  background: var(--light-gray-bg);
 }
 
 .filter-tab.active {
-    background-color: var(--bg);
-    color: var(--primary-red);
-    font-weight: var(--fw-6);
+  background-color: var(--bg);
+  color: var(--primary-red);
+  font-weight: var(--fw-6);
+  border-bottom: 2px solid var(--primary-red);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
-.filter-btn {
-    background: none;
-    border: 1px solid var(--border);
-    padding: var(--sp-2) var(--sp-4);
-    font-size: var(--fs-xs);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+/* ── Buyer Cell (avatar + name + company) ───────────────────── */
+.inq-buyer-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
 }
 
-.inquiry-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-4);
+.inq-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--primary-red);
+  color: var(--text-white);
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: var(--fw-7);
+  flex-shrink: 0;
 }
 
-.inquiry-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: var(--sp-5);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    transition: all 0.2s;
+.inq-company {
+  font-size: 10px;
+  color: var(--text-gray);
+  display: block;
+  margin-top: 1px;
 }
 
-.inquiry-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border-color: var(--primary-red-light);
+/* ── Priority Badges ────────────────────────────────────────── */
+.inq-priority-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: var(--fw-7);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
 }
 
-.card-main {
-    display: flex;
-    gap: var(--sp-5);
-    flex: 1;
-}
+.inq-priority-high    { background: #fce4ec; color: #c62828; }
+.inq-priority-medium  { background: #fff3e0; color: #ef6c00; }
+.inq-priority-low     { background: #e8f5e9; color: #2e7d32; }
 
-.buyer-avatar {
-    width: 48px;
-    height: 48px;
-    background-color: var(--primary-red);
-    color: var(--text-white);
-    border-radius: var(--radius-circle);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: var(--fw-7);
-    flex-shrink: 0;
-}
-
-.inquiry-details {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.details-top {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.buyer-name { font-weight: var(--fw-7); color: var(--text-heading); }
-.company-name { font-size: var(--fs-xs); color: var(--text-medium); }
-
+/* ── Status Tags ────────────────────────────────────────────── */
 .status-tag {
-    font-size: 10px;
-    font-weight: var(--fw-7);
-    padding: 2px 8px;
-    border-radius: var(--radius-pill);
-    text-transform: uppercase;
+  font-size: 10px;
+  font-weight: var(--fw-7);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  display: inline-block;
 }
 
-.status-tag.new { background: #e3f2fd; color: #1976d2; }
-.status-tag.negotiation { background: #fff3e0; color: #ef6c00; }
-.status-tag.confirmed { background: #e8f5e9; color: #2e7d32; }
-.status-tag.closed { background: #f5f5f5; color: #757575; }
+.status-tag.new          { background: #e3f2fd; color: #1976d2; }
+.status-tag.replied      { background: #e0f2f1; color: #00695c; }
+.status-tag.negotiation  { background: #fff3e0; color: #ef6c00; }
+.status-tag.confirmed    { background: #e8f5e9; color: #2e7d32; }
+.status-tag.closed       { background: #f5f5f5; color: #757575; }
 
-.details-mid {
-    display: flex;
-    gap: var(--sp-4);
-    font-size: var(--fs-xs);
-    color: var(--text-medium);
-}
-
-.details-bottom {
-    margin-top: 4px;
-}
-
-.last-message {
-    font-size: var(--fs-sm);
-    color: var(--text);
-    font-style: italic;
-    background: var(--bg);
-    padding: var(--sp-2) var(--sp-4);
-    border-radius: var(--radius-md);
-    border-left: 3px solid var(--border);
-}
-
-.card-actions {
-    display: flex;
-    gap: var(--sp-2);
-}
-
-.action-btn {
-    background: none;
-    border: 1px solid var(--border);
-    padding: var(--sp-2) var(--sp-4);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: var(--fs-xs);
-    font-weight: var(--fw-6);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.action-btn.reply {
-    background-color: var(--primary-red);
-    color: var(--text-white);
-    border-color: var(--primary-red);
-}
-
-.action-btn:hover:not(.reply) { background-color: var(--bg); }
-
+/* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
-    .inquiry-card {
-        flex-direction: column;
-        gap: var(--sp-4);
-    }
-    .card-actions {
-        width: 100%;
-        justify-content: flex-end;
-    }
+  .lead-filters {
+    padding-bottom: var(--sp-1);
+    gap: var(--sp-1);
+  }
+
+  .filter-tab {
+    padding: var(--sp-1) var(--sp-3);
+    font-size: var(--fs-xs);
+  }
 }

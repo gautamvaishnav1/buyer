@@ -19,13 +19,13 @@
 }
 
 /* title + subtitle */
-.product-mgmt .mgmt-header {
+/* .product-mgmt .mgmt-header {
   background: linear-gradient(
     180deg,
     rgba(192, 57, 43, 0.06),
     rgba(192, 57, 43, 0)
   );
-}
+} */
 
 /* ================= HEADER ================= */
 
@@ -241,6 +241,7 @@
   border-radius: var(--radius-md);
   background: var(--bg);
   transition: border-color 0.2s ease;
+  padding-inline: var(--sp-2);
 }
 
 .p-dropdown:hover {
@@ -250,7 +251,7 @@
 .p-dropdown .p-dropdown-label {
   font-size: var(--fs-xs);
   color: var(--text-dark);
-  padding: var(--sp-2) var(--sp-3);
+  padding-inline: var(--sp-2) ;
 }
 
 .p-dropdown .p-dropdown-trigger {
@@ -534,20 +535,15 @@
   width: 100%;
   border-radius: var(--radius-md);
   font-size: var(--fs-xs);
-  padding: var(--sp-2) var(--sp-3);
-  border: 1px solid var(--border);
+  /* padding: var(--sp-2) var(--sp-3); */
+  border: none;
   background: var(--bg);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.p-inputtext:focus,
-.p-inputtextarea:focus,
-.p-inputnumber-input:focus {
-  border-color: var(--primary-red);
-  box-shadow: 0 0 0 2px var(--primary-red-light);
-}
+
 
 .p-inputtextarea {
   resize: vertical;
@@ -581,6 +577,9 @@
 
 .product-mgmt .p-paginator {
   display: flex;
+   justify-content: end;
+    /* padding: var(--sp-2); */
+    /* gap: var(--sp-1); */
   align-items: center;
   gap: var(--sp-2);
   flex-wrap: wrap;
@@ -649,11 +648,7 @@
     grid-template-columns: 1fr;
   }
 
-  .product-mgmt .p-paginator {
-    justify-content: center;
-    padding: var(--sp-2);
-    gap: var(--sp-1);
-  }
+  
 
   .product-mgmt .p-paginator-element {
     padding: var(--sp-1) var(--sp-2);
@@ -692,7 +687,7 @@
 }
 
 .pm-form-card {
-  background: #ffffff;
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   padding: var(--sp-6);
@@ -1142,3 +1137,19 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--sp-4);
+  align-items: start;
+}
+
+.form-group {
+  margin-bottom: var(--sp-4);
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
