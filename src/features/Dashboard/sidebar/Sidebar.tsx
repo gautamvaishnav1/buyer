@@ -30,13 +30,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
   const menuItems: MenuItem[] = [
     { id: "dashboard", label: "Dashboard", icon: <FaHome />, path: "/" },
-    { id: "products", label: "Products", icon: <AiFillProduct />, path: "/products" },
-    { id: "inquiries", label: "Inquiries", icon: <FaComments />, path: "/inquiries" },
-    { id: "rfq", label: "RFQ", icon: <FaFileInvoiceDollar />, path: "/rfq" },
-    { id: "orders", label: "Orders", icon: <FaClipboardList />, path: "/orders" },
-    { id: "payments", label: "Payments", icon: <FaCreditCard />, path: "/payments" },
-    { id: "analytics", label: "Analytics", icon: <FaChartLine />, path: "/analytics" },
-    { id: "verification", label: "Verify", icon: <FaCheckCircle />, path: "/verification" },
+    { id: "products", label: "Products", icon: <AiFillProduct />, path: "/seller/products" },
+    { id: "inquiries", label: "Inquiries", icon: <FaComments />, path: "/seller/inquiries" },
+    { id: "rfq", label: "RFQ", icon: <FaFileInvoiceDollar />, path: "/seller/rfq" },
+    { id: "orders", label: "Orders", icon: <FaClipboardList />, path: "/seller/orders" },
+    { id: "payments", label: "Payments", icon: <FaCreditCard />, path: "/seller/payments" },
+    { id: "analytics", label: "Analytics", icon: <FaChartLine />, path: "/seller/analytics" },
+    { id: "verification", label: "Verify", icon: <FaCheckCircle />, path: "/seller/verification" },
   ]
 
   return (
@@ -46,13 +46,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         onClick={onClose}
       ></div>
 
-      <div className="sidebar-container">
-
         <aside className={`sidebar ${isOpen ? "open" : ""}`}>
 
-          <div className="sidebar-logo">
+          {/* <div className="sidebar-logo">
             <img src="/logo.png" alt="Logo" className="sidebar-logo-img" />
-          </div>
+          </div> */}
 
           <nav className="sidebar-nav">
 
@@ -89,7 +87,6 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           </nav>
         </aside>
 
-      </div>
     </>
   )
 }

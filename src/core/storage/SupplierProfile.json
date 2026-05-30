@@ -1,0 +1,100 @@
+{
+  "companyInfo": {
+    "companyName": "Global Manufacturing Ltd",
+    "businessType": "Manufacturer / Trader",
+    "established": 2012,
+    "employees": "50 - 100",
+    "website": "www.globalmfg.com",
+    "email": "info@globalmfg.com",
+    "phone": "+86-755-12345678",
+    "address": "123 Industrial Road, Shenzhen, Guangdong, China"
+  },
+  "factoryInfo": {
+    "location": "Industrial Area, Shenzhen, China",
+    "factorySize": "5000+ sqm",
+    "productionLines": 4,
+    "monthlyCapacity": "50,000 units",
+    "qualityControl": "In-house QC team with ISO 9001 certification"
+  },
+  "documents": [
+    {
+      "id": "DOC001",
+      "name": "Business License",
+      "type": "license",
+      "status": "Verified",
+      "uploadDate": "2024-01-15",
+      "expiryDate": "2025-01-15",
+      "fileUrl": "/documents/business-license.pdf"
+    },
+    {
+      "id": "DOC002",
+      "name": "Quality Certification (ISO)",
+      "type": "certification",
+      "status": "Pending Review",
+      "uploadDate": "2024-03-20",
+      "expiryDate": "2026-03-20",
+      "fileUrl": "/documents/iso-certification.pdf"
+    },
+    {
+      "id": "DOC003",
+      "name": "Tax Registration Certificate",
+      "type": "tax",
+      "status": "Verified",
+      "uploadDate": "2024-02-10",
+      "expiryDate": "2025-02-10",
+      "fileUrl": "/documents/tax-certificate.pdf"
+    },
+    {
+      "id": "DOC004",
+      "name": "Export License",
+      "type": "license",
+      "status": "Verified",
+      "uploadDate": "2024-01-25",
+      "expiryDate": "2025-01-25",
+      "fileUrl": "/documents/export-license.pdf"
+    }
+  ],
+  "verification": {
+    "badgeStatus": "Pending",
+    "verificationFee": {
+      "amount": 299,
+      "currency": "USD",
+      "period": "Year",
+      "description": "The verification fee covers the cost of manual audit and background check by our third-party partner."
+    },
+    "lastAuditDate": null,
+    "nextAuditDate": null,
+    "auditor": null
+  },
+  "businessMetrics": {
+    "yearsOnPlatform": 3,
+    "totalOrders": 1250,
+    "responseRate": "95%",
+    "onTimeDeliveryRate": "92%",
+    "averageRating": 4.7,
+    "totalReviews": 380
+  },
+  "certifications": [
+    {
+      "name": "ISO 9001:2015",
+      "issuedBy": "International Organization for Standardization",
+      "issueDate": "2023-06-15",
+      "expiryDate": "2026-06-15",
+      "status": "Active"
+    },
+    {
+      "name": "CE Marking",
+      "issuedBy": "European Conformity",
+      "issueDate": "2023-09-10",
+      "expiryDate": "2025-09-10",
+      "status": "Active"
+    },
+    {
+      "name": "RoHS Compliance",
+      "issuedBy": "EU Directive",
+      "issueDate": "2024-01-20",
+      "expiryDate": "2026-01-20",
+      "status": "Active"
+    }
+  ]
+}

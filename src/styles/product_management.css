@@ -1,9 +1,9 @@
 .product-mgmt {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-6);
+  /* gap: var(--sp-6); */
   animation: fadeIn 0.35s ease-out;
-  padding: var(--sp-4);
+  padding: var(--sp-3);
 }
 
 /* shared surface */
@@ -39,12 +39,13 @@
 
 .mgmt-header h1 {
   font-size: var(--fs-lg);
-  margin-bottom: var(--sp-1);
+  /* margin-bottom: var(--sp-1); */
   color: var(--text-heading);
+  margin: 0 !important;
 }
 
 .mgmt-header p {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   color: var(--text-medium);
 }
 
@@ -59,17 +60,18 @@
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  padding: var(--sp-3) var(--sp-5);
+  padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-md);
   font-weight: var(--fw-6);
   cursor: pointer;
   transition: all 0.2s;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   border: 1px solid var(--border);
 }
 
 .add-product-btn {
   border: none;
+  text-decoration: none;
   background-color: var(--bg-danger);
   color: #ffffff;
 }
@@ -293,16 +295,16 @@
 }
 
 .product-mgmt .p-datatable .p-datatable-tbody > tr > td {
-  padding: 0 0 0 var(--sp-9);
+  /* padding: 0 0 0 var(--sp-9); */
   border-bottom: 1px solid var(--border);
   font-size: 10px;
   vertical-align: middle;
   color: var(--text);
+  transition: background-color 0.15s ease-in-out;
+text-align: center;
 }
 
-.product-mgmt .p-datatable .p-datatable-tbody > tr {
-  transition: background-color 0.15s ease-in-out;
-}
+
 
 .product-mgmt .p-datatable .p-datatable-tbody > tr > td:last-child {
   text-align: center;
@@ -535,7 +537,8 @@
   width: 100%;
   border-radius: var(--radius-md);
   font-size: var(--fs-xs);
-  /* padding: var(--sp-2) var(--sp-3); */
+  border: 1px solid black;
+  padding-inline: var(--sp-2);
   border: none;
   background: var(--bg);
   transition:
@@ -626,7 +629,12 @@
 }
 
 /* ================= RESPONSIVE ================= */
+.p-calendar-w-btn-right .p-datepicker-trigger{
+  background-color: var(--bg);
+  color: black;
+  border: 0;
 
+}
 @media (max-width: 768px) {
   .category-section {
     grid-template-columns: 1fr 1fr;
@@ -682,7 +690,7 @@
 
 @media (min-width: 1024px) {
   .product-mgmt-container {
-    grid-template-columns: 1.6fr 0.9fr;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1152,4 +1160,19 @@
   .form-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.p-datepicker-group{
+      background: white;
+    /* padding: var(--sp-3); */
+    text-align: center;
+    font-size: 10px;
+}
+
+.p-datepicker-header{
+  background-color: var(--black);
+}
+.p-datepicker-prev, .p-datepicker-next{
+  background: transparent;
+  border: 0;
 }

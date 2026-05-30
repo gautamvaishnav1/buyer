@@ -7,7 +7,7 @@ import {
   FaPaperPlane, 
   FaClock, 
   FaCalendarAlt, 
-  FaMapMarkerAlt, 
+ 
   FaBuilding, 
   FaGlobe, 
   FaCheckCircle, 
@@ -15,6 +15,7 @@ import {
   FaImage
 } from 'react-icons/fa';
 import '../../styles/view_rfq.css';
+import { ROUTES } from '../../shared/constants';
 
 export const ViewRFQ = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,14 +60,14 @@ export const ViewRFQ = () => {
       
       {/* ── Action Bar ── */}
       <div className="rfq-actions-bar">
-        <Link to="/supplier-dashboard/rfq" className="rfq-back-link">
+        <Link to={ROUTES.RFQ} className="rfq-back-link">
           <FaArrowLeft /> Back to RFQs
         </Link>
         <div className="rfq-action-buttons">
-          <button className="btn-outline" style={{ color: '#c62828', borderColor: '#c62828' }}>
+          <button className="btn-outline p-2 rounded-lg" >
             <FaTimes /> Decline
           </button>
-          <button className="btn-outline">
+          <button className="btn-outline p-2 rounded-lg">
             <FaEnvelope /> Message Buyer
           </button>
           <button className="btn-primary">
@@ -198,7 +199,7 @@ export const ViewRFQ = () => {
               </div>
             )}
             
-            <button className="btn-outline" style={{ width: '100%', marginTop: '16px', justifyContent: 'center' }}>
+            <button className="btn-outline p-2 rounded-lg" style={{ width: '100%', marginTop: '16px', justifyContent: 'center' }}>
               View Full Profile
             </button>
           </div>

@@ -10,21 +10,14 @@ import {
   FaBuilding,
   FaGlobe,
   FaCheckCircle,
-  FaFilePdf,
   FaImage,
   FaPlus,
-  FaFileInvoice,
-  FaHandshake,
-  FaVideo,
   FaExternalLinkAlt,
   FaCertificate,
-  FaAward,
- 
   FaBoxes,
-
-  FaCreditCard
 } from 'react-icons/fa'
 import '../../styles/view_inquiry.css'
+import { ROUTES } from '../../shared/constants'
 
 // ── Dynamic B2B Sourcing Inquiry Generator ───────────────────────────────────
 const getDetailedInquiry = (id: string) => {
@@ -163,13 +156,6 @@ const ViewInquiry = () => {
   // Text inputs & form state
   const [replyText, setReplyText] = useState<string>('')
   
-  // Draft Quotation / PI state
-  const [unitPrice, setUnitPrice] = useState<string>('')
-  const [quantity, setQuantity] = useState<string>('')
-  const [shippingCost, setShippingCost] = useState<string>('150')
-  const [leadTime, setLeadTime] = useState<string>('30')
-  const [paymentMethod, setPaymentMethod] = useState<string>('T/T (Bank Transfer)')
-
   // Conversation history
   const [timelineItems, setTimelineItems] = useState<any[]>([])
 
@@ -181,22 +167,13 @@ const ViewInquiry = () => {
     setInquiry(data)
     // setThemeSkin(data.platform)
     setTimelineItems(data.timeline)
-    
-    // Set initial quote inputs
-    setUnitPrice(data.requirements.rawPrice.toFixed(2))
-    setQuantity(data.requirements.rawQty.toString())
   }, [inquiryId])
 
   if (!inquiry) {
     return <div className="p-8 text-center text-lg">Loading Inquiry details...</div>
   }
 
-  // Calculate totals for Quote Form
-  const parsedPrice = parseFloat(unitPrice) || 0
-  const parsedQty = parseInt(quantity) || 0
-  const parsedShipping = parseFloat(shippingCost) || 0
-  const subTotal = parsedPrice * parsedQty
-  const grandTotal = subTotal + parsedShipping
+  // Calculate totals for Quote Form (used in commented quotation tab)
 
   const triggerAlert = (type: string, text: string) => {
     setAlertMsg({ type, text })
@@ -271,34 +248,7 @@ Sales Team`
     triggerAlert('success', 'Message reply sent to buyer!')
   }
 
-  const handleSendQuote = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const formattedQuote = `Formal Proforma Invoice (PI) Issued:
-------------------------------------------
-Product: ${inquiry.product.name}
-Quantity: ${parsedQty.toLocaleString()} ${inquiry.product.unit}
-Unit Price: $${parsedPrice.toFixed(2)}
-Subtotal: $${subTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-Est. Shipping: $${parsedShipping.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-GRAND TOTAL: $${grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-Estimated Lead Time: ${leadTime} Days
-Payment Terms: ${paymentMethod}
-------------------------------------------
-Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
-
-    const newItem = {
-      id: timelineItems.length + 1,
-      actor: 'Supplier (You)',
-      role: 'supplier',
-      date: new Date().toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-      message: formattedQuote,
-      isQuote: true
-    }
-
-    setTimelineItems([newItem, ...timelineItems])
-    triggerAlert('success', 'Interactive B2B Quotation submitted!')
-  }
+  // handleSendQuote removed — used only in commented-out quotation tab
 
   const handleDecline = () => {
     const confirmation = window.confirm("Are you sure you want to decline this inquiry?")
@@ -355,19 +305,19 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
 
       {/* ── Action/Nav Bar ── */}
       <div className="inq-actions-bar">
-        <Link to="/supplier-dashboard/inquiries" className="inq-back-link">
+        <Link to={ROUTES.INQUIRIES} className="inq-back-link">
           <FaArrowLeft /> Back to Inquiry Management
         </Link>
         <div className="inq-action-buttons">
           <button onClick={handleDecline} className="btn-secondary" style={{ color: '#e60012' }}>
             <FaTimes /> Decline Sourcing
           </button>
-          <button onClick={() => window.print()} className="btn-secondary">
+          {/* <button onClick={() => window.print()} className="btn-secondary">
             <FaFilePdf /> Export / Print Page
-          </button>
-          <button onClick={() => setReplyTab('quotation')} className="btn-brand">
+          </button> */}
+          {/* <button onClick={() => setReplyTab('quotation')} className="btn-brand">
             <FaPlus /> Draft Proforma Invoice
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -427,7 +377,7 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
                 <h3>{inquiry.product.name}</h3>
                 <p>SKU Reference: <strong>{inquiry.product.sku}</strong> | Category: {inquiry.product.category}</p>
                 <p style={{ marginTop: '4px' }}>
-                  <Link to={`/supplier-dashboard/products/view-product/${inquiry.product.sku}`} style={{ color: 'var(--primary-brand)', fontSize: '11px', textDecoration: 'none', fontWeight: 600 }}>
+                  <Link to={`/seller/supplier-dashboard/products/view-product/${inquiry.product.sku}`} style={{ color: 'var(--primary-brand)', fontSize: '11px', textDecoration: 'none', fontWeight: 600 }}>
                     View Product Specs Catalog <FaExternalLinkAlt style={{ fontSize: '9px' }} />
                   </Link>
                 </p>
@@ -576,7 +526,7 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
           >
             <FaEnvelope /> Write Message / Email Reply
           </button>
-          <button 
+          {/* <button 
             className={`reply-tab-btn ${replyTab === 'quotation' ? 'active' : ''}`}
             onClick={() => setReplyTab('quotation')}
           >
@@ -588,6 +538,7 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
           >
             <FaHandshake /> Schedule Factory Tour / Video Call
           </button>
+        </div> */}
         </div>
 
         <div className="reply-body">
@@ -632,10 +583,10 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
           )}
 
           {/* Tab 2: Draft Proforma Invoice (PI) / B2B Quote */}
-          {replyTab === 'quotation' && (
-            <div className="quote-creator-grid animate-fade-in">
+          {/* {replyTab === 'quotation' && (
+            <div className="quote-creator-grid animate-fade-in"> */}
               {/* Left Side: Inputs */}
-              <form onSubmit={handleSendQuote} className="quote-inputs-panel">
+              {/* <form onSubmit={handleSendQuote} className="quote-inputs-panel">
                 <div className="form-group">
                   <label>Quoted Unit Price ($ USD)</label>
                   <input 
@@ -693,22 +644,22 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
                 <button type="submit" className="btn-brand" style={{ marginTop: '10px' }}>
                   <FaFileInvoice /> Issue Formal Quotation PI
                 </button>
-              </form>
+              </form> */}
 
               {/* Right Side: Beautiful dynamic preview */}
-              <div className="quote-preview-panel">
+              {/* <div className="quote-preview-panel">
                 <h4 style={{ fontSize: '12px', color: 'var(--text-gray)', marginBottom: '10px', textTransform: 'uppercase', fontWeight: 700 }}>
                   Real-time Invoice Sheet Preview:
-                </h4>
+                </h4> */}
                 
-                <div className="invoice-preview-card">
+                {/* <div className="invoice-preview-card"> */}
                   {/* <div className="invoice-stamp">PI DRAFT</div> */}
-                  <div className="invoice-header">
+                  {/* <div className="invoice-header">
                     <span className="invoice-logo">INVOICE GATEWAY</span>
                     <span className="invoice-title">PROFORMA INVOICE</span>
-                  </div>
+                  </div> */}
 
-                  <div className="invoice-details-list">
+                  {/* <div className="invoice-details-list">
                     <div className="invoice-row">
                       <span style={{ color: 'var(--text-gray)' }}>B2B Client:</span>
                       <strong style={{ color: 'var(--text-heading)' }}>{inquiry.buyer.company}</strong>
@@ -746,10 +697,10 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
           {/* Tab 3: Schedule Factory Tour */}
-          {replyTab === 'meeting' && (
+          {/* {replyTab === 'meeting' && (
             <div className="animate-fade-in text-center p-6" style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid var(--border)' }}>
               <FaVideo style={{ fontSize: '48px', color: 'var(--primary-brand)', marginBottom: '16px' }} />
               <h3 style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '8px' }}>
@@ -776,7 +727,7 @@ Please review and confirm to proceed with Trade Assurance / Bank Transfer.`
                 </button>
               </div>
             </div>
-          )}
+          )} */}
 
         </div>
       </div>

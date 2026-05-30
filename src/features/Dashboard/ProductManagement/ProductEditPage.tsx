@@ -1,17 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
-import { Dropdown } from "primereact/dropdown";
-import { InputNumber } from "primereact/inputnumber";
-import { InputSwitch } from "primereact/inputswitch";
-import { FileUpload } from "primereact/fileupload";
-import { Button } from "primereact/button";
 import dummyProducts from "../../../core/storage/DummyProduct_10.json";
 import { updateProduct } from "./productStore";
-import "../../../styles/product_management.css";
+import "../../../styles/add_new_product.css";
 
+// ── Types ────────────────────────────────────────────────────────────────────
 type Product = {
   id: number;
   title: string;
@@ -19,921 +13,752 @@ type Product = {
   category: string;
   status: string;
   featured: boolean;
-  description: {
-    short: string;
-    long: string;
-  };
+  description: { short: string; long: string };
   images: string[];
   thumbnail: string;
-  pricing: {
-    basePrice: number;
-    currency: string;
-    gst: number;
-  };
+  pricing: { basePrice: number; currency: string; gst: number };
   bulkPricing: Array<{ minQty: number; pricePerUnit: number }>;
-  inventory: {
-    sku: string;
-    totalStock: number;
-    minOrderQty: number;
-  };
-  supplier: {
-    name: string;
-    companyName: string;
-    location: string;
-  };
+  inventory: { sku: string; totalStock: number; minOrderQty: number };
+  supplier: { name: string; companyName: string; location: string };
   shipping: {
     weight: number;
-    dimensions: {
-      length: number;
-      breadth: number;
-      height: number;
-    };
+    dimensions: { length: number; breadth: number; height: number };
     dispatchTimeDays: number;
   };
-  returnPolicy: {
-    returnable: boolean;
-    returnDays: number;
-  };
-  compliance: {
-    hsnCode: string;
-    gstRate: number;
-    countryOfOrigin: string;
-  };
+  returnPolicy: { returnable: boolean; returnDays: number };
+  compliance: { hsnCode: string; gstRate: number; countryOfOrigin: string };
   createdAt: string;
   updatedAt: string;
   subcategory: string;
 };
 
+// ── Sub-components ───────────────────────────────────────────────────────────
+const SectionHeader = ({ step, title, icon }: { step: number; title: string; icon: string }) => (
+  <div className="pep-section-header">
+    <span className="pep-step-badge">{step}</span>
+    <i className={`${icon} pep-section-icon`} />
+    <span className="pep-section-title">{title}</span>
+  </div>
+);
+
+const Field = ({
+  label, required, hint, error, children,
+}: {
+  label: string; required?: boolean; hint?: string; error?: string; children: React.ReactNode;
+}) => (
+  <div className="pep-field">
+    <label className="pep-label">
+      {label}{required && <span className="pep-required"> *</span>}
+    </label>
+    {children}
+    {error && <span className="pep-error"><i className="pi pi-exclamation-circle" />{error}</span>}
+    {hint && !error && <span className="pep-hint">{hint}</span>}
+  </div>
+);
+
+const StatRow = ({ label, value }: { label: string; value: string }) => (
+  <div className="pep-stat-row">
+    <span className="pep-stat-label">{label}</span>
+    <span className="pep-stat-value">{value}</span>
+  </div>
+);
+
+// ── Main component ───────────────────────────────────────────────────────────
 const ProductEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [product, setProduct] = useState<Product | null>(null);
   const [bulkPricing, setBulkPricing] = useState<Array<{ minQty: number; pricePerUnit: number }>>([]);
-  const [productCode, setProductCode] = useState("");
-  const [showAiDrawer, setShowAiDrawer] = useState(false);
   const [isInsuranceRequired, setIsInsuranceRequired] = useState(false);
+  const [imgPreview, setImgPreview] = useState<string>("");
 
-  // Redux Categories
   type CategoryState = { categories: Array<{ category: string } & Record<string, unknown>> };
   const categoriesData = useSelector((state: { category: CategoryState }) => state.category.categories) || [];
   const categoryValues = [...new Set(categoriesData.map((item) => item.category))];
-
-  // Default Categories if redux is empty
-  const defaultCategories = ["Electronics", "Apparel & Shoes", "Machinery", "Home & Garden", "Packaging & Paper"];
+  const defaultCategories = [
+    "Electronics", "Apparel & Shoes", "Machinery", "Home & Garden",
+    "Packaging & Paper", "Safety Equipment", "Office Supplies", "AV Equipment",
+  ];
   const displayCategories = categoryValues.length > 0 ? categoryValues : defaultCategories;
 
-  // AI Chat State
-  const [chatInput, setChatInput] = useState("");
-  const [aiMessages, setAiMessages] = useState<Array<{ sender: "user" | "system"; text: string; time: string }>>([
-    {
-      sender: "system",
-      text: "Welcome back! I have successfully loaded your B2B product records. I am ready to help you optimize pricing, generate descriptive copy, or autocomplete fields. How can I help you today?",
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    },
-  ]);
-
   useEffect(() => {
-    const foundProduct = dummyProducts.find((p: Product) => p.id === parseInt(id || "0"));
-    if (!foundProduct) return;
-    setProduct(foundProduct as Product);
-    setBulkPricing(foundProduct.bulkPricing || []);
-    setProductCode(foundProduct.inventory.sku || "");
-    // Default mock insurance based on weight/price
-    setIsInsuranceRequired(foundProduct.pricing.basePrice > 5000);
+    const found = dummyProducts.find((p: Product) => p.id === parseInt(id || "0"));
+    if (!found) return;
+    setProduct(found as Product);
+    setBulkPricing(found.bulkPricing || []);
+    setIsInsuranceRequired(found.pricing.basePrice > 5000);
+    setImgPreview(found.thumbnail || "");
   }, [id]);
 
-  const handleInputChange = <T,>(field: keyof Product, value: T) => {
+  // ── Setters ─────────────────────────────────────────────────────────────────
+  const set = <T,>(field: keyof Product, value: T) => {
     if (!product) return;
     setProduct({ ...product, [field]: value } as Product);
   };
 
-  const handleNestedChange = <S extends keyof Product, F extends keyof Product[S]>(
-    section: S,
-    field: F,
-    value: Product[S][F]
-  ) => {
+  const setNested = <S extends keyof Product>(section: S, field: string, value: unknown) => {
     if (!product) return;
-    setProduct({
-      ...product,
-      [section]: {
-        ...(product[section] as Product[S]),
-        [field]: value,
-      },
-    } as Product);
+    const sectionData = product[section] as object;
+    setProduct({ ...product, [section]: { ...sectionData, [field]: value } } as Product);
   };
 
-  const handleDimensionChange = (field: keyof Product["shipping"]["dimensions"], value: number) => {
+  const setDim = (dim: "length" | "breadth" | "height", value: number) => {
     if (!product) return;
     setProduct({
       ...product,
       shipping: {
         ...product.shipping,
-        dimensions: {
-          ...product.shipping.dimensions,
-          [field]: value,
-        },
+        dimensions: { ...product.shipping.dimensions, [dim]: value },
       },
     });
   };
 
-  const addBulkPricingTier = () => {
-    setBulkPricing([...bulkPricing, { minQty: 10, pricePerUnit: 0 }]);
-    addSystemChatMessage("✨ New bulk price tier slot added. Configure minimum units and specific discounted prices.");
-  };
-
+  const addBulkPricingTier = () => setBulkPricing([...bulkPricing, { minQty: 10, pricePerUnit: 0 }]);
   const updateBulkPricing = (index: number, field: string, value: number) => {
     const updated = [...bulkPricing];
     updated[index] = { ...updated[index], [field]: value };
     setBulkPricing(updated);
   };
-
-  const removeBulkPricingTier = (index: number) => {
-    setBulkPricing(bulkPricing.filter((_, i) => i !== index));
-    addSystemChatMessage("🗑️ Wholesale pricing tier removed.");
-  };
+  const removeBulkPricingTier = (index: number) => setBulkPricing(bulkPricing.filter((_, i) => i !== index));
 
   const handleSave = () => {
     if (product) {
       dispatch(updateProduct({ ...product, bulkPricing }));
-      navigate("/dashboard/products");
+      navigate("/seller/products");
     }
   };
 
-  // Helper to add chat messages
-  const addSystemChatMessage = (text: string) => {
-    setAiMessages((prev) => [
-      ...prev,
-      {
-        sender: "system",
-        text,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      },
-    ]);
-    setTimeout(() => {
-      const el = document.getElementById("ai-chat-log-panel");
-      if (el) el.scrollTop = el.scrollHeight;
-    }, 100);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !product) return;
+    const url = URL.createObjectURL(file);
+    setImgPreview(url);
+    setProduct({ ...product, thumbnail: url });
   };
 
-  // Mock AI Complete Form from Catalog Code
-  const handleAiCompleteForm = () => {
-    if (!product) return;
-    setProductCode("ECCO-MX-109");
-    setProduct({
-      ...product,
-      title: "ECCO MX M Men's Sneaker Black (Catalog Sync)",
-      slug: "ecco-mx-m-mens-sneaker-black",
-      category: "Apparel & Shoes",
-      subcategory: "Outdoor Footwear",
-      description: {
-        short: "• Motocross-inspired traction outsole\n• Breathable, premium neoprene-like textile structure\n• Quick-fit toggle lacing system",
-        long: "Engineered for heavy-duty city walking and light trail exploration, the ECCO MX M Sneaker is built on a robust, motocross-influenced polyurethane outsole that delivers extreme traction. Recommended for volume supply lines.",
-      },
-      pricing: { ...product.pricing, basePrice: 6499, currency: "INR" },
-      inventory: { ...product.inventory, sku: "ECCO-MX-109-BLK", totalStock: 350, minOrderQty: 10 },
-      shipping: {
-        weight: 0.95,
-        dimensions: { length: 32, breadth: 21, height: 12 },
-        dispatchTimeDays: 2,
-      },
-      compliance: { hsnCode: "64039990", gstRate: 18, countryOfOrigin: "India" },
-    });
-    setBulkPricing([
-      { minQty: 10, pricePerUnit: 6000 },
-      { minQty: 50, pricePerUnit: 5500 },
-    ]);
-    setShowAiDrawer(false);
-    addSystemChatMessage("✨ Scan completed! Auto-matched this product's record to Catalog ECCO-MX-109 and loaded optimized specs, descriptions, packaging sizes, HSN code, and competitive bulk pricing curves!");
+  // ── Helpers ─────────────────────────────────────────────────────────────────
+  const sym = product?.pricing.currency === "INR" ? "₹"
+    : product?.pricing.currency === "USD" ? "$" : "€";
+
+  const discount = (price: number) =>
+    product && product.pricing.basePrice > 0
+      ? Math.round((1 - price / product.pricing.basePrice) * 100)
+      : 0;
+
+  const statusLabel: Record<string, string> = {
+    active: "Active", inactive: "Inactive", draft: "Draft",
   };
 
-  // Mock AI Autofill (Logitech Mouse)
-  const handleAiAutofill = () => {
-    if (!product) return;
-    setProduct({
-      ...product,
-      title: "Logitech MX Master 3S Wireless Mouse (AI Optimised)",
-      slug: "logitech-mx-master-3s-wireless-mouse",
-      category: "Electronics",
-      subcategory: "Input Devices",
-      description: {
-        short: "• 8,000 DPI track-anywhere optical sensor\n• Ultra-quiet MagSpeed electromagnetic scrolling\n• Multi-OS easy-switch flow control",
-        long: "Remastered flagship wireless mouse. Features silent click feedback, a high-precision 8K DPI sensor capable of tracking on glass, and high-speed electromagnetic scrolling. Perfect for professional office inventory.",
-      },
-      pricing: { ...product.pricing, basePrice: 9495, currency: "INR" },
-      inventory: { ...product.inventory, sku: "LOGI-MX3S-GRY", totalStock: 800, minOrderQty: 20 },
-      shipping: {
-        weight: 0.32,
-        dimensions: { length: 18, breadth: 14, height: 8 },
-        dispatchTimeDays: 2,
-      },
-      compliance: { hsnCode: "84716060", gstRate: 18, countryOfOrigin: "China" },
-    });
-    setBulkPricing([
-      { minQty: 20, pricePerUnit: 9000 },
-      { minQty: 100, pricePerUnit: 8400 },
-    ]);
-    addSystemChatMessage("✨ AI Optimisation Complete! Product fields and bulk pricing tables have been updated with verified industrial standard metrics.");
-  };
-
-  // Mock AI Description Text Generation
-  const handleAiGenerateText = (type: "short" | "long" | "seo") => {
-    if (!product) return;
-    addSystemChatMessage(`🤖 Generating professional e-commerce ${type === "seo" ? "SEO keyword optimizations" : type === "short" ? "B2B bullet points" : "long descriptions"} for "${product.title}"...`);
-
-    setTimeout(() => {
-      if (type === "short") {
-        const text = `• Premium commercial grade build quality\n• High performance reliability designed for enterprise B2B use\n• Full compliance with safety standards and certified packaging`;
-        handleNestedChange("description", "short", text);
-        addSystemChatMessage("✨ Short description updated with clean, impact-oriented bullet points!");
-      } else if (type === "long") {
-        const text = `High-durability commercial product engineered specifically for volume enterprise distribution. Features reinforced exterior casing, lightweight optimized internal architecture, and standard modular connections. Complete package includes localized documentation, retail warranty cards, and shock-resistant transport packaging.`;
-        handleNestedChange("description", "long", text);
-        addSystemChatMessage("✨ Full length B2B technical specification copy has been generated and inserted!");
-      } else {
-        const generatedSlug = product.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-        setProduct((prev) => {
-          if (!prev) return null;
-          return {
-            ...prev,
-            slug: generatedSlug,
-            description: {
-              short: `• Optimized search keyword listing for B2B supply: ${prev.title}\n` + prev.description.short,
-              long: `Sought-after wholesale inventory catalog item. Ideal for volume importers: ` + prev.description.long,
-            },
-          };
-        });
-        addSystemChatMessage(`✨ SEO Complete! Drafted optimized URL slug: "/${generatedSlug}" and integrated rich indexing keywords into your description blocks.`);
-      }
-    }, 700);
-  };
-
-  // Mock AI Pricing Model Analysis
-  const handleAiPricingModel = () => {
-    if (!product) return;
-    const currentPrice = product.pricing.basePrice || 1000;
-    const bullet1 = Math.round(currentPrice * 0.95);
-    const bullet2 = Math.round(currentPrice * 0.88);
-    setBulkPricing([
-      { minQty: product.inventory.minOrderQty || 10, pricePerUnit: bullet1 },
-      { minQty: (product.inventory.minOrderQty || 10) * 5, pricePerUnit: bullet2 },
-    ]);
-    addSystemChatMessage(
-      `📊 Wholesale pricing recommendation calculated:\n` +
-      `• Base Unit Cost: ${product.pricing.currency === "INR" ? "₹" : "$"} ${currentPrice}\n` +
-      `• Tier 1 (MOQ: ${product.inventory.minOrderQty}): ${product.pricing.currency === "INR" ? "₹" : "$"} ${bullet1}/unit (5% off)\n` +
-      `• Tier 2 (${(product.inventory.minOrderQty || 10) * 5}+ units): ${product.pricing.currency === "INR" ? "₹" : "$"} ${bullet2}/unit (12% off)\n` +
-      `• Recommended pricing curves have been auto-injected into your Bulk Pricing table below!`
-    );
-  };
-
-  // Prompt Chat Submissions
-  const handleChatSubmit = () => {
-    if (!chatInput.trim()) return;
-    const userText = chatInput;
-    setChatInput("");
-    setAiMessages((prev) => [
-      ...prev,
-      {
-        sender: "user",
-        text: userText,
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      },
-    ]);
-
-    setTimeout(() => {
-      const lower = userText.toLowerCase();
-      if (lower.includes("fill") || lower.includes("auto") || lower.includes("complete") || lower.includes("optimise")) {
-        handleAiAutofill();
-      } else if (lower.includes("price") || lower.includes("cost") || lower.includes("discount") || lower.includes("bulk")) {
-        handleAiPricingModel();
-      } else if (lower.includes("desc") || lower.includes("write") || lower.includes("seo") || lower.includes("copy")) {
-        handleAiGenerateText("seo");
-      } else if (lower.includes("ecco")) {
-        handleAiCompleteForm();
-      } else {
-        addSystemChatMessage("I can recognize your commands! Type 'optimise' to apply Logitech specs, 'ecco' to load catalog matching sneakers, or 'pricing' to suggest wholesale pricing tier discounts.");
-      }
-    }, 600);
-  };
-
-  const statusOptions = [
-    { label: "Active", value: "active" },
-    { label: "Inactive", value: "inactive" },
-    { label: "Draft", value: "draft" },
-  ];
-
-  const currencyOptions = [
-    { label: "INR (₹)", value: "INR" },
-    { label: "USD ($)", value: "USD" },
-    { label: "EUR (€)", value: "EUR" },
-  ];
-
-  if (!product) return <div className="p-6">Loading product details...</div>;
+  if (!product) return (
+    <div className="pep-loading-container">
+      <i className="pi pi-spin pi-spinner pep-loading-spinner" />
+      <span className="pep-loading-text">Loading product…</span>
+    </div>
+  );
 
   return (
-    <div className="product-mgmt">
-      {/* Header Bar */}
-      <div className="edit-header pm-surface">
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-3)" }}>
-          <Button
-            icon="pi pi-arrow-left"
-            className="p-button-text p-button-plain p-button-rounded"
-            onClick={() => navigate("/dashboard/products")}
-            aria-label="Back to Products"
-          />
+    <div className="pep-page">
+
+      {/* ══ TOP BAR ══════════════════════════════════════════════════ */}
+      <div className="pep-topbar">
+        <div className="pep-topbar-left">
+          <button className="pep-back-btn" onClick={() => navigate("/seller/products")} aria-label="Back">
+            <i className="pi pi-arrow-left" />
+          </button>
           <div>
-            <h1>Edit Product Listing</h1>
-            <p className="text-muted">Manage B2B inventory specifications and custom wholesale discount tiers</p>
+            <nav className="pep-breadcrumb">
+              <span>Products</span>
+              <i className="pi pi-angle-right" />
+              <span className="pep-breadcrumb-active">Edit Listing</span>
+            </nav>
+            <h1 className="pep-page-title">{product.title}</h1>
           </div>
         </div>
-        <div className="header-actions">
-          <Button
-            label="Cancel"
-            className="p-button-outlined"
-            onClick={() => navigate("/dashboard/products")}
-          />
-          <Button
-            label="Save Changes"
-            className="p-button-success"
-            onClick={handleSave}
-          />
+        <div className="pep-topbar-right">
+          <button className="pep-btn-discard" onClick={() => navigate("/seller/products")}>
+            Discard
+          </button>
+          <button className="pep-btn-publish" onClick={handleSave}>
+            <i className="pi pi-check" /> Publish Changes
+          </button>
         </div>
       </div>
 
-      <div className="product-mgmt-container">
-        {/* Left Column: Input Form Cards */}
-        <div className="product-form-column">
-          
-          {/* Card 1: Identification & Auto-Match */}
-          <div className="pm-form-card">
-            <h2>
-              <i className="pi pi-id-card" style={{ marginRight: "var(--sp-2)", color: "var(--text-success)" }}></i>
-              Product Identification
-            </h2>
-            <div className="form-grid">
-              <div className="form-group">
-                <label>Product Code / SKU Suffix (e.g. Type 'ECCO')</label>
-                <div className="input-with-action">
-                  <InputText
-                    value={productCode}
-                    onChange={(e) => {
-                      setProductCode(e.target.value);
-                      if (e.target.value.toLowerCase().includes("ecco")) {
-                        setShowAiDrawer(true);
-                      }
-                    }}
-                    placeholder="Enter SKU Code or type 'ECCO'"
-                  />
-                  <button
-                    type="button"
-                    className="input-action-btn"
-                    onClick={() => setShowAiDrawer(!showAiDrawer)}
-                    title="Find Catalog Match"
-                  >
-                    ✨
-                  </button>
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Product Catalog ID (Unique Reference)</label>
-                <div className="p-inputgroup">
-                  <InputText value={`PRD-${product.id}`} disabled style={{ background: "#f4f4f6", opacity: 0.8 }} />
-                  <Button icon="pi pi-copy" className="p-button-outlined p-button-plain" title="Copy ID" />
-                </div>
-              </div>
-            </div>
+      {/* ══ MAIN GRID ════════════════════════════════════════════════ */}
+      <div className="pep-main-grid">
 
-            {/* Catalog AI Matches Drawer */}
-            {showAiDrawer && (
-              <div className="ai-autocomplete-drawer">
-                <div className="ai-drawer-header">
-                  <span>✨ AI Catalog Scanner Matches</span>
-                  <div>Select catalog listing to auto-complete form fields</div>
+        {/* ── LEFT: form sections ─────────────────────────────────── */}
+        <div className="pep-form-col">
+
+          {/* ── 1. Product Images ──────────────────────────────────── */}
+          <section className="pep-card">
+            <SectionHeader step={1} title="Product Images" icon="pi pi-images" />
+
+            {/* Existing images strip */}
+            {(imgPreview || product.thumbnail) && (
+              <div className="pep-image-strip">
+                <div className="pep-image-item-wrap">
+                  <img
+                    src={imgPreview || product.thumbnail}
+                    alt="main"
+                    className="pep-image-item-main"
+                  />
+                  <span className="pep-image-item-badge">MAIN</span>
                 </div>
-                <table className="ai-match-table">
-                  <thead>
-                    <tr>
-                      <th>Catalog SKU</th>
-                      <th>Product Title</th>
-                      <th>Market Value</th>
-                      <th style={{ textAlign: "right" }}>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><code>ECCO-MX-109</code></td>
-                      <td>ECCO MX M Men's Sneaker Black</td>
-                      <td>₹6,499.00</td>
-                      <td style={{ textAlign: "right" }}>
-                        <Button
-                          label="Complete the Form"
-                          className="p-button-success p-button-sm"
-                          style={{ padding: "4px 10px", fontSize: "10px" }}
-                          onClick={handleAiCompleteForm}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div className="ai-drawer-actions">
-                  <Button label="Close Scanner" className="p-button-text p-button-plain p-button-sm" onClick={() => setShowAiDrawer(false)} />
+                {product.images?.slice(0, 5).map((img, i) => (
+                  <img key={i} src={img} alt={`img-${i}`} className="pep-image-item-secondary" />
+                ))}
+                <div
+                  className="pep-image-add-slot"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <i className="pi pi-plus pep-image-add-icon" />
+                  <span className="pep-image-add-text">Add</span>
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Card 2: Basic Product Listing Information */}
-          <div className="pm-form-card">
-            <h2>
-              <i className="pi pi-info-circle" style={{ marginRight: "var(--sp-2)", color: "var(--text-success)" }}></i>
-              Basic Listing Details
-            </h2>
-            <div className="form-grid">
-              <div className="form-group">
-                <label>Product Listing Title</label>
-                <InputText
-                  value={product.title}
-                  onChange={(e) => {
-                    handleInputChange("title", e.target.value);
-                    handleInputChange("slug", e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-"));
-                  }}
-                  placeholder="e.g. Logitech MX Master 3S Mouse"
-                />
-              </div>
-              <div className="form-group">
-                <label>SEO URL Slug / Slug Path</label>
-                <InputText
-                  value={product.slug}
-                  onChange={(e) => handleInputChange("slug", e.target.value)}
-                  placeholder="e.g. logitech-mx-master-3s-mouse"
-                />
-              </div>
-            </div>
-
-            <div className="form-grid mt-2">
-              <div className="form-group">
-                <label>Main Category</label>
-                <Dropdown
-                  value={product.category}
-                  options={displayCategories.map((c) => ({ label: c, value: c }))}
-                  onChange={(e) => handleInputChange("category", e.value)}
-                  placeholder="Select Category"
-                />
-              </div>
-              <div className="form-group">
-                <label>Subcategory</label>
-                <InputText
-                  value={product.subcategory}
-                  onChange={(e) => handleInputChange("subcategory", e.target.value)}
-                  placeholder="e.g. Computer Accessories"
-                />
-              </div>
-            </div>
-
-            <div className="form-grid mt-2" style={{ gridTemplateColumns: "1fr 1fr" }}>
-              <div className="form-group">
-                <label>Catalog Visibility Status</label>
-                <Dropdown
-                  value={product.status}
-                  options={statusOptions}
-                  onChange={(e) => handleInputChange("status", e.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label style={{ display: "block", marginBottom: "8px" }}>Featured Supplier Spotlight</label>
-                <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
-                  <InputSwitch
-                    checked={product.featured}
-                    onChange={(e) => handleInputChange("featured", e.value)}
-                  />
-                  <span className="text-muted" style={{ fontSize: "11px" }}>Show on corporate business profile</span>
+            {/* Upload zone */}
+            {!imgPreview && !product.thumbnail && (
+              <div
+                className="pep-upload-zone"
+                onClick={() => fileInputRef.current?.click()}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && fileInputRef.current?.click()}
+              >
+                <div className="pep-upload-icon-wrap">
+                  <i className="pi pi-cloud-upload pep-upload-icon" />
+                </div>
+                <div className="pep-upload-text">
+                  <p className="pep-upload-title">Click or drag &amp; drop to upload</p>
+                  <p className="pep-upload-sub">JPG, PNG · 800×800 px recommended · Max 5 MB each</p>
                 </div>
               </div>
-            </div>
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              className="pep-file-hidden"
+              onChange={handleFileChange}
+            />
 
-            {/* Media/Thumbnail Url */}
-            <div className="form-group mt-2">
-              <label>Thumbnail URL</label>
-              <InputText value={product.thumbnail} onChange={(e) => handleInputChange("thumbnail", e.target.value)} />
-            </div>
-            <div className="form-group mt-2">
-              <label>Additional Images</label>
-              <FileUpload mode="basic" name="images" accept="image/*" multiple />
-            </div>
-          </div>
-
-          {/* Card 3: B2B Descriptions & AI Generator */}
-          <div className="pm-form-card">
-            <h2>
-              <i className="pi pi-file-edit" style={{ marginRight: "var(--sp-2)", color: "var(--text-success)" }}></i>
-              Descriptions & Specifications
-            </h2>
-            {/* <div className="form-group">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-                <label style={{ margin: 0 }}>Short Description (B2B Highlights)</label>
-                <Button
-                  label="✨ Generate bullets with AI"
-                  className="p-button-text p-button-sm p-button-success"
-                  style={{ fontSize: "10px", padding: 0 }}
-                  onClick={() => handleAiGenerateText("short")}
-                />
-              </div>
-              <InputTextarea
-                rows={3}
-                value={product.description.short}
-                onChange={(e) => handleNestedChange("description", "short", e.target.value)}
-                placeholder="Bullet points of key selling features, raw components, or compliance grades..."
+            <Field label="Main Thumbnail URL" hint="Or paste a direct image URL instead of uploading.">
+              <input
+                className="pep-input"
+                type="url"
+                value={product.thumbnail}
+                onChange={(e) => {
+                  setProduct({ ...product, thumbnail: e.target.value });
+                  setImgPreview(e.target.value);
+                }}
+                placeholder="https://example.com/image.jpg"
               />
-            </div> */}
-            <div className="form-group mt-2">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-                <label style={{ margin: 0 }}>Detailed B2B Technical Description</label>
-                <Button
-                 
-                  className="p-button-text p-button-sm p-button-success"
-                  style={{ fontSize: "10px", padding: 0 }}
-                  onClick={() => handleAiGenerateText("long")}
+            </Field>
+          </section>
+
+          {/* ── 2. Basic Information ───────────────────────────────── */}
+          <section className="pep-card">
+            <SectionHeader step={2} title="Basic Information" icon="pi pi-info-circle" />
+
+            <Field label="Product Title" required>
+              <input
+                className="pep-input"
+                type="text"
+                value={product.title}
+                onChange={(e) => {
+                  set("title", e.target.value);
+                  set("slug", e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-"));
+                }}
+                placeholder="e.g. Industrial Safety Gloves — Box of 100"
+              />
+            </Field>
+
+            <div className="pep-row-2">
+              <Field label="Category" required>
+                <select
+                  className="pep-select"
+                  value={product.category}
+                  onChange={(e) => set("category", e.target.value)}
+                >
+                  <option value="">Select a category</option>
+                  {displayCategories.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="Subcategory">
+                <input
+                  className="pep-input"
+                  type="text"
+                  value={product.subcategory}
+                  onChange={(e) => set("subcategory", e.target.value)}
+                  placeholder="e.g. Safety Gloves"
                 />
-              </div>
-              <InputTextarea
+              </Field>
+            </div>
+
+            <div className="pep-row-2">
+              <Field label="SKU / Product Code">
+                <input
+                  className="pep-input"
+                  type="text"
+                  value={product.inventory.sku}
+                  onChange={(e) => setNested("inventory", "sku", e.target.value)}
+                  placeholder="e.g. SAFE-009-BLK"
+                />
+              </Field>
+              <Field label="SEO URL Slug" hint="Auto-generated from title.">
+                <input
+                  className="pep-input"
+                  type="text"
+                  value={product.slug}
+                  onChange={(e) => set("slug", e.target.value)}
+                  placeholder="auto-generated"
+                />
+              </Field>
+            </div>
+
+            <Field
+              label="Product Description"
+              hint="Include material specs, certifications, and packaging info for better B2B conversion."
+            >
+              <textarea
+                className="pep-textarea"
                 rows={6}
                 value={product.description.long}
-                onChange={(e) => handleNestedChange("description", "long", e.target.value)}
-                placeholder="Deep product manual specs, compliance marks, packaging details, and warranty terms..."
+                onChange={(e) => setNested("description", "long", e.target.value)}
+                placeholder="Detailed B2B technical description — material specs, certifications, packaging details, warranty terms…"
               />
-            </div>
-          </div>
+            </Field>
+          </section>
 
-          {/* Card 4: Base Pricing, Sku Inventory & Bulk Tiers */}
-          <div className="pm-form-card">
-            <h2>
-              <i className="pi pi-wallet" style={{ marginRight: "var(--sp-2)", color: "var(--text-success)" }}></i>
-              Pricing & Sku Management
-            </h2>
-            <div className="form-grid">
-              <div className="form-group">
-                <label>Billing Currency</label>
-                <Dropdown
+          {/* ── 3. Pricing & Inventory ─────────────────────────────── */}
+          <section className="pep-card">
+            <SectionHeader step={3} title="Pricing & Inventory" icon="pi pi-wallet" />
+
+            <div className="pep-row-3">
+              <Field label="Currency" required>
+                <select
+                  className="pep-select"
                   value={product.pricing.currency}
-                  options={currencyOptions}
-                  onChange={(e) => handleNestedChange("pricing", "currency", e.value)}
-                />
-              </div>
-              <div className="form-group">
-                <label>Wholesale Base Price (Per Unit)</label>
-                <InputNumber
-                  value={product.pricing.basePrice}
-                  onValueChange={(e) => handleNestedChange("pricing", "basePrice", e.value)}
-                  mode="currency"
-                  currency={product.pricing.currency}
-                  placeholder="e.g. 5000"
-                />
-              </div>
-              <div className="form-group">
-                <label>Manufacturer SKU Suffix</label>
-                <InputText
-                  value={product.inventory.sku}
-                  onChange={(e) => handleNestedChange("inventory", "sku", e.target.value)}
-                  placeholder="e.g. MFG-SKU-904"
-                />
-              </div>
+                  onChange={(e) => setNested("pricing", "currency", e.target.value)}
+                >
+                  <option value="INR">INR (₹)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                </select>
+              </Field>
+              <Field label="Unit Price" required>
+                <div className="pep-input-prefix-wrap">
+                  <span className="pep-input-prefix">{sym}</span>
+                  <input
+                    className="pep-input pep-input-prefixed"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={product.pricing.basePrice || ""}
+                    onChange={(e) => setNested("pricing", "basePrice", parseFloat(e.target.value) || 0)}
+                    placeholder="0.00"
+                  />
+                </div>
+              </Field>
+              <Field label="GST Rate (%)">
+                <div className="pep-input-suffix-wrap">
+                  <input
+                    className="pep-input pep-input-suffixed"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={product.pricing.gst}
+                    onChange={(e) => setNested("pricing", "gst", parseFloat(e.target.value) || 0)}
+                  />
+                  <span className="pep-input-suffix">%</span>
+                </div>
+              </Field>
             </div>
 
-            <div className="form-grid mt-2">
-              <div className="form-group">
-                <label>Available Stock Balance</label>
-                <InputNumber
-                  value={product.inventory.totalStock}
-                  onValueChange={(e) => handleNestedChange("inventory", "totalStock", e.value)}
+            <div className="pep-row-2">
+              <Field label="Total Stock (units)">
+                <input
+                  className="pep-input"
+                  type="number"
+                  min="0"
+                  value={product.inventory.totalStock || ""}
+                  onChange={(e) => setNested("inventory", "totalStock", parseInt(e.target.value) || 0)}
+                  placeholder="0"
                 />
-              </div>
-              <div className="form-group">
-                <label>Minimum Purchase MOQ (Units)</label>
-                <InputNumber
+              </Field>
+              <Field label="Min. Order Qty (MOQ)">
+                <input
+                  className="pep-input"
+                  type="number"
+                  min="1"
                   value={product.inventory.minOrderQty}
-                  onValueChange={(e) => handleNestedChange("inventory", "minOrderQty", e.value)}
+                  onChange={(e) => setNested("inventory", "minOrderQty", parseInt(e.target.value) || 1)}
                 />
-              </div>
+              </Field>
             </div>
 
-            {/* Bulk Pricing Tiers */}
-            <div className="form-group mt-4">
-              <label style={{ fontSize: "var(--fs-sm)", fontWeight: "var(--fw-7)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span>Wholesale Quantity Discount Tiers</span>
-                <Button
-                
-                  className="p-button-text p-button-sm p-button-success"
-                  style={{ fontSize: "10px", padding: 0 }}
-                  onClick={handleAiPricingModel}
-                />
-              </label>
-              <div style={{ marginTop: "var(--sp-2)" }}>
-                {bulkPricing.map((tier, index) => (
-                  <div key={index} className="bulk-tier">
-                    <div className="form-group">
-                      <label>Min Quantity</label>
-                      <InputNumber
-                        value={tier.minQty}
-                        onValueChange={(e) => updateBulkPricing(index, "minQty", e.value || 0)}
+            {/* Bulk pricing table */}
+            <div className="pep-bulk-divider">
+              <div className="pep-bulk-header">
+                <div>
+                  <span className="pep-bulk-title">Bulk / Wholesale Pricing Tiers</span>
+                  <p className="pep-bulk-sub">Set quantity-based discounts for B2B buyers</p>
+                </div>
+                <button className="pep-btn-add-tier" type="button" onClick={addBulkPricingTier}>
+                  <i className="pi pi-plus" /> Add Tier
+                </button>
+              </div>
+
+              {bulkPricing.length === 0 ? (
+                <div className="pep-bulk-empty">
+                  <i className="pi pi-tag pep-bulk-empty-icon" />
+                  <span className="pep-bulk-empty-text">No tiers yet — click "Add Tier" to set quantity discounts</span>
+                </div>
+              ) : (
+                <table className="pep-bulk-table">
+                  <thead>
+                    <tr>
+                      <th className="pep-bulk-th">Min. Qty (pcs)</th>
+                      <th className="pep-bulk-th">Price / Unit</th>
+                      <th className="pep-bulk-th">Discount</th>
+                      <th className="pep-bulk-th pep-bulk-th-action"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bulkPricing.map((tier, i) => {
+                      const d = discount(tier.pricePerUnit);
+                      return (
+                        <tr key={i} className="pep-bulk-row">
+                          <td className="pep-bulk-td-qty">
+                            <input
+                              className="pep-input pep-input-sm"
+                              type="number"
+                              min="1"
+                              value={tier.minQty}
+                              onChange={(e) => updateBulkPricing(i, "minQty", parseInt(e.target.value) || 1)}
+                            />
+                          </td>
+                          <td className="pep-bulk-td-price">
+                            <div className="pep-input-prefix-wrap">
+                              <span className="pep-input-prefix">{sym}</span>
+                              <input
+                                className="pep-input pep-input-sm pep-input-prefixed"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                value={tier.pricePerUnit || ""}
+                                onChange={(e) => updateBulkPricing(i, "pricePerUnit", parseFloat(e.target.value) || 0)}
+                              />
+                            </div>
+                          </td>
+                          <td className="pep-bulk-td">
+                            {d > 0
+                              ? <span className="pep-discount-badge">-{d}%</span>
+                              : <span className="pep-no-discount">—</span>
+                            }
+                          </td>
+                          <td className="pep-bulk-td-right">
+                            <button className="pep-btn-remove-tier" type="button" onClick={() => removeBulkPricingTier(i)} title="Remove">
+                              <i className="pi pi-trash" />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </section>
+
+          {/* ── 4. Shipping & Logistics ────────────────────────────── */}
+          <section className="pep-card">
+            <SectionHeader step={4} title="Shipping & Logistics" icon="pi pi-truck" />
+
+            <div className="pep-row-2">
+              <Field label="Gross Weight (kg)">
+                <div className="pep-input-suffix-wrap">
+                  <input
+                    className="pep-input pep-input-suffixed"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={product.shipping.weight || ""}
+                    onChange={(e) => setNested("shipping", "weight", parseFloat(e.target.value) || 0)}
+                    placeholder="0.00"
+                  />
+                  <span className="pep-input-suffix">kg</span>
+                </div>
+              </Field>
+              <Field label="Dispatch Time">
+                <div className="pep-input-suffix-wrap">
+                  <input
+                    className="pep-input pep-input-suffixed"
+                    type="number"
+                    min="1"
+                    value={product.shipping.dispatchTimeDays}
+                    onChange={(e) => setNested("shipping", "dispatchTimeDays", parseInt(e.target.value) || 1)}
+                  />
+                  <span className="pep-input-suffix">days</span>
+                </div>
+              </Field>
+            </div>
+
+            <div className="pep-field">
+              <label className="pep-label">Package Dimensions (cm)</label>
+              <div className="pep-row-3">
+                {(["length", "breadth", "height"] as const).map((dim) => (
+                  <div key={dim} className="pep-dim-group">
+                    <span className="pep-dim-label">{dim}</span>
+                    <div className="pep-input-suffix-wrap">
+                      <input
+                        className="pep-input pep-input-suffixed"
+                        type="number"
+                        min="0"
+                        value={product.shipping.dimensions[dim] || ""}
+                        onChange={(e) => setDim(dim, parseFloat(e.target.value) || 0)}
+                        placeholder="0"
                       />
+                      <span className="pep-input-suffix">cm</span>
                     </div>
-                    <div className="form-group">
-                      <label>Price Per Unit</label>
-                      <InputNumber
-                        value={tier.pricePerUnit}
-                        onValueChange={(e) => updateBulkPricing(index, "pricePerUnit", e.value || 0)}
-                        mode="currency"
-                        currency={product.pricing.currency}
-                      />
-                    </div>
-                    <Button
-                      icon="pi pi-trash"
-                      className="p-button-danger p-button-rounded p-button-outlined"
-                      style={{ height: "34px", width: "34px" }}
-                      onClick={() => removeBulkPricingTier(index)}
-                      title="Remove Discount Tier"
-                    />
                   </div>
                 ))}
-                <Button
-                  label="Add Price Tier"
-                  icon="pi pi-plus"
-                  className="p-button-outlined p-button-sm mt-2"
-                  onClick={addBulkPricingTier}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Card 5: Logistics & Regulatory Compliance */}
-          <div className="pm-form-card">
-            <h2>
-              <i className="pi pi-truck" style={{ marginRight: "var(--sp-2)", color: "var(--text-success)" }}></i>
-              Logistics & Regulatory Compliance
-            </h2>
-            <div className="form-grid">
-              <div className="form-group">
-                <label>Unit Gross Weight (kg)</label>
-                <InputNumber
-                  value={product.shipping.weight}
-                  onValueChange={(e) => handleNestedChange("shipping", "weight", e.value)}
-                  suffix=" kg"
-                  minFractionDigits={2}
-                />
-              </div>
-              <div className="form-group">
-                <label>Average Handling Dispatch Days</label>
-                <InputNumber
-                  value={product.shipping.dispatchTimeDays}
-                  onValueChange={(e) => handleNestedChange("shipping", "dispatchTimeDays", e.value)}
-                  suffix=" days"
-                />
               </div>
             </div>
 
-            {/* Package dimensions */}
-            <div className="form-group mt-2">
-              <label>Package Dimensions (cm)</label>
-              <div className="form-grid-3">
-                <div className="form-group">
-                  <label>Length</label>
-                  <InputNumber
-                    value={product.shipping.dimensions.length}
-                    onValueChange={(e) => handleDimensionChange("length", e.value || 0)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Breadth</label>
-                  <InputNumber
-                    value={product.shipping.dimensions.breadth}
-                    onValueChange={(e) => handleDimensionChange("breadth", e.value || 0)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Height</label>
-                  <InputNumber
-                    value={product.shipping.dimensions.height}
-                    onValueChange={(e) => handleDimensionChange("height", e.value || 0)}
-                  />
-                </div>
+            {/* Cargo insurance */}
+            <div className="pep-field">
+              <label className="pep-label">Cargo Insurance</label>
+              <div className="pep-row-2">
+                {[
+                  { val: false, label: "Optional Coverage", icon: "pi pi-shield", desc: "Standard liability caps apply. Importer is responsible for additional cargo damage policies." },
+                  { val: true,  label: "Mandatory Bulk Protection", icon: "pi pi-verified", desc: "Full loss protection during sea/air transit. Recommended for orders exceeding ₹50,000." },
+                ].map((opt) => {
+                  const active = isInsuranceRequired === opt.val;
+                  return (
+                    <label key={String(opt.val)} className={`pep-insurance-card${active ? " active" : ""}`}>
+                      <input
+                        type="radio"
+                        name="insurance"
+                        className="pep-radio-hidden"
+                        checked={active}
+                        onChange={() => setIsInsuranceRequired(opt.val)}
+                      />
+                      <div className="pep-insurance-card-top">
+                        <div className="pep-insurance-label-wrap">
+                          <i className={`${opt.icon} pep-insurance-icon${active ? " active" : ""}`} />
+                          <span className="pep-insurance-label">{opt.label}</span>
+                        </div>
+                        <div className={`pep-radio-outer${active ? " active" : ""}`}>
+                          {active && <div className="pep-radio-inner" />}
+                        </div>
+                      </div>
+                      <p className="pep-insurance-desc">{opt.desc}</p>
+                    </label>
+                  );
+                })}
               </div>
             </div>
+          </section>
 
-            {/* Custom Interactive B2B Shipping Insurance Radio Cards */}
-            <div className="form-group mt-2">
-              <label>Maritime / Overland Logistics Cargo Insurance</label>
-              <div className="insurance-cards-grid">
-                <div
-                  className={`insurance-card ${!isInsuranceRequired ? "active" : ""}`}
-                  onClick={() => setIsInsuranceRequired(false)}
-                >
-                  <div className="insurance-card-header">
-                    Optional Coverage
-                    <div className="radio-circle"><div className="radio-circle-inner"></div></div>
-                  </div>
-                  <div className="insurance-card-desc">
-                    Standard shipment liability caps apply. Importer is solely responsible for extra cargo damage policies.
-                  </div>
-                </div>
+          {/* ── 5. Compliance & Return Policy ─────────────────────── */}
+          <section className="pep-card">
+            <SectionHeader step={5} title="Compliance & Return Policy" icon="pi pi-shield" />
 
-                <div
-                  className={`insurance-card ${isInsuranceRequired ? "active" : ""}`}
-                  onClick={() => setIsInsuranceRequired(true)}
-                >
-                  <div className="insurance-card-header">
-                    Mandatory Bulk Protection
-                    <div className="radio-circle"><div className="radio-circle-inner"></div></div>
-                  </div>
-                  <div className="insurance-card-desc">
-                    Supplier guarantees complete loss protection during sea/air transit. Essential for high-value orders exceeding ₹50,000.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="form-grid mt-4">
-              <div className="form-group">
-                <label>Global HSN Code</label>
-                <InputText
+            <div className="pep-row-3">
+              <Field label="HSN Code">
+                <input
+                  className="pep-input"
+                  type="text"
                   value={product.compliance.hsnCode}
-                  onChange={(e) => handleNestedChange("compliance", "hsnCode", e.target.value)}
+                  onChange={(e) => setNested("compliance", "hsnCode", e.target.value)}
                   placeholder="e.g. 84716060"
                 />
-              </div>
-              <div className="form-group">
-                <label>Applied GST Rate (%)</label>
-                <InputNumber
-                  value={product.compliance.gstRate}
-                  onValueChange={(e) => handleNestedChange("compliance", "gstRate", e.value)}
-                  suffix="%"
-                />
-              </div>
-              <div className="form-group">
-                <label>Country of Origin</label>
-                <InputText
+              </Field>
+              <Field label="GST Rate (%)">
+                <div className="pep-input-suffix-wrap">
+                  <input
+                    className="pep-input pep-input-suffixed"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={product.compliance.gstRate}
+                    onChange={(e) => setNested("compliance", "gstRate", parseFloat(e.target.value) || 0)}
+                  />
+                  <span className="pep-input-suffix">%</span>
+                </div>
+              </Field>
+              <Field label="Country of Origin">
+                <input
+                  className="pep-input"
+                  type="text"
                   value={product.compliance.countryOfOrigin}
-                  onChange={(e) => handleNestedChange("compliance", "countryOfOrigin", e.target.value)}
+                  onChange={(e) => setNested("compliance", "countryOfOrigin", e.target.value)}
                   placeholder="e.g. India"
                 />
-              </div>
+              </Field>
             </div>
 
-            {/* Return Policy */}
-            <div className="form-grid mt-2" style={{ gridTemplateColumns: "1fr 1fr" }}>
-              <div className="form-group">
-                <label style={{ display: "block", marginBottom: "8px" }}>Returnable Product</label>
-                <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-2)" }}>
-                  <InputSwitch
-                    checked={product.returnPolicy.returnable}
-                    onChange={(e) => handleNestedChange("returnPolicy", "returnable", e.value)}
+            <div className="pep-return-box">
+              <div className="pep-field">
+                <label className="pep-label">Returnable</label>
+                <label className="pep-toggle-row">
+                  <div
+                    className={`pep-toggle${product.returnPolicy.returnable ? " on" : ""}`}
+                    onClick={() => setNested("returnPolicy", "returnable", !product.returnPolicy.returnable)}
+                    role="switch"
+                    aria-checked={product.returnPolicy.returnable}
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === " " && setNested("returnPolicy", "returnable", !product.returnPolicy.returnable)}
+                  >
+                    <div className="pep-toggle-thumb" />
+                  </div>
+                  <span className={product.returnPolicy.returnable ? "pep-return-status-on" : "pep-return-status-off"}>
+                    {product.returnPolicy.returnable ? "Returns accepted" : "No returns"}
+                  </span>
+                </label>
+              </div>
+              <Field label="Return Window (days)">
+                <div className="pep-input-suffix-wrap">
+                  <input
+                    className="pep-input pep-input-suffixed"
+                    type="number"
+                    min="0"
+                    value={product.returnPolicy.returnDays}
+                    onChange={(e) => setNested("returnPolicy", "returnDays", parseInt(e.target.value) || 0)}
+                    disabled={!product.returnPolicy.returnable}
                   />
-                  <span className="text-muted" style={{ fontSize: "11px" }}>Accept return shipments</span>
+                  <span className="pep-input-suffix">days</span>
+                </div>
+              </Field>
+            </div>
+          </section>
+
+        </div>
+        {/* ── END LEFT COLUMN ─────────────────────────────────────── */}
+
+        {/* ── RIGHT: sticky sidebar ────────────────────────────────── */}
+        <aside className="pep-sidebar-col">
+
+          {/* Preview card */}
+          <div className="pep-sidebar-card">
+            <div className="pep-sidebar-header">
+              <span className="pep-sidebar-header-text">Product Preview</span>
+            </div>
+            <div className="pep-sidebar-card-body">
+              {imgPreview || product.thumbnail ? (
+                <img
+                  src={imgPreview || product.thumbnail}
+                  alt="preview"
+                  className="pep-preview-img"
+                />
+              ) : (
+                <div className="pep-preview-img-placeholder">
+                  <i className="pi pi-image pep-preview-img-placeholder-icon" />
+                  <p className="pep-preview-img-placeholder-text">No image yet</p>
+                </div>
+              )}
+
+              {product.title
+                ? <h3 className="pep-preview-title">{product.title}</h3>
+                : <h3 className="pep-preview-title-empty">Product title will appear here</h3>
+              }
+              <p className="pep-preview-category">
+                {product.category || "Category"}{product.subcategory ? ` › ${product.subcategory}` : ""}
+              </p>
+
+              <div className="pep-price-box">
+                <p className="pep-price-label">Unit Price</p>
+                <p className="pep-price-value">
+                  {product.pricing.basePrice > 0 ? `${sym}${product.pricing.basePrice.toLocaleString()}` : "—"}
+                </p>
+                <p className="pep-price-moq">MOQ: {product.inventory.minOrderQty} units</p>
+              </div>
+
+              {[
+                { label: "SKU",      value: product.inventory.sku || "—" },
+                { label: "Stock",    value: product.inventory.totalStock > 0 ? `${product.inventory.totalStock.toLocaleString()} units` : "—" },
+                { label: "Dispatch", value: `${product.shipping.dispatchTimeDays} days` },
+                { label: "Weight",   value: product.shipping.weight > 0 ? `${product.shipping.weight} kg` : "—" },
+                { label: "GST",      value: `${product.pricing.gst}%` },
+                { label: "Origin",   value: product.compliance.countryOfOrigin || "—" },
+              ].map(({ label, value }) => (
+                <StatRow key={label} label={label} value={value} />
+              ))}
+            </div>
+          </div>
+
+          {/* Status card */}
+          <div className="pep-sidebar-card">
+            <div className="pep-sidebar-header">
+              <span className="pep-sidebar-header-text">Listing Status</span>
+            </div>
+            <div className="pep-sidebar-card-body">
+              <div className="pep-field">
+                <label className="pep-label">Visibility</label>
+                <select
+                  className="pep-select"
+                  value={product.status}
+                  onChange={(e) => set("status", e.target.value)}
+                >
+                  <option value="active">Active — visible to buyers</option>
+                  <option value="inactive">Inactive — hidden</option>
+                  <option value="draft">Draft — not published</option>
+                </select>
+              </div>
+
+              <span className={`pep-status-badge pep-status-${product.status}`}>
+                <span className="pep-status-dot" />
+                {statusLabel[product.status] ?? product.status}
+              </span>
+
+              <div className="pep-featured-row">
+                <div>
+                  <p className="pep-featured-title">Featured Spotlight</p>
+                  <p className="pep-featured-sub">Show on supplier profile</p>
+                </div>
+                <div
+                  className={`pep-toggle${product.featured ? " on" : ""}`}
+                  onClick={() => set("featured", !product.featured)}
+                  role="switch"
+                  aria-checked={product.featured}
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === " " && set("featured", !product.featured)}
+                >
+                  <div className="pep-toggle-thumb" />
                 </div>
               </div>
-              <div className="form-group">
-                <label>Return Validity Days</label>
-                <InputNumber
-                  value={product.returnPolicy.returnDays}
-                  onValueChange={(e) => handleNestedChange("returnPolicy", "returnDays", e.value)}
-                  disabled={!product.returnPolicy.returnable}
-                />
-              </div>
             </div>
           </div>
 
-        </div>
+          {/* Save card */}
+          <div className="pep-save-card">
+            <button className="pep-btn-publish-full" type="button" onClick={handleSave}>
+              <i className="pi pi-check" /> Publish Changes
+            </button>
+            <button className="pep-btn-discard-full" type="button" onClick={() => navigate("/seller/products")}>
+              <i className="pi pi-times" /> Discard
+            </button>
 
+            <div className="pep-info-note">
+              <i className="pi pi-info-circle pep-info-note-icon" />
+              <span className="pep-info-note-text">
+                Changes are saved to your catalog immediately. Buyers will see the updated listing within minutes.
+              </span>
+            </div>
+          </div>
 
-{/* 
-          <div className="ai-assist-header">
-            <i className="pi pi-sparkles sparkle-icon"></i>
-            <span>AI Assist Sidebar</span>
-          </div> */}
- 
-  {/* <div className="ai-orb-section">
-    <div className="ai-orb-container">
-      <div className="ai-orb-glow"></div>
-      <div className="ai-orb">
-        <i className="pi pi-sparkles"></i>
+        </aside>
+
       </div>
-    </div>
-    <h4>Active AI Core Online</h4>
-    <p>I can optimize listing details, generate copy or auto-complete fields.</p>
-  </div> */}
-
-  {/* <div className="prompt-pills-container">
-    <div className="prompt-pill" onClick={handleAiAutofill}>
-      ✨ Optimise Logitech Specs
-    </div>
-    <div className="prompt-pill" onClick={() => handleAiGenerateText("seo")}>
-      📝 Smart SEO Optimization
-    </div>
-    <div className="prompt-pill" onClick={handleAiPricingModel}>
-      💰 Wholesale Pricing Index
-    </div>
-  </div>
-
-  <div className="ai-chat-log" id="ai-chat-log-panel">
-    {aiMessages.map((msg, index) => (
-      <div key={index} className={`ai-chat-message ${msg.sender}`}>
-        <span style={{ fontWeight: "bold", fontSize: "8px", textTransform: "uppercase" }}>
-          {msg.sender === "user" ? "Supplier Admin" : "AI Sales Copilot"}
-        </span>
-        <div>{msg.text}</div>
-        <span className="ai-message-time">{msg.time}</span>
-      </div>
-    ))}
-  </div>
-
-  <div className="ai-chat-input-container">
-    <textarea
-      value={chatInput}
-      onChange={(e) => setChatInput(e.target.value)}
-      placeholder="Query assistant (e.g. type 'optimise' or 'ecco')..."
-      onKeyDown={(e) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          handleChatSubmit();
-        }
-      }}
-    />
-    <div className="ai-chat-controls">
-      <div className="ai-chat-icons">
-        <i className="pi pi-chart-bar" title="Wholesale Indices Analysis"></i>
-        <i className="pi pi-database" title="Catalog Taxonomy Sourcing"></i>
-      </div>
-      <button className="ai-send-btn" onClick={handleChatSubmit} title="Submit Instruction">
-        <i className="pi pi-send" style={{ fontSize: "10px" }}></i>
-      </button>
-    </div>
-  </div>
-</div>
-          <div className="ai-assist-header">
-            <i className="pi pi-sparkles sparkle-icon"></i>
-            <span>AI Assist Sidebar</span>
-          </div>
-
-          <div className="ai-orb-section">
-            <div className="ai-orb-container">
-              <div className="ai-orb-glow"></div>
-              <div className="ai-orb">
-                <i className="pi pi-sparkles"></i>
-              </div>
-            </div>
-            <h4>Active AI Core Online</h4>
-            <p>I can optimize listing details, generate copy or auto-complete fields.</p>
-          </div>
-
-          <div className="prompt-pills-container">
-            <div className="prompt-pill" onClick={handleAiAutofill}>
-              ✨ Optimise Logitech Specs
-            </div>
-            <div className="prompt-pill" onClick={() => handleAiGenerateText("seo")}>
-              📝 Smart SEO Optimization
-            </div>
-            <div className="prompt-pill" onClick={handleAiPricingModel}>
-              💰 Wholesale Pricing Index
-            </div>
-          </div>
-
-          <div className="ai-chat-log" id="ai-chat-log-panel">
-            {aiMessages.map((msg, index) => (
-              <div key={index} className={`ai-chat-message ${msg.sender}`}>
-                <span style={{ fontWeight: "bold", fontSize: "8px", textTransform: "uppercase" }}>
-                  {msg.sender === "user" ? "Supplier Admin" : "AI Sales Copilot"}
-                </span>
-                <div>{msg.text}</div>
-                <span className="ai-message-time">{msg.time}</span>
-              </div>
-            ))}
-          </div> */}
-
-          {/* <div className="ai-chat-input-container">
-            <textarea
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              placeholder="Query assistant (e.g. type 'optimise' or 'ecco')..."
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleChatSubmit();
-                }
-              }}
-            />
-            <div className="ai-chat-controls">
-              <div className="ai-chat-icons">
-                <i className="pi pi-chart-bar" title="Wholesale Indices Analysis"></i>
-                <i className="pi pi-database" title="Catalog Taxonomy Sourcing"></i>
-              </div>
-              <button className="ai-send-btn" onClick={handleChatSubmit} title="Submit Instruction">
-                <i className="pi pi-send" style={{ fontSize: "10px" }}></i>
-              </button>
-            </div>
-          </div> */}
-        </div>
-
     </div>
   );
 };

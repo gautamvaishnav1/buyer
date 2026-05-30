@@ -1,12 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import  inquiryData from '../../core/storage/DummyInquiries.json';
-const initialState={
-    inquiries:inquiryData
+
+interface InquiryState{
+    inquiries:any[];
+    search:string;
+}
+
+
+
+const initialState:InquiryState={
+    inquiries:inquiryData,
+    search:''
 }
 const inquirySlice=createSlice({
     name:'inquiry',
     initialState:initialState,
     reducers:{
+        setSearch:(state,action)=>{
+            state.search=action.payload
+        },
         addInquiries:(state,action)=>{
             state.inquiries.push(action.payload)
         },
@@ -28,5 +40,5 @@ const inquirySlice=createSlice({
     }
 })
 
-export const {addInquiries,getInquiryById,updateInquiry,deleteInquiry,updateInquiryStatus}=inquirySlice.actions
+export const {setSearch,addInquiries,getInquiryById,updateInquiry,deleteInquiry,updateInquiryStatus}=inquirySlice.actions
 export default inquirySlice

@@ -50,7 +50,7 @@
   --header-bg-gradient: linear-gradient(to right, rgba(230, 0, 18, 0.05) 0%, rgba(43, 57, 74, 0.02) 100%);
   --badge-bg: rgba(230, 0, 18, 0.08);
   --badge-color: #e60012;
-  background-color: #f5f6f8;
+  /* background-color: #f5f6f8; */
 }
 
 /* ── Skins Specific Theme Headers/Watermarks ── */
@@ -141,8 +141,11 @@
   gap: var(--sp-2);
   color: var(--text-gray);
   text-decoration: none;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   font-weight: 600;
+  padding: var(--sp-2);
+  border:1px solid var(--border);
+  border-radius: var(--radius-lg);
   transition: color 0.2s;
   cursor: pointer;
 }
@@ -226,7 +229,7 @@
 }
 
 .inq-title-group h1 {
-  font-size: var(--fs-md);
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--text-heading);
   margin-bottom: var(--sp-2);
@@ -369,7 +372,7 @@
   font-size: var(--fs-xs);
   color: var(--text-dark);
   line-height: 1.6;
-  background: var(--bg-light);
+  /* background: var(--bg-light);  */
   padding: var(--sp-4);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
@@ -410,6 +413,8 @@
 .inq-sidebar {
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 40px;
   gap: var(--sp-6);
 }
 
@@ -646,7 +651,7 @@
   min-height: 180px;
   padding: var(--sp-4);
   font-family: inherit;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   color: var(--text-black);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);

@@ -1,17 +1,17 @@
-import { FaFileExport, FaPlus } from 'react-icons/fa'
+// import { FaFileExport, FaPlus } from 'react-icons/fa'
 import '../../styles/product_management.css'
 import SearchBar from '../Dashboard/ProductManagement/SearchBar'
-import { LiaEdit } from 'react-icons/lia'
-import { AiFillDelete } from 'react-icons/ai'
+// import { LiaEdit } from 'react-icons/lia'
+// import { AiFillDelete } from 'react-icons/ai'
 import { GrView } from 'react-icons/gr'
-
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
+// import { DataTable } from 'primereact/datatable'
+// import { Column } from 'primereact/column'
 
 import { useState } from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import LinkButton from '../../shared/LinkButton/LinkButton'
+import TableData from '../../shared/components/tableData/TableData'
 
 // ── Mock Order Data ──────────────────────────────────────────────────────────
 const generateMockOrders = (count: number) => {
@@ -31,7 +31,6 @@ const generateMockOrders = (count: number) => {
   }
   return orders
 }
-
 const mockOrders = generateMockOrders(35)
 
 const Order = () => {
@@ -97,19 +96,54 @@ const Order = () => {
       <div className='btnEditDelete'>
         <LinkButton
           styleName='blue'
-          link={`order-details/${options.id}`}
+          link={`/seller/orders/order-details/${options.id}`}
         ><GrView /></LinkButton>
-        <LinkButton
+        {/* <LinkButton
           styleName='green'
           link={`order-edit/${options.id}`}
         ><LiaEdit /></LinkButton>
         <LinkButton
           styleName='red'
           link={`order-delete/${options.id}`}
-        ><AiFillDelete /></LinkButton>
+        ><AiFillDelete /></LinkButton> */}
       </div>
     )
   }
+const columns=[
+  {
+    header:'#',
+    body:countFunction
+  },
+  {
+    header:'Order ID',
+    body:orderIdBody
+  },
+  {
+    header:'Date',
+    body:dateBody
+  },
+  {
+    header:'Buyer',
+    body:buyerBody
+  },
+  {
+    header:'Items',
+    body:itemsBody
+  },
+  {
+    header:'Amount',
+    body:amountBody
+  },
+  {
+    header:'Status',
+    body:statusBody 
+  },
+  {
+    header:'Actions',
+    body:OrderTableActions
+  }
+]
+
 
   return (
     <div className='product-mgmt'>
@@ -121,15 +155,15 @@ const Order = () => {
           <p>Track, manage, and process all your B2B orders.</p>
         </div>
         <div className='header-actions'>
-          <button className='bulk-upload-btn'>
+          {/* <button className='bulk-upload-btn'>
             <FaFileExport />
             Export CSV
-          </button>
-
+          </button> */}
+{/* 
           <button className='add-product-btn'>
             <FaPlus />
             New Order
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -139,7 +173,7 @@ const Order = () => {
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar />
+          <SearchBar placeholder='search orders' />
 
           {/* ================= STATUS DROPDOWN ================= */}
 
@@ -188,7 +222,8 @@ const Order = () => {
 
         {/* Data table for orders */}
         <section className='mt-2'>
-          <DataTable value={filteredOrders} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}
+          <TableData data={filteredOrders} columns={columns}/>
+          {/* <DataTable value={filteredOrders} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink">
             <Column header='#' body={countFunction}></Column>
             <Column header='Order ID' body={orderIdBody}></Column>
@@ -198,7 +233,7 @@ const Order = () => {
             <Column header='Amount' body={amountBody}></Column>
             <Column header='Status' body={statusBody}></Column>
             <Column header='Actions' body={OrderTableActions}></Column>
-          </DataTable>
+          </DataTable> */}
         </section>
       </section>
     </div>

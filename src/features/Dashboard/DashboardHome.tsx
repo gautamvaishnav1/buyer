@@ -31,11 +31,12 @@ import "../../styles/dashboard_home.css"
 
 const DashboardHome = () => {
   return (
-    <div className="dashboard-container b2b-seller-hub">
+    // <div className="dashboard-container b2b-seller-hub">
+    <>
       <DashboardOverview />
 
       {/* Wireframe row 3: Recent products | Recent inquiries | Recent selling */}
-      <div className="diagram-main-grid">
+      {/* <div className="diagram-main-grid"> */}
         {/* <section className="grid-box">
           <div className="box-header">
             <div>
@@ -155,8 +156,12 @@ const DashboardHome = () => {
             ))}
           </ul>
         </section> */}
-      </div>
-    </div>
+      {/* // </div> */}
+    {/* // </div> */}
+
+
+
+    </>
   )
 }
 

@@ -3,19 +3,19 @@
    ============================================================ */
 
 .rfq-view-container {
-  padding: var(--sp-6);
+  padding: var(--sp-4);
   /* background-color: var(--bg-body, #f4f6f8); */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   font-family: 'Inter', sans-serif;
 }
 
 /* ── Action Bar ────────────────────────────────────────────── */
 .rfq-actions-bar {
   width: 100%;
-  max-width: 1050px;
+  /* max-width: 1050px; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -46,7 +46,7 @@
 /* ── Main Layout ───────────────────────────────────────────── */
 .rfq-main-content {
   width: 100%;
-  max-width: 1050px;
+  /* max-width: 1050px; */
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: var(--sp-6);
@@ -94,7 +94,7 @@
 
 .rfq-urgency {
   text-align: right;
-  background: var(--bg-light, #f8f9fa);
+  /* background: var(--bg-light, #f8f9fa); */
   padding: var(--sp-3);
   border-radius: var(--radius-sm);
   border: 1px dashed var(--border);
@@ -140,10 +140,10 @@
   font-size: var(--fs-xs);
   color: var(--text-dark);
   line-height: 1.6;
-  background: var(--bg-light, #f8f9fa);
+  /* background: var(--bg-light, #f8f9fa); */
   padding: var(--sp-4);
   border-radius: var(--radius-sm);
-  border-left: 3px solid var(--primary-red);
+  border-left: 3px solid var(--header-bg);
 }
 
 /* Requirements Grid */
@@ -184,7 +184,7 @@
   padding: var(--sp-3);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: var(--bg-light, #f8f9fa);
+  /* background: var(--bg-light, #f8f9fa); */
   min-width: 200px;
   transition: border-color 0.2s;
   cursor: pointer;
@@ -196,7 +196,7 @@
 
 .rfq-attachment-icon {
   font-size: 24px;
-  color: var(--primary-red);
+  color: var(--header-bg);
 }
 
 .rfq-attachment-info {
@@ -231,6 +231,12 @@
   padding: var(--sp-5);
 }
 
+.btn-outline{
+  border: 0;
+  font-size: var(--fs-xs);
+  background: var(--header-bg);
+  /* border-radius: var(--rounde-sm); */
+}
 .rfq-buyer-header {
   display: flex;
   align-items: center;
@@ -244,7 +250,7 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: var(--primary-red);
+  background: var(--header-bg);
   color: #fff;
   display: flex;
   align-items: center;
@@ -333,7 +339,7 @@
 
 .btn-quote-submit {
   width: 100%;
-  background: var(--primary-red);
+  background: var(--header-bg);
   color: var(--text-white);
   border: none;
   padding: var(--sp-2);

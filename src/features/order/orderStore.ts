@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import orderData from '../../core/storage/DummyOrders.json';
+interface OrderState{
+    orders:any[];
+    search:string;
+}
+const initialState:OrderState={
+    orders:orderData,
+    search:''
+}
 const orderSlice=createSlice({
     name:'order',
-    initialState:{
-        orders:orderData
-    
-    },
+    initialState,
     reducers:{
             addOrder:(state,action)=>{
                 state.orders.push(action.payload)

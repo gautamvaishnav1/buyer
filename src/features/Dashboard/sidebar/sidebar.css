@@ -1,35 +1,37 @@
 /* Sidebar Rail - Professional Red Theme */
 .sidebar {
-    width: 4.5rem; /* ~72px */
-    height: 100vh;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    width: 4.2rem;
+    z-index: 996;
     background: #e60023;
     border-right: none;
     overflow-y: auto;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1001;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: var(--sp-4) 0;
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-    transition: transform var(--transition);
-    transform: translateX(-100%);
+    transition: all 0.3s;
 }
 
 .module-placeholder{
     margin-left: var(--sp-6);
 }
-.sidebar.open {
-    transform: translateX(0);
+
+@media (max-width: 768px) {
+    .sidebar {
+        left: -260px;
+    }
+    .sidebar.open {
+        left: 0;
+    }
 }
 
 @media (min-width: 769px) {
     .sidebar {
-        width: 5rem; /* ~80px */
-        transform: translateX(0);
-        transition: width var(--transition);
+        left: 0;
     }
 }
 
@@ -39,8 +41,8 @@
 }
 
 .sidebar-logo {
-    padding-bottom: var(--sp-6);
-    margin-bottom: var(--sp-2);
+    /* padding-bottom: var(--sp-6);
+    margin-bottom: var(--sp-2); */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -57,16 +59,16 @@
 }
 
 .sidebar-logo-img {
-    width: var(--sp-8);
-    height: var(--sp-8);
+    width:80%;
+    height: 80%;
     object-fit: contain;
     filter: brightness(0) invert(1); /* Ensure logo is white on red */
     transition: transform var(--transition);
 }
 
-.sidebar-logo:hover .sidebar-logo-img {
+/* .sidebar-logo:hover .sidebar-logo-img {
     transform: rotate(5deg) scale(1.1);
-}
+} */
 
 .sidebar-nav {
     width: 100%;
@@ -103,10 +105,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--sp-1);
+    /* gap: var(--sp-1); */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: var(--sp-3) 0;
-    border-radius: var(--radius-md);
+    padding: var(--sp-3) 0; 
     position: relative;
 }
 
@@ -134,7 +135,7 @@
 
 .menu-icon {
     /* font-size: var(--fs-lg); */
-    font-size:17px;
+    font-size:25px;
     transition: transform var(--transition);
 }
 
@@ -143,7 +144,7 @@
 }
 
 .menu-text {
-    font-size: 10px;
+    font-size: 8px;
     font-weight: var(--fw-7);
     text-align: center;
     text-transform: uppercase;
@@ -192,7 +193,7 @@
     }
 
     .menu-text {
-        font-size: var(--fs-base) !important;
+        font-size: var(--fs-xs) !important;
         text-transform: none;
         letter-spacing: normal;
         opacity: 1;
@@ -219,21 +220,21 @@
     }
 }
 
-.sidebar-overlay {
+/* .sidebar-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(2px); /* Premium feel */
+    backdrop-filter: blur(2px); 
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
-}
+} */
 
-.sidebar-overlay.show {
+/* .sidebar-overlay.show {
     opacity: 1;
     visibility: visible;
-}
+} */

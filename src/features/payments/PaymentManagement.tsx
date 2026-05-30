@@ -1,17 +1,17 @@
-import { FaFileExport, FaPlus } from 'react-icons/fa'
+// import { FaFileExport, FaPlus } from 'react-icons/fa'
 import '../../styles/product_management.css'
 import SearchBar from '../Dashboard/ProductManagement/SearchBar'
-import { LiaEdit } from 'react-icons/lia'
-import { AiFillDelete } from 'react-icons/ai'
+// import { LiaEdit } from 'react-icons/lia'
+// import { AiFillDelete } from 'react-icons/ai'
 import { GrView } from 'react-icons/gr'
-
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
+// import { DataTable } from 'primereact/datatable'
+// import { Column } from 'primereact/column'
 
 import { useState } from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import LinkButton from '../../shared/LinkButton/LinkButton'
+import TableData from '../../shared/components/tableData/TableData'
 
 // ── Mock Payment Data ────────────────────────────────────────────────────────
 const generateMockPayments = (count: number) => {
@@ -79,19 +79,63 @@ const PaymentManagement = () => {
       <div className='btnEditDelete'>
         <LinkButton
           styleName='blue'
-          link={`view-payment/${options.id}`}
+          link={`/seller/view-payment/${options.id}`}
         ><GrView /></LinkButton>
-        <LinkButton
+        {/* <LinkButton
           styleName='green'
           link={`edit-payment/${options.id}`}
         ><LiaEdit /></LinkButton>
         <LinkButton
           styleName='red'
           link={`delete-payment/${options.id}`}
-        ><AiFillDelete /></LinkButton>
+        ><AiFillDelete /></LinkButton> */}
       </div>
     )
   }
+
+const columns = [
+  {
+    header: "#",
+    body: countFunction,
+  },
+  {
+    header: "Payment ID",
+    body: paymentIdBody,
+  },
+  {
+    header: "Order ID",
+    body: orderIdBody,
+  },
+  {
+    header: "Date",
+    body: dateBody,
+  },
+  {
+    header: "Buyer",
+    body: buyerBody,
+  },
+  {
+    header: "Amount",
+    body: amountBody,
+  },
+  {
+    header: "Method",
+    body: methodBody,
+  },
+  {
+    header: "Status",
+    body: statusBody,
+  },
+  {
+    header: "Actions",
+    body: PaymentTableActions,  
+  }  
+  
+
+
+]
+
+
 
   return (
     <div className='product-mgmt'>
@@ -103,15 +147,15 @@ const PaymentManagement = () => {
           <p>Track and manage all payment transactions.</p>
         </div>
         <div className='header-actions'>
-          <button className='bulk-upload-btn'>
+          {/* <button className='bulk-upload-btn'>
             <FaFileExport />
             Export CSV
-          </button>
+          </button> */}
 
-          <button className='add-product-btn'>
+          {/* <button className='add-product-btn'>
             <FaPlus />
             Record Payment
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -121,7 +165,7 @@ const PaymentManagement = () => {
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar />
+          <SearchBar placeholder='search payments' />
 
           {/* ================= STATUS DROPDOWN ================= */}
 
@@ -166,7 +210,8 @@ const PaymentManagement = () => {
 
         {/* Data table for payments */}
         <section className='mt-2'>
-          <DataTable value={filteredPayments} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}
+          <TableData columns={columns} data={filteredPayments}/>
+          {/* <DataTable value={filteredPayments} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink">
             <Column header='#' body={countFunction}></Column>
             <Column header='Payment ID' body={paymentIdBody}></Column>
@@ -177,7 +222,7 @@ const PaymentManagement = () => {
             <Column header='Method' body={methodBody}></Column>
             <Column header='Status' body={statusBody}></Column>
             <Column header='Actions' body={PaymentTableActions}></Column>
-          </DataTable>
+          </DataTable> */}
         </section>
       </section>
     </div>

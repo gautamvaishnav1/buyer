@@ -26,3 +26,34 @@
     height: 80px;
     /* border-radius: 50%; */
 }
+
+@media (max-width: 768px) {
+    .welcome-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+        padding: 16px;
+    }
+    .welcome-banner h2 {
+        font-size: 20px;
+    }
+    .welcome-banner p {
+        font-size: 14px;
+    }
+    .welcome-banner img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-banner {
+        padding: 12px;
+    }
+    .welcome-banner h2 {
+        font-size: 18px;
+    }
+    .welcome-banner p {
+        font-size: 13px;
+    }
+}

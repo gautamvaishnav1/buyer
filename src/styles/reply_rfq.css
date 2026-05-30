@@ -1,0 +1,735 @@
+/* ============================================================
+   B2B Supplier Portal - Reply RFQ Stylesheet
+   Follows the same design system as reply_inquiry.css
+   ============================================================ */
+
+.reply-rfq-container {
+  padding: var(--sp-6);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--sans);
+  color: var(--text);
+}
+
+/* ── Action & Navigation Bar ───────────────────────────────── */
+.rfq-reply-action-bar {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-6);
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.rfq-reply-back-link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-dark);
+  text-decoration: none;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  transition: var(--transition);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: var(--sp-2);
+}
+
+.rfq-reply-back-link:hover {
+  color: var(--primary-red);
+  border-color: var(--primary-red-light);
+  transform: translateX(-3px);
+}
+
+.rfq-reply-action-btns {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.rfq-btn-decline {
+  background: transparent;
+  color: var(--primary-red);
+  border: 1px solid var(--primary-red-light);
+  padding: var(--sp-2);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.rfq-btn-decline:hover {
+  background: rgba(192, 57, 43, 0.05);
+  border-color: var(--primary-red);
+}
+
+.rfq-btn-primary {
+  background: var(--primary-red);
+  color: var(--text-white);
+  border: 1px solid var(--primary-red);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-6);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.rfq-btn-primary:hover {
+  background: var(--primary-red-hover);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.25);
+}
+
+/* ── Content Grid Layout ───────────────────────────────────── */
+.rfq-reply-content-grid {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-12);
+}
+
+.rfq-workspace-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+.rfq-context-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+}
+
+/* ── Card Styling ──────────────────────────────────────────── */
+.rfq-reply-card {
+  background: var(--bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: var(--sp-6);
+  display: flex;
+  position: sticky;
+  top: 50px;
+  flex-direction: column;
+}
+
+.rfq-card-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.rfq-card-title-bar h3 {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-7);
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+/* ── Tabbed Workspace Header ───────────────────────────────── */
+.rfq-workspace-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-5);
+  gap: var(--sp-2);
+}
+
+.rfq-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 12px 18px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  color: var(--text-gray);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  transition: var(--transition);
+}
+
+.rfq-tab-btn:hover {
+  color: var(--text-dark);
+}
+
+.rfq-tab-btn.active {
+  color: var(--primary-red);
+  border-bottom-color: var(--primary-red);
+}
+
+/* ── Quotation Form ────────────────────────────────────────── */
+.rfq-quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.rfq-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+.rfq-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rfq-form-group label {
+  font-size: var(--fs-xs);
+  color: var(--text-dark);
+  font-weight: var(--fw-6);
+}
+
+.rfq-form-control {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: var(--fs-xs);
+  outline: none;
+  color: var(--text-black);
+  background: var(--bg);
+  transition: var(--transition-border);
+}
+
+.rfq-form-control:focus {
+  border-color: var(--primary-red);
+}
+
+.rfq-form-control::placeholder {
+  color: var(--text-gray);
+}
+
+/* ── Quote Preview Panel ───────────────────────────────────── */
+.rfq-quote-preview {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+}
+
+.rfq-quote-preview-title {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-7);
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 6px;
+}
+
+/* ── Invoice / PI Sheet ────────────────────────────────────── */
+.rfq-invoice-sheet {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  padding: var(--sp-5);
+  position: relative;
+  overflow: hidden;
+}
+
+.rfq-invoice-sheet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-red);
+}
+
+.rfq-invoice-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-4);
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: var(--sp-3);
+}
+
+.rfq-invoice-logo {
+  font-weight: var(--fw-8);
+  color: var(--text-heading);
+  font-size: var(--fs-sm);
+  letter-spacing: -0.5px;
+}
+
+.rfq-invoice-type {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-7);
+  color: var(--primary-red);
+  text-transform: uppercase;
+}
+
+.rfq-invoice-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-xs);
+  color: var(--text-gray);
+}
+
+.rfq-invoice-meta-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rfq-invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--sp-4);
+}
+
+.rfq-invoice-table th {
+  font-size: 10px;
+  font-weight: var(--fw-7);
+  color: var(--text-gray);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border);
+  padding: 6px 0;
+  text-align: left;
+}
+
+.rfq-invoice-table td {
+  font-size: var(--fs-xs);
+  color: var(--text-dark);
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.rfq-invoice-table th.right,
+.rfq-invoice-table td.right {
+  text-align: right;
+}
+
+.rfq-invoice-calculations {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  padding-top: var(--sp-3);
+}
+
+.rfq-invoice-calc-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-xs);
+  color: var(--text-dark);
+}
+
+.rfq-invoice-calc-row.grand-total {
+  font-weight: var(--fw-7);
+  font-size: var(--fs-sm);
+  color: var(--primary-red);
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+  margin-top: 2px;
+}
+
+/* ── Email Editor ──────────────────────────────────────────── */
+.rfq-editor-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.rfq-templates-section {
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+  border: 1px solid var(--border);
+}
+
+.rfq-templates-title {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-7);
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--sp-2);
+}
+
+.rfq-template-chips {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.rfq-template-chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.rfq-template-chip:hover {
+  border-color: var(--primary-red-light);
+  color: var(--primary-red);
+  background: rgba(192, 57, 43, 0.02);
+}
+
+.rfq-subject-input {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: var(--fs-xs);
+  outline: none;
+  color: var(--text-black);
+  background: var(--bg);
+}
+
+.rfq-subject-input:focus {
+  border-color: var(--primary-red);
+  background: #fff;
+}
+
+.rfq-message-textarea {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  outline: none;
+  min-height: 250px;
+  resize: vertical;
+  background: var(--bg);
+  color: var(--text-black);
+  font-family: inherit;
+}
+
+.rfq-message-textarea:focus {
+  border-color: var(--primary-red);
+  background: #fff;
+}
+
+/* ── Attachments Zone ──────────────────────────────────────── */
+.rfq-attachments-zone {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.rfq-dropzone-container {
+  border: 2px dashed #cbd5e1;
+  padding: var(--sp-6) var(--sp-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.rfq-dropzone-container:hover {
+  border-color: var(--primary-red-light);
+  background: rgba(192, 57, 43, 0.02);
+}
+
+.rfq-dropzone-container svg {
+  font-size: 32px;
+  color: var(--text-gray);
+  margin-bottom: var(--sp-1);
+}
+
+.rfq-dropzone-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-7);
+  color: var(--text-heading);
+}
+
+.rfq-dropzone-sub {
+  font-size: var(--fs-xs);
+  color: var(--text-gray);
+}
+
+.rfq-attached-files-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.rfq-file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: var(--sp-3);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.rfq-file-item:hover {
+  box-shadow: var(--shadow);
+}
+
+.rfq-file-info {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.rfq-file-icon {
+  font-size: 24px;
+  color: var(--primary-red);
+}
+
+.rfq-file-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.rfq-file-name {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  color: var(--text-heading);
+}
+
+.rfq-file-size {
+  font-size: 10px;
+  color: var(--text-gray);
+}
+
+.rfq-file-delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-gray);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.rfq-file-delete-btn:hover {
+  color: var(--primary-red);
+  background: var(--bg-light);
+}
+
+/* ── Context Sidebar: Buyer Profile ────────────────────────── */
+.rfq-buyer-avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-circle);
+  background: linear-gradient(135deg, var(--primary-red), #e74c3c);
+  color: var(--text-white);
+  font-weight: var(--fw-7);
+  font-size: var(--fs-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(192, 57, 43, 0.2);
+}
+
+.rfq-buyer-stats-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+}
+
+.rfq-buyer-stat-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 6px;
+}
+
+.rfq-buyer-stat-row label {
+  color: var(--text-gray);
+  font-weight: var(--fw-5);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rfq-buyer-stat-row span {
+  color: var(--text-dark);
+  font-weight: var(--fw-6);
+}
+
+.rfq-verified-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: rgba(39, 174, 96, 0.1);
+  border: 1px solid var(--text-success);
+  color: var(--text-success-hover);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-7);
+  justify-content: center;
+  margin-top: var(--sp-2);
+}
+
+/* ── Context Sidebar: Specifications ───────────────────────── */
+.rfq-specs-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  font-size: var(--fs-xs);
+}
+
+.rfq-spec-check-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 4px;
+}
+
+.rfq-spec-check-item label {
+  color: var(--text-gray);
+  font-weight: var(--fw-5);
+}
+
+.rfq-spec-check-item span {
+  color: var(--text-dark);
+  font-weight: var(--fw-6);
+}
+
+.rfq-buyer-msg-card {
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  border-left: 3px solid var(--primary-red);
+  white-space: pre-line;
+  color: var(--text-dark);
+}
+
+/* ── Status badge for RFQ ──────────────────────────────────── */
+.rfq-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: var(--fw-7);
+  text-transform: uppercase;
+}
+
+.rfq-status-badge.open { background: #dcfce7; color: #15803d; }
+.rfq-status-badge.quoted { background: #dbeafe; color: #2563eb; }
+.rfq-status-badge.negotiating { background: #fef3c7; color: #d97706; }
+.rfq-status-badge.closed { background: #f1f5f9; color: #64748b; }
+.rfq-status-badge.expired { background: #fee2e2; color: #dc2626; }
+
+/* ── Urgency Countdown ─────────────────────────────────────── */
+.rfq-urgency-box {
+  text-align: right;
+  padding: var(--sp-3);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border);
+}
+
+.rfq-urgency-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-gray);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.rfq-urgency-time {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--primary-red);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+/* Toast Notifications */
+.rfq-toast {
+  position: fixed;
+  top: 80px;
+  right: 32px;
+  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-7);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  z-index: 1000;
+  animation: rfq-slide-in 0.3s ease;
+}
+
+.rfq-toast.success {
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  color: #2e7d32;
+}
+
+.rfq-toast.error {
+  background: #fce4ec;
+  border: 1px solid #ff8a80;
+  color: #c62828;
+}
+
+@keyframes rfq-slide-in {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Responsive Styling ─────────────────────────────────────── */
+@media (max-width: 992px) {
+  .rfq-reply-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .rfq-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .rfq-reply-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rfq-reply-action-btns {
+    justify-content: space-between;
+  }
+}

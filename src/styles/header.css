@@ -2,33 +2,67 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--sp-4);
-    height: var(--sp-12);
+    height: 64px;
     background-color: var(--bg);
-    /* Changed to White */
-    border-bottom: 1px solid var(--border);
-    /* Added border for white bg */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 999;
+    
+}
+
+.logo {
+    color: var(--header-logo-bg);
+    height: 100%;
+    width: 4.2rem; /* Same as sidebar */
+    display: flex;
+    background: var(--header-bg);
+    justify-content: center;
+    align-items: center;
+}
+.header::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left:4.2rem;
+    right: 0;
+    bottom: 0;
+  border-bottom: 0.5px solid var(--border);
+  box-shadow: var(--box-shadow);
+   
+}
+
+.logo img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
 }
 
 @media (min-width: 769px) {
     .header {
-        left: 80px;
+        width: 100%;
+        top: 0;
         /* Sidebar width */
-        padding: 0 var(--sp-6);
+        /* padding: 0 var(--sp-6); */
         height: 64px;
     }
 }
 
+/* Apply the shadow only to the items that come AFTER the logo */
+.logo ~ div, 
+.header-left, 
+.header-search, 
+.header-actions {
+    /* This creates a seamless bottom shadow effect across the remaining elements */
+    filter: drop-shadow(0px 4px 3px rgba(0, 0, 0, 0.04));
+}
 .header-left {
     display: flex;
     align-items: center;
-    gap: var(--sp-3);
+    /* gap: var(--sp-3); */
+    margin-left: var(--sp-2);
 }
 
 .hamburger-btn {

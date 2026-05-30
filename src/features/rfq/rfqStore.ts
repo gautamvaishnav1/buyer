@@ -1,9 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import rfqData from '../../core/storage/DummyRFQs.json'
 
-
-const initialState={
-    Rfq :rfqData
+interface RFQState{
+    rfq:any[];
+    search:string;
+}
+const initialState:RFQState={
+    rfq :rfqData,
+    search:''
 }
 const rfqSlice=createSlice({
 
@@ -11,12 +15,13 @@ const rfqSlice=createSlice({
     name:'Rfq',
     initialState,
     reducers:{
-            // readRfq:(state,action)=>{
-            //         state.Rfq=action.payload
-            // }
+           setSearch:(state,action:PayloadAction<string>)=>{
+            state.search=action.payload
+        },
+
     }
 })
 
 
-
+export const {setSearch}=rfqSlice.actions
 export default rfqSlice.reducer

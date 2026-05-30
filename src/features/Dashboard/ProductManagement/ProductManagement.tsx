@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import LinkButton from '../../../shared/LinkButton/LinkButton'
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../../shared/constants';
 
 const ProductManagement = () => {
   const productData = useSelector((state: any) => state.products.products)
@@ -67,7 +69,7 @@ const ProductManagement = () => {
       </h4>
     )
   } 
-  const countFunction = ( rowData:any,options: any) => {
+  const countFunction = (_rowData: any, options: any) => {
     console.log(options.rowIndex+1)
     return <span>{options.rowIndex + 1}</span>
   }
@@ -90,17 +92,17 @@ const ProductManagement = () => {
       <div className='btnEditDelete'>
         <LinkButton
           styleName='blue'
-          link={`view-product/${options.id}`}
+          link={`/seller/products/view-product/${options.id}`}
          
         ><GrView/></LinkButton>
         <LinkButton
           styleName='green'
-          link={`edit-products/${options.id}`}
+          link={`/seller/products/edit-products/${options.id}`}
           
         ><LiaEdit/></LinkButton>
         <LinkButton
           styleName='red'
-          link={`delete-products/${options.id}`}
+          link={`/seller/delete-products/${options.id}`}
           // text={`Delete`}
         ><AiFillDelete/></LinkButton>
       </div>
@@ -129,10 +131,10 @@ const ProductManagement = () => {
             Bulk Upload
           </button>
 
-          <button className='add-product-btn'>
+          <Link to={ROUTES.ADD_PRODUCTS} className='add-product-btn '>
             <FaPlus />
             Add New Product
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -142,7 +144,7 @@ const ProductManagement = () => {
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar />
+          <SearchBar placeholder='search products '/>
 
           {/* ================= CATEGORY DROPDOWN ================= */}
 

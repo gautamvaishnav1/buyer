@@ -1,17 +1,18 @@
 import { useState } from 'react'
-import { FaFileExport, FaPlus } from 'react-icons/fa'
+// import { FaFileExport, FaPlus } from 'react-icons/fa'
 import { GrView } from 'react-icons/gr'
-import { LiaEdit } from 'react-icons/lia'
-import { AiFillDelete } from 'react-icons/ai'
-
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
+// import { LiaEdit } from 'react-icons/lia'
+// import { AiFillDelete } from 'react-icons/ai'
+import { FaReply } from "react-icons/fa6";
+// import { DataTable } from 'primereact/datatable'
+// import { Column } from 'primereact/column'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import LinkButton from '../../shared/LinkButton/LinkButton'
 import SearchBar from '../Dashboard/ProductManagement/SearchBar'
 import '../../styles/product_management.css'
 import '../../styles/inquiry_management.css'
+import TableData from '../../shared/components/tableData/TableData'
 
 // ── Mock Inquiry Data ────────────────────────────────────────────────────────
 const generateMockInquiries = (count: number) => {
@@ -105,7 +106,7 @@ const InquiryManagement = () => {
       <div className="inq-avatar">{row.buyerName.charAt(0)}</div>
       <div>
         <h4>{row.buyerName.length > 15 ? row.buyerName.slice(0, 15) + '...' : row.buyerName}</h4>
-        <span className="inq-company">{row.company}</span>
+        {/* <span className="inq-company">{row.company}</span> */}
       </div>
     </div>
   )
@@ -131,18 +132,60 @@ const InquiryManagement = () => {
 
   const InquiryTableActions = (row: any) => (
     <div className='btnEditDelete'>
-      <LinkButton styleName='blue' link={`/view-inquiry/${row.id}`}>
+      <LinkButton styleName='blue' link={`/seller/view-inquiry/${row.id}`}>
         <GrView />
       </LinkButton>
-      <LinkButton styleName='green' link={`edit-inquiry/${row.id}`}>
-        <LiaEdit />
+      <LinkButton styleName='green' link={`/seller/inquiries/reply-inquiry/${row.id}`}>
+        <FaReply />
       </LinkButton>
-      <LinkButton styleName='red' link={`delete-inquiry/${row.id}`}>
+      {/* <LinkButton styleName='red' link={`delete-inquiry/${row.id}`}>
         <AiFillDelete />
-      </LinkButton>
+      </LinkButton> */}
     </div>
   )
 
+  const columns=[
+    {
+      header:'#',
+      body:countFunction
+    },
+    {
+      header:'Inquiry ID',
+      body:inquiryIdBody
+    },
+    {
+      header:'Date',
+      body:dateBody
+    },
+    {
+      header:'Buyer',
+      body:buyerBody
+    },
+    {
+      header:'Product',
+      body:productBody
+    },
+    {
+      header:'Qty',
+      body:quantityBody
+    },
+    {
+      header:'Budget',
+      body:budgetBody
+    },
+    {
+      header:'Priority',
+      body:priorityBody
+    },
+    {
+      header:'Status',
+      body:statusBodyTemplate
+    },
+    {
+      header:'Actions',
+      body:InquiryTableActions  
+    }
+  ]
   return (
     <div className='product-mgmt'>
       {/* ================= HEADER ================= */}
@@ -153,15 +196,15 @@ const InquiryManagement = () => {
           <p>Track and reply to potential buyers and manage your sales leads.</p>
         </div>
         <div className='header-actions'>
-          <button className='bulk-upload-btn'>
+          {/* <button className='bulk-upload-btn'>
             <FaFileExport />
             Export CSV
-          </button>
+          </button> */}
 
-          <button className='add-product-btn'>
+          {/* <button className='add-product-btn'>
             <FaPlus />
             New Inquiry
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -190,7 +233,7 @@ const InquiryManagement = () => {
       <section className='table-section'>
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
-          <SearchBar />
+          <SearchBar placeholder='search inquires' />
 
           {/* ================= STATUS DROPDOWN ================= */}
           <div>
@@ -231,8 +274,9 @@ const InquiryManagement = () => {
         </section>
 
         {/* Data table for inquiries */}
-        <section className='mt-2'>
-          <DataTable
+        <section >
+          <TableData data={filteredInquiries} columns={columns}/>
+          {/* <DataTable
             value={filteredInquiries}
             paginator
             rows={5}
@@ -250,7 +294,8 @@ const InquiryManagement = () => {
             <Column header='Priority' body={priorityBody}></Column>
             <Column header='Status' body={statusBodyTemplate}></Column>
             <Column header='Actions' body={InquiryTableActions}></Column>
-          </DataTable>
+          </DataTable> */}
+
         </section>
       </section>
     </div>
