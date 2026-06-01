@@ -708,3 +708,63 @@
     justify-content: space-between;
   }
 }
+
+/* ── Additional responsive fixes ─────────────────────────── */
+@media (max-width: 1024px) {
+  .reply-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .reply-card {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .reply-inquiry-container {
+    padding: var(--sp-3);
+  }
+  .inq-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .action-buttons {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .workspace-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+  }
+  .tab-btn {
+    padding: var(--sp-2) var(--sp-3);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .quote-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .reply-card {
+    padding: var(--sp-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .reply-inquiry-container {
+    padding: var(--sp-2);
+  }
+  .template-chips {
+    flex-direction: column;
+  }
+  .template-chip {
+    text-align: center;
+  }
+  .inq-toast {
+    right: var(--sp-3);
+    left: var(--sp-3);
+    top: 70px;
+  }
+}

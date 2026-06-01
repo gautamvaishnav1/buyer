@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams,  Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
   FaArrowLeft,
   FaTimes,
@@ -97,6 +97,7 @@ ${buyer.company}`;
     product: {
       name: productName,
       sku: `PROD-${3000 + index}`,
+      productId: ((index - 1) % 10) + 1,
       category: 'Industrial Supplies & Logistics',
       unit: index % 2 === 0 ? 'Units' : 'Sets',
     },
@@ -141,7 +142,7 @@ ${buyer.company}`;
 
 const ViewInquiry = () => {
   const { id } = useParams<{ id: string }>()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const inquiryId = id || 'INQ5001'
 
   // Fetch / Generate Inquiry Data
@@ -170,7 +171,11 @@ const ViewInquiry = () => {
   }, [inquiryId])
 
   if (!inquiry) {
-    return <div className="p-8 text-center text-lg">Loading Inquiry details...</div>
+    return (
+      <div className="inquiry-view-container inquiry-view-loading">
+        Loading inquiry details…
+      </div>
+    )
   }
 
   // Calculate totals for Quote Form (used in commented quotation tab)
@@ -254,6 +259,7 @@ Sales Team`
     const confirmation = window.confirm("Are you sure you want to decline this inquiry?")
     if (confirmation) {
       triggerAlert('success', 'Inquiry marked as declined.')
+      window.setTimeout(() => navigate(ROUTES.INQUIRIES), 1500)
     }
   }
 
@@ -262,8 +268,8 @@ Sales Team`
       
       {/* ── Dynamic Toast Banner ── */}
       {alertMsg && (
-        <div 
-          className={`px-6 py-3 rounded-lg text-sm font-bold flex gap-2 items-center fixed top-20 right-8 shadow-lg z-50 animate-fade-in`}
+        <div
+          className="inq-toast animate-fade-in"
           style={{
             backgroundColor: alertMsg.type === 'success' ? '#e8f5e9' : '#fce4ec',
             color: alertMsg.type === 'success' ? '#2e7d32' : '#c62828',
@@ -309,15 +315,22 @@ Sales Team`
           <FaArrowLeft /> Back to Inquiry Management
         </Link>
         <div className="inq-action-buttons">
-          <button onClick={handleDecline} className="btn-secondary" style={{ color: '#e60012' }}>
+          <button
+            type="button"
+            onClick={() => navigate(ROUTES.MESSAGE)}
+            className="btn-secondary"
+          >
+            <FaEnvelope /> Message Buyer
+          </button>
+          <Link
+            to={ROUTES.REPLY_INQUIRY.replace(':id', inquiryId)}
+            className="btn-brand"
+          >
+            <FaPlus /> Submit Quote
+          </Link>
+          <button type="button" onClick={handleDecline} className="btn-secondary" style={{ color: '#e60012' }}>
             <FaTimes /> Decline Sourcing
           </button>
-          {/* <button onClick={() => window.print()} className="btn-secondary">
-            <FaFilePdf /> Export / Print Page
-          </button> */}
-          {/* <button onClick={() => setReplyTab('quotation')} className="btn-brand">
-            <FaPlus /> Draft Proforma Invoice
-          </button> */}
         </div>
       </div>
 
@@ -377,7 +390,7 @@ Sales Team`
                 <h3>{inquiry.product.name}</h3>
                 <p>SKU Reference: <strong>{inquiry.product.sku}</strong> | Category: {inquiry.product.category}</p>
                 <p style={{ marginTop: '4px' }}>
-                  <Link to={`/seller/supplier-dashboard/products/view-product/${inquiry.product.sku}`} style={{ color: 'var(--primary-brand)', fontSize: '11px', textDecoration: 'none', fontWeight: 600 }}>
+                  <Link to={ROUTES.VIEW_PRODUCT.replace(':id', String(inquiry.product.productId))} style={{ color: 'var(--primary-brand)', fontSize: '11px', textDecoration: 'none', fontWeight: 600 }}>
                     View Product Specs Catalog <FaExternalLinkAlt style={{ fontSize: '9px' }} />
                   </Link>
                 </p>
@@ -520,25 +533,13 @@ Sales Team`
       {/* ── Interactive Reply / Quotation System ── */}
       <div className="reply-portal">
         <div className="reply-tabs">
-          <button 
+          <button
+            type="button"
             className={`reply-tab-btn ${replyTab === 'message' ? 'active' : ''}`}
             onClick={() => setReplyTab('message')}
           >
             <FaEnvelope /> Write Message / Email Reply
           </button>
-          {/* <button 
-            className={`reply-tab-btn ${replyTab === 'quotation' ? 'active' : ''}`}
-            onClick={() => setReplyTab('quotation')}
-          >
-            <FaFileInvoice /> Draft Proforma Invoice (PI)
-          </button>
-          <button 
-            className={`reply-tab-btn ${replyTab === 'meeting' ? 'active' : ''}`}
-            onClick={() => setReplyTab('meeting')}
-          >
-            <FaHandshake /> Schedule Factory Tour / Video Call
-          </button>
-        </div> */}
         </div>
 
         <div className="reply-body">

@@ -127,7 +127,7 @@ const AddNewProduct = () => {
   const handleSave = () => {
     if (!validate()) return;
     dispatch(addProducts({ ...p, id: Date.now() }));
-    navigate("/dashboard/products");
+    navigate("/seller/products");
   };
 
   // ── Helpers ────────────────────────────────────────────────────────────────
@@ -154,7 +154,7 @@ const AddNewProduct = () => {
       {/* ══ TOP BAR ══════════════════════════════════════════════════ */}
       <div className="pep-topbar">
         <div className="pep-topbar-left">
-          <button className="pep-back-btn" onClick={() => navigate("/dashboard/products")} aria-label="Back">
+          <button className="pep-back-btn" onClick={() => navigate("/seller/products")} aria-label="Back">
             <i className="pi pi-arrow-left" />
           </button>
           <div>
@@ -167,7 +167,7 @@ const AddNewProduct = () => {
           </div>
         </div>
         <div className="pep-topbar-right">
-          <button className="pep-btn-discard" onClick={() => navigate("/dashboard/products")}>
+          <button className="pep-btn-discard" onClick={() => navigate("/seller/products")}>
             Discard
           </button>
           <button className="pep-btn-publish" onClick={handleSave}>
@@ -720,7 +720,7 @@ const AddNewProduct = () => {
             <button className="pep-btn-publish-full" type="button" onClick={handleSave}>
               <i className="pi pi-check" /> Publish Product
             </button>
-            <button className="pep-btn-discard-full" type="button" onClick={() => navigate("/dashboard/products")}>
+            <button className="pep-btn-discard-full" type="button" onClick={() => navigate("/seller/products")}>
               <i className="pi pi-times" /> Discard
             </button>
 

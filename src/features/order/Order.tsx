@@ -1,5 +1,6 @@
 // import { FaFileExport, FaPlus } from 'react-icons/fa'
 import '../../styles/product_management.css'
+import '../../styles/order.css'
 import SearchBar from '../Dashboard/ProductManagement/SearchBar'
 // import { LiaEdit } from 'react-icons/lia'
 // import { AiFillDelete } from 'react-icons/ai'
@@ -8,6 +9,7 @@ import { GrView } from 'react-icons/gr'
 // import { Column } from 'primereact/column'
 
 import { useState } from 'react'
+import { matchesSearch } from '../../shared/utils/filterList'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import LinkButton from '../../shared/LinkButton/LinkButton'
@@ -37,6 +39,7 @@ const Order = () => {
   const [statusFilter, setStatusFilter] = useState('')
   const [buyerFilter, setBuyerFilter] = useState('')
   const [dateRange, setDateRange] = useState<Date[] | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const statusValues = ['All', 'Pending', 'Processing', 'Shipped', 'Delivered']
 
@@ -53,7 +56,16 @@ const Order = () => {
     if (dateRange && dateRange.length === 2 && dateRange[0] && dateRange[1]) {
       matchDate = o.rawDate >= dateRange[0] && o.rawDate <= dateRange[1]
     }
-    return matchStatus && matchBuyer && matchDate
+    const matchSearchTerm = matchesSearch(
+      searchQuery,
+      o.id,
+      o.buyer,
+      o.status,
+      o.amount,
+      o.date,
+      o.items
+    )
+    return matchStatus && matchBuyer && matchDate && matchSearchTerm
   })
 
   // ── Body Templates ─────────────────────────────────────────────────────────
@@ -173,7 +185,11 @@ const columns=[
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar placeholder='search orders' />
+          <SearchBar
+            placeholder="Search orders"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
 
           {/* ================= STATUS DROPDOWN ================= */}
 

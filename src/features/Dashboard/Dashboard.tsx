@@ -43,18 +43,11 @@ const Dashboard = ({
 }: DashboardProps) => {
   return (
     <>
-      {/* Header */}
-     
+      <Header onMenuClick={onMenuClick} isSidebarOpen={isSidebarOpen} />
 
       <div className="dashboard-layout">
-         <Header onMenuClick={onMenuClick} />
-        {/* Sidebar */}
-        <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={onClose}
-        />
+        <Sidebar isOpen={isSidebarOpen} onClose={onClose} />
 
-        {/* Main Content */}
         <main className="dashboard-content">
           <Outlet />
         </main>

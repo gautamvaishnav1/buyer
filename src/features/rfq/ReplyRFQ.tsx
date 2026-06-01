@@ -183,7 +183,7 @@ Sales Department`;
     }
     triggerToast('success', `Response dispatched to ${rfq.buyer}!`);
     setEmailText('');
-    setTimeout(() => navigate('/supplier-dashboard/rfq'), 2000);
+    setTimeout(() => navigate(ROUTES.RFQ), 2000);
   };
 
   // File upload
@@ -236,7 +236,7 @@ Sales Department`;
             onClick={() => {
               if (window.confirm('Are you sure you want to decline this RFQ?')) {
                 triggerToast('success', 'RFQ declined. Buyer has been notified.');
-                setTimeout(() => navigate('/supplier-dashboard/rfq'), 1500);
+                setTimeout(() => navigate(ROUTES.RFQ), 1500);
               }
             }}
           >

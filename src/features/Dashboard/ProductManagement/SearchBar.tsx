@@ -1,13 +1,22 @@
-// import { FaSearch } from 'react-icons/fa'
 import '../../../styles/product_management.css'
-interface SearchBarProps{
+
+interface SearchBarProps {
   placeholder: string
+  value: string
+  onChange: (value: string) => void
 }
-const SearchBar = (props:SearchBarProps) => {
+
+const SearchBar = ({ placeholder, value, onChange }: SearchBarProps) => {
   return (
-    <main className=' search-container-second'>
-        <input className=" search-input" type="text" name="" id="" placeholder={props.placeholder}/>
-        {/* <FaSearch className="search-icon" /> */}
+    <main className="search-container-second">
+      <input
+        className="search-input"
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        aria-label={placeholder}
+      />
     </main>
   )
 }

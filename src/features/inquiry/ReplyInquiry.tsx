@@ -186,7 +186,7 @@ Sales Team`;
     
     // Return to inquiry dashboard
     setTimeout(() => {
-      navigate('/inquiries');
+      navigate(ROUTES.INQUIRIES);
     }, 2000);
   };
 
@@ -238,7 +238,7 @@ Sales Team`;
             onClick={() => {
               if (window.confirm('Are you sure you want to decline this sourcing inquiry?')) {
                 triggerToast('success', 'Lead declined. Sourcing closed.');
-                setTimeout(() => navigate('/inquiries'), 1500);
+                setTimeout(() => navigate(ROUTES.INQUIRIES), 1500);
               }
             }}
           >

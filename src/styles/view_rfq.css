@@ -231,11 +231,153 @@
   padding: var(--sp-5);
 }
 
-.btn-outline{
-  border: 0;
+/* ── Action buttons ─────────────────────────────────────────── */
+.rfq-btn-outline,
+.rfq-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
   font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  font-family: inherit;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.rfq-btn-outline {
+  background: var(--bg);
+  color: var(--text-dark);
+  border: 1px solid var(--border);
+}
+
+.rfq-btn-outline:hover:not(:disabled) {
+  background: var(--bg-light);
+  border-color: var(--text-gray);
+}
+
+.rfq-btn-outline:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.rfq-btn-decline:hover:not(:disabled) {
+  color: var(--primary-red);
+  border-color: var(--primary-red-light);
+}
+
+.rfq-btn-primary {
   background: var(--header-bg);
-  /* border-radius: var(--rounde-sm); */
+  color: var(--text-white);
+  border: 1px solid var(--header-bg);
+  box-shadow: 0 4px 10px rgba(230, 0, 35, 0.2);
+}
+
+.rfq-btn-primary:hover:not(:disabled) {
+  background: var(--primary-red-hover);
+  border-color: var(--primary-red-hover);
+}
+
+.rfq-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.rfq-btn-full {
+  width: 100%;
+  margin-top: var(--sp-4);
+}
+
+.btn-quote-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rfq-declined-banner {
+  width: 100%;
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  background: #fff3e0;
+  border: 1px solid #ffe0b2;
+  border-radius: var(--radius-md);
+  color: #ef6c00;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+}
+
+.rfq-toast {
+  position: fixed;
+  top: 72px;
+  right: var(--sp-4);
+  left: auto;
+  max-width: min(400px, calc(100vw - var(--sp-8)));
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-6);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  box-shadow: var(--shadow);
+  z-index: 1100;
+}
+
+.rfq-toast--success {
+  background: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  color: #2e7d32;
+}
+
+.rfq-toast--error {
+  background: #fce4ec;
+  border: 1px solid #ff8a80;
+  color: #c62828;
+}
+
+.rfq-not-found {
+  text-align: center;
+  padding: var(--sp-12) var(--sp-4);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.rfq-not-found h2 {
+  color: var(--text-heading);
+  margin-bottom: var(--sp-3);
+}
+
+.rfq-not-found p {
+  color: var(--text-gray);
+  margin-bottom: var(--sp-6);
+}
+
+.rfq-section--last {
+  border-bottom: none;
+}
+
+.rfq-attachment-card--btn {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border-light, #eaedf1);
+  transition: var(--transition);
+}
+
+.rfq-attachment-card--btn:hover {
+  border-color: var(--primary-red);
+  box-shadow: var(--box-shadow);
+}
+
+.rfq-attachment-dl {
+  margin-left: auto;
+  color: var(--link-blue);
+  flex-shrink: 0;
 }
 .rfq-buyer-header {
   display: flex;
@@ -368,6 +510,30 @@
   }
 }
 
+@media (max-width: 767px) {
+  .rfq-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-3);
+  }
+
+  .rfq-action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .rfq-btn-outline,
+  .rfq-btn-primary {
+    width: 100%;
+  }
+
+  .rfq-toast {
+    left: var(--sp-3);
+    right: var(--sp-3);
+    max-width: none;
+  }
+}
+
 @media (max-width: 576px) {
   .rfq-header {
     flex-direction: column;
@@ -379,5 +545,67 @@
   }
   .rfq-req-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ── Additional responsive fixes ─────────────────────────── */
+@media (max-width: 1024px) {
+  .rfq-main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .rfq-view-container {
+    padding: var(--sp-3);
+  }
+  .rfq-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-3);
+  }
+  .rfq-action-buttons {
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+  .rfq-header {
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  .rfq-urgency {
+    width: 100%;
+    text-align: left;
+  }
+  .rfq-urgency-time {
+    justify-content: flex-start;
+  }
+  .rfq-meta {
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .rfq-req-grid {
+    grid-template-columns: 1fr;
+  }
+  .rfq-attachments {
+    flex-direction: column;
+  }
+  .rfq-attachment-card {
+    min-width: unset;
+    width: 100%;
+  }
+  .rfq-buyer-card {
+    padding: var(--sp-4);
+  }
+  .rfq-quote-card {
+    padding: var(--sp-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .rfq-view-container {
+    padding: var(--sp-2);
+  }
+  .rfq-section {
+    padding: var(--sp-4);
   }
 }

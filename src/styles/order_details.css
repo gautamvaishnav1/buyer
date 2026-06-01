@@ -1137,3 +1137,76 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Additional responsive fixes ─────────────────────────── */
+@media (max-width: 1024px) {
+  .detail-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .stepper-card {
+    padding: var(--sp-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .order-detail-container {
+    padding: var(--sp-3);
+  }
+  .stepper-card {
+    padding: var(--sp-3);
+  }
+  .stepper-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-3);
+  }
+  .stepper-actions {
+    width: 100%;
+  }
+  .stepper-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .summary-container {
+    flex-direction: column;
+  }
+  .important-contract-notes,
+  .invoice-calculations {
+    min-width: unset;
+    width: 100%;
+  }
+  .products-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .chat-container {
+    height: 300px;
+  }
+  .modal-container {
+    margin: var(--sp-4);
+    padding: var(--sp-4);
+  }
+  .buyer-profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-detail-container {
+    padding: var(--sp-2);
+  }
+  .detail-card {
+    padding: var(--sp-3);
+  }
+  .meta-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .milestones-list .milestone-header-row {
+    flex-direction: column;
+    gap: var(--sp-1);
+  }
+  .stepper-track {
+    gap: var(--sp-3);
+  }
+}

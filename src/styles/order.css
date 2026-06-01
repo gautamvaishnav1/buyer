@@ -240,54 +240,6 @@
 .order-action-green { background: var(--link-green); }
 .order-action-red   { background: var(--link-red); }
 
-/* ── Paginator ──────────────────────────────────────────────── */
-.order-datatable .p-paginator {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  flex-wrap: wrap;
-  font-size: var(--fs-xs);
-  padding: var(--sp-3) var(--sp-6);
-  border-top: 1px solid var(--border);
-}
-
-.order-datatable .p-paginator-element {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-  padding: var(--sp-1) var(--sp-2);
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  min-width: 32px;
-  text-align: center;
-  background: var(--bg);
-  color: var(--text-dark);
-}
-
-.order-datatable .p-paginator-element:hover {
-  background: var(--primary-red);
-  color: #fff;
-  border-color: var(--primary-red);
-}
-
-.order-datatable .p-paginator-element.p-paginator-page-active {
-  background: var(--primary-red);
-  color: var(--text-white);
-  border-color: var(--primary-red);
-  font-weight: 700;
-}
-
-.order-datatable .p-paginator .p-dropdown {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  height: 32px;
-}
-
-.order-datatable .p-paginator .p-dropdown .p-dropdown-label {
-  padding: 0 var(--sp-1);
-  font-size: var(--fs-xs);
-}
-
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .order-filter-bar {
@@ -302,18 +254,6 @@
   .order-header-actions {
     width: 100%;
     justify-content: flex-end;
-  }
-
-  .order-datatable .p-paginator {
-    justify-content: center;
-    padding: var(--sp-2);
-    gap: var(--sp-1);
-  }
-
-  .order-datatable .p-paginator-element {
-    padding: var(--sp-1) var(--sp-2);
-    min-width: 28px;
-    font-size: 12px;
   }
 
   .order-mgmt {

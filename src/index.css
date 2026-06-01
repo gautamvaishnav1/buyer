@@ -719,4 +719,34 @@ input{
   .m-6, .m-8 {
     margin: var(--sp-2);
   }
+}
+
+/* === Full-site responsive helpers === */
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container,
+  .product-mgmt-container,
+  .b2b-seller-hub,
+  .inquiry-view-container,
+  .rfq-view-container,
+  .order-detail-container,
+  .reply-inquiry-container,
+  .reply-rfq-container {
+    padding-left: var(--sp-3);
+    padding-right: var(--sp-3);
+    box-sizing: border-box;
+  }
 

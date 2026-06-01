@@ -8,10 +8,12 @@ import { GrView } from 'react-icons/gr'
 // import { Column } from 'primereact/column'
 
 import { useState } from 'react'
+import { matchesSearch } from '../../shared/utils/filterList'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import LinkButton from '../../shared/LinkButton/LinkButton'
 import TableData from '../../shared/components/tableData/TableData'
+import { ROUTES } from '../../shared/constants'
 
 // ── Mock Payment Data ────────────────────────────────────────────────────────
 const generateMockPayments = (count: number) => {
@@ -40,6 +42,7 @@ const PaymentManagement = () => {
   const [statusFilter, setStatusFilter] = useState('')
   const [methodFilter, setMethodFilter] = useState('')
   const [dateRange, setDateRange] = useState<Date[] | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const statusValues = ['All', 'Completed', 'Pending', 'Failed', 'Refunded']
 
@@ -56,7 +59,17 @@ const PaymentManagement = () => {
     if (dateRange && dateRange.length === 2 && dateRange[0] && dateRange[1]) {
       matchDate = p.rawDate >= dateRange[0] && p.rawDate <= dateRange[1]
     }
-    return matchStatus && matchMethod && matchDate
+    const matchSearchTerm = matchesSearch(
+      searchQuery,
+      p.id,
+      p.orderId,
+      p.buyer,
+      p.amount,
+      p.method,
+      p.status,
+      p.date
+    )
+    return matchStatus && matchMethod && matchDate && matchSearchTerm
   })
 
   // ── Body Templates ─────────────────────────────────────────────────────────
@@ -79,7 +92,7 @@ const PaymentManagement = () => {
       <div className='btnEditDelete'>
         <LinkButton
           styleName='blue'
-          link={`/seller/view-payment/${options.id}`}
+          link={ROUTES.VIEW_PAYMENT.replace(':id', options.id)}
         ><GrView /></LinkButton>
         {/* <LinkButton
           styleName='green'
@@ -165,7 +178,11 @@ const columns = [
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar placeholder='search payments' />
+          <SearchBar
+            placeholder="Search payments"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
 
           {/* ================= STATUS DROPDOWN ================= */}
 

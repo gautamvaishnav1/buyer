@@ -91,6 +91,8 @@ import { OrderDetail } from "../features/order/OrderDetail"
 import SupplierProfile from "../features/profile/SupplierProfile"
 import Analytics from "../features/analytics/Analytics"
 import PaymentManagement from "../features/payments/PaymentManagement"
+import ViewPayment from "../features/payments/ViewPayment"
+import MessagesPage from "../features/message/MessagesPage"
 
 const AppRouter = () => {
   // Desktop => open by default
@@ -117,24 +119,23 @@ const AppRouter = () => {
     }
   }, [])
 
-  // Toggle sidebar only on mobile
+  const isMobileViewport = () =>
+    window.matchMedia("(max-width: 767px)").matches
+
   const handleMenuClick = () => {
-    if (window.innerWidth < 768) {
-      setIsSidebarOpen((prev) => !prev)
-    }
+    if (!isMobileViewport()) return
+    setIsSidebarOpen((prev) => !prev)
   }
 
-  // Close sidebar only on mobile
   const handleSidebarClose = () => {
-    if (window.innerWidth < 768) {
-      setIsSidebarOpen(false)
-    }
+    if (!isMobileViewport()) return
+    setIsSidebarOpen(false)
   }
 
   return (
     <>
-      {/* Header */}
-      {/* <Header onMenuClick={handleMenuClick} /> */}
+      {/* Header is already rendered inside <Dashboard /> */}
+
 
       <Routes>
         <Route
@@ -181,7 +182,7 @@ const AppRouter = () => {
             path={ROUTES.VIEW_INQUIRY}
             element={<ViewInquiry />}
           />
-
+      <Route path={ROUTES.MESSAGE} element={<MessagesPage />} />
           <Route
             path={ROUTES.REPLY_INQUIRY}
             element={<ReplyInquiry />}
@@ -220,6 +221,11 @@ const AppRouter = () => {
             element={<PaymentManagement />}
           />
 
+          <Route
+            path={ROUTES.VIEW_PAYMENT}
+            element={<ViewPayment />}
+          />
+
           {/* Analytics */}
           <Route
             path={ROUTES.ANALYTICS}
@@ -233,7 +239,7 @@ const AppRouter = () => {
           />
 
           <Route
-            path="verification"
+            path={ROUTES.VERIFICATION}
             element={<SupplierProfile />}
           />
 

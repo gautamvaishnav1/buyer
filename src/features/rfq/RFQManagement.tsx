@@ -9,6 +9,7 @@ import { FaReply } from "react-icons/fa6";
 // import { Column } from 'primereact/column'
 
 import { useState } from 'react'
+import { matchesSearch } from '../../shared/utils/filterList'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar } from 'primereact/calendar'
 import LinkButton from '../../shared/LinkButton/LinkButton'
@@ -41,6 +42,7 @@ const RFQManagement = () => {
   const [statusFilter, setStatusFilter] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('')
   const [dateRange, setDateRange] = useState<Date[] | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const statusValues = ['All', 'Open', 'Quoted', 'Negotiating', 'Closed', 'Expired']
 
@@ -53,13 +55,27 @@ const RFQManagement = () => {
 
 
 
-  // ── Filtered data ──────────────────────────────────────────────────────────
-  // const filteredRFQs = mockRFQs.filter(r => {
-  //   const matchStatus = !statusFilter || statusFilter === 'All' || r.status === statusFilter
-  //   const matchCategory = !categoryFilter || categoryFilter === 'All' || r.category === categoryFilter
-  //   const matchDate = dateRange && dateRange.length === 2 && dateRange[0] && dateRange[1] ? r.rawDate >= dateRange[0] && r.rawDate <= dateRange[1] : true
-  //   return matchStatus && matchCategory && matchDate
-  // })
+  const filteredRFQs = mockRFQs.filter(r => {
+    const matchStatus =
+      !statusFilter || statusFilter === 'All' || r.status === statusFilter
+    const matchCategory =
+      !categoryFilter || categoryFilter === 'All' || r.category === categoryFilter
+    let matchDate = true
+    if (dateRange && dateRange.length === 2 && dateRange[0] && dateRange[1]) {
+      matchDate = r.rawDate >= dateRange[0] && r.rawDate <= dateRange[1]
+    }
+    const matchSearchTerm = matchesSearch(
+      searchQuery,
+      r.id,
+      r.buyer,
+      r.category,
+      r.status,
+      r.budget,
+      r.quantity,
+      r.date
+    )
+    return matchStatus && matchCategory && matchDate && matchSearchTerm
+  })
 
   // ── Body Templates ─────────────────────────────────────────────────────────
   const countFunction = (_rowData: any, options: any) => {
@@ -165,7 +181,11 @@ const RFQManagement = () => {
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar placeholder='search rfq' />
+          <SearchBar
+            placeholder="Search RFQs"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
 
           {/* ================= STATUS DROPDOWN ================= */}
 
@@ -210,7 +230,7 @@ const RFQManagement = () => {
         </section>
 
         {/* Data table for RFQs */}
-        <TableData data={mockRFQs} columns={columns} />
+        <TableData data={filteredRFQs} columns={columns} />
        
       </section>
     </div>

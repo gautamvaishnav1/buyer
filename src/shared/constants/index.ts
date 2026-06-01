@@ -23,7 +23,10 @@ export const ROUTES = {
   VIEW_RFQ:'/seller/view-rfq/:id',
   VIEW_ORDER:'/seller/orders/view-order/:id',
   VIEW_PAYMENT:'/seller/view-payment/:id',
-  PROFILE:'/seller/profile'
+  VERIFICATION:'/seller/verification',
+  PROFILE:'/seller/profile',
+  MESSAGE:'/seller/message',
+  MESSAGE_BUYER:'/seller/message/buyer/:id'
 }
 
 export const ERROR_MESSAGES = {

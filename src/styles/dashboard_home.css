@@ -21,16 +21,18 @@
 .dashboard-content {
   margin-top: 64px;
   margin-left: 4.4rem;
-  /* padding: 20px 30px; */
   min-height: 100vh;
-  transition: all 0.3s ease;
+  transition: margin-left 0.3s ease;
+  flex: 1;
+  min-width: 0;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
+/* Mobile — sidebar is an overlay, so no left margin needed */
+@media (max-width: 767px) {
   .dashboard-content {
     margin-left: 0;
-    padding: 20px;
+    margin-top: 56px;
+    padding: var(--sp-3);
   }
 }
 

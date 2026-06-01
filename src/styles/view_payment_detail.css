@@ -140,14 +140,14 @@
 }
 
 .payment-banner-item .value {
-  font-size: var(--fs-lg);
+  font-size: var(--fs-sm);
   font-weight: var(--fw-7);
   color: var(--text-heading);
 }
 
 .payment-banner-item .value.amount {
   color: var(--primary-red);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-sm);
 }
 
 /* ── Status Badge ──────────────────────────────────────────── */

@@ -166,6 +166,100 @@
   border-radius: var(--radius-md);
 }
 
+/* ================= CALENDAR (match category dropdown) ================= */
+
+.category-dropdown.p-calendar,
+.category-dropdown.p-inputwrapper.p-calendar {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Calendar with icon — same outer size & surface as .category-dropdown .p-dropdown */
+.category-dropdown.p-calendar.p-calendar-w-btn,
+.category-dropdown.p-calendar.p-calendar-w-btn-right {
+  display: inline-flex;
+  align-items: stretch;
+  width: 100%;
+  height: 27px;
+  /* min-height: 40px;/ */
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg);
+  box-shadow: none;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.category-dropdown.p-calendar.p-calendar-w-btn-right:hover,
+.category-dropdown.p-calendar.p-calendar-w-btn:hover {
+  border-color: var(--border);
+}
+
+.category-dropdown.p-calendar.p-calendar-w-btn-right .p-inputtext,
+.category-dropdown.p-calendar.p-calendar-w-btn .p-inputtext {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background-color: var(--bg);
+  font-size: var(--fs-xs);
+  color: var(--text-black);
+  padding-inline: var(--sp-2);
+  box-shadow: none;
+}
+
+.category-dropdown.p-calendar.p-calendar-w-btn-right .p-inputtext::placeholder,
+.category-dropdown.p-calendar.p-calendar-w-btn .p-inputtext::placeholder {
+  color: var(--text-medium);
+  font-size: var(--fs-xs);
+}
+
+.category-dropdown.p-calendar.p-calendar-w-btn-right .p-inputtext:focus,
+.category-dropdown.p-calendar.p-calendar-w-btn .p-inputtext:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.category-dropdown.p-calendar.p-calendar-w-btn-right .p-datepicker-trigger,
+.category-dropdown.p-calendar.p-calendar-w-btn .p-datepicker-trigger {
+  width: 40px;
+  min-width: 40px;
+  height: 100%;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text-black);
+  border: none;
+  border-left: 1px solid var(--border);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-dropdown.p-calendar.p-calendar-w-btn-right .p-datepicker-trigger:hover,
+.category-dropdown.p-calendar.p-calendar-w-btn .p-datepicker-trigger:hover {
+  background-color: var(--bg);
+  color: var(--text-black);
+}
+
+/* Calendar without icon button */
+.category-dropdown.p-calendar:not(.p-calendar-w-btn) .p-inputtext {
+  width: 100%;
+  height: 40px;
+  min-height: 40px;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg);
+  font-size: var(--fs-xs);
+  color: var(--text-black);
+  padding-inline: var(--sp-2);
+}
+
 .p-dropdown-filter-container {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -576,65 +670,221 @@ text-align: center;
   background: var(--primary-red);
 }
 
-/* ================= PAGINATION ================= */
+/* ================= PAGINATION (shared management tables) ================= */
 
-.product-mgmt .p-paginator {
+.table-scroll .p-paginator,
+.product-mgmt .p-paginator,
+.mgmt-paginator.p-paginator {
   display: flex;
-   justify-content: end;
-    /* padding: var(--sp-2); */
-    /* gap: var(--sp-1); */
+  justify-content: flex-end;
   align-items: center;
   gap: var(--sp-2);
   flex-wrap: wrap;
   font-size: var(--fs-xs);
   padding: var(--sp-3) var(--sp-6);
   border-top: 1px solid var(--border);
+  background: var(--bg);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.product-mgmt .p-paginator-element {
+.table-scroll .p-paginator-element,
+.product-mgmt .p-paginator-element,
+.mgmt-paginator .p-paginator-element {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  /* font-size: 13px; */
   font-weight: 500;
   padding: var(--sp-1) var(--sp-2);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  min-width: 32px;
+  min-width: 2rem;
+  min-height: 2rem;
   text-align: center;
   background: var(--bg);
   color: var(--text-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.product-mgmt .p-paginator-element:hover {
+.table-scroll .p-paginator-element:hover,
+.product-mgmt .p-paginator-element:hover,
+.mgmt-paginator .p-paginator-element:hover {
   background: var(--primary-red);
   color: #ffffff;
   border-color: var(--primary-red);
 }
 
-.product-mgmt .p-paginator-element.p-paginator-page-active {
+.table-scroll .p-paginator-element.p-paginator-page-active,
+.product-mgmt .p-paginator-element.p-paginator-page-active,
+.mgmt-paginator .p-paginator-element.p-highlight,
+.mgmt-paginator .p-paginator-page.p-highlight {
   background: var(--primary-red);
   color: var(--text-white);
   border-color: var(--primary-red);
   font-weight: 700;
 }
 
-.product-mgmt .p-paginator .p-dropdown {
+.table-scroll .p-paginator .p-dropdown,
+.product-mgmt .p-paginator .p-dropdown,
+.mgmt-paginator .p-dropdown {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   height: 32px;
+  min-height: 32px;
+  background: var(--bg);
 }
 
-.product-mgmt .p-paginator .p-dropdown .p-dropdown-label {
-  padding: 0 var(--sp-1);
+.table-scroll .p-paginator .p-dropdown .p-dropdown-label,
+.product-mgmt .p-paginator .p-dropdown .p-dropdown-label,
+.mgmt-paginator .p-dropdown .p-dropdown-label {
+  padding: 0 var(--sp-2);
+  font-size: var(--fs-xs);
+  background: var(--bg);
+  color: var(--text-black);
+}
+
+.table-scroll .p-paginator .p-paginator-current,
+.product-mgmt .p-paginator .p-paginator-current,
+.mgmt-paginator .p-paginator-current {
+  color: var(--text-medium);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+}
+
+.table-scroll .p-paginator .p-paginator-pages,
+.product-mgmt .p-paginator .p-paginator-pages,
+.mgmt-paginator .p-paginator-pages {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .table-scroll .p-paginator,
+  .product-mgmt .p-paginator,
+  .mgmt-paginator.p-paginator {
+    justify-content: center;
+    padding: var(--sp-3) var(--sp-3);
+    gap: var(--sp-2);
+    row-gap: var(--sp-2);
+  }
+
+  .table-scroll .p-paginator .p-paginator-current,
+  .product-mgmt .p-paginator .p-paginator-current,
+  .mgmt-paginator .p-paginator-current {
+    flex: 1 1 100%;
+    width: 100%;
+    text-align: center;
+    order: 1;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .table-scroll .p-paginator > .p-dropdown,
+  .product-mgmt .p-paginator > .p-dropdown,
+  .mgmt-paginator > .p-dropdown {
+    order: 2;
+    flex: 0 1 auto;
+    max-width: 9rem;
+  }
+
+  .table-scroll .p-paginator .p-paginator-first,
+  .table-scroll .p-paginator .p-paginator-prev,
+  .table-scroll .p-paginator .p-paginator-pages,
+  .table-scroll .p-paginator .p-paginator-next,
+  .table-scroll .p-paginator .p-paginator-last,
+  .product-mgmt .p-paginator .p-paginator-first,
+  .product-mgmt .p-paginator .p-paginator-prev,
+  .product-mgmt .p-paginator .p-paginator-pages,
+  .product-mgmt .p-paginator .p-paginator-next,
+  .product-mgmt .p-paginator .p-paginator-last,
+  .mgmt-paginator .p-paginator-first,
+  .mgmt-paginator .p-paginator-prev,
+  .mgmt-paginator .p-paginator-pages,
+  .mgmt-paginator .p-paginator-next,
+  .mgmt-paginator .p-paginator-last {
+    order: 3;
+  }
+
+  .table-scroll .p-paginator .p-paginator-pages,
+  .product-mgmt .p-paginator .p-paginator-pages,
+  .mgmt-paginator .p-paginator-pages {
+    flex: 1 1 auto;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .table-scroll .p-paginator .p-paginator-pages::-webkit-scrollbar,
+  .product-mgmt .p-paginator .p-paginator-pages::-webkit-scrollbar,
+  .mgmt-paginator .p-paginator-pages::-webkit-scrollbar {
+    display: none;
+  }
+
+  .table-scroll .p-paginator-element,
+  .product-mgmt .p-paginator-element,
+  .mgmt-paginator .p-paginator-element {
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    padding: var(--sp-1);
+    font-size: 11px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .table-scroll .p-paginator,
+  .product-mgmt .p-paginator,
+  .mgmt-paginator.p-paginator {
+    padding: var(--sp-2);
+    gap: var(--sp-1);
+  }
+
+  .table-scroll .p-paginator .p-paginator-first,
+  .table-scroll .p-paginator .p-paginator-last,
+  .product-mgmt .p-paginator .p-paginator-first,
+  .product-mgmt .p-paginator .p-paginator-last,
+  .mgmt-paginator .p-paginator-first,
+  .mgmt-paginator .p-paginator-last {
+    display: none;
+  }
+
+  .table-scroll .p-paginator .p-paginator-current,
+  .product-mgmt .p-paginator .p-paginator-current,
+  .mgmt-paginator .p-paginator-current {
+    font-size: 10px;
+  }
+
+  .table-scroll .p-paginator > .p-dropdown,
+  .product-mgmt .p-paginator > .p-dropdown,
+  .mgmt-paginator > .p-dropdown {
+    max-width: 100%;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .table-scroll .p-paginator > .p-dropdown .p-dropdown,
+  .product-mgmt .p-paginator > .p-dropdown .p-dropdown,
+  .mgmt-paginator > .p-dropdown .p-dropdown {
+    width: 100%;
+  }
+
+  .table-scroll .p-paginator-element,
+  .product-mgmt .p-paginator-element,
+  .mgmt-paginator .p-paginator-element {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
 }
 
 /* ================= RESPONSIVE ================= */
-.p-calendar-w-btn-right .p-datepicker-trigger{
-  background-color: var(--bg);
-  color: black;
-  border: 0;
 
-}
 @media (max-width: 768px) {
   .category-section {
     grid-template-columns: 1fr 1fr;
@@ -654,14 +904,6 @@ text-align: center;
   .form-grid-3,
   .bulk-tier {
     grid-template-columns: 1fr;
-  }
-
-  
-
-  .product-mgmt .p-paginator-element {
-    padding: var(--sp-1) var(--sp-2);
-    min-width: 28px;
-    font-size: 12px;
   }
 }
 
@@ -1162,17 +1404,232 @@ text-align: center;
   }
 }
 
-.p-datepicker-group{
-      background: white;
-    /* padding: var(--sp-3); */
-    text-align: center;
-    font-size: 10px;
+/* ================= DATEPICKER PANEL (month / year / day views) ================= */
+
+.p-datepicker {
+  background: var(--bg);
+  color: var(--text-black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-xs);
+  padding: var(--sp-2);
 }
 
-.p-datepicker-header{
-  background-color: var(--black);
+.p-datepicker:not(.p-datepicker-inline) {
+  background: var(--bg);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
 }
-.p-datepicker-prev, .p-datepicker-next{
-  background: transparent;
-  border: 0;
+
+.p-datepicker .p-datepicker-header,
+.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+  background: var(--bg);
+  color: var(--text-black);
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--sp-2);
+  margin: 0;
+}
+
+.p-datepicker .p-datepicker-title {
+  background: var(--bg);
+  color: var(--text-black);
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-decade {
+  background: var(--bg);
+  color: var(--text-black);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-6);
+  padding: var(--sp-1) var(--sp-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover {
+  background: var(--bg-light);
+  color: var(--text-black);
+  border-color: var(--border);
+}
+
+.p-datepicker .p-datepicker-header select.p-datepicker-month,
+.p-datepicker .p-datepicker-header select.p-datepicker-year {
+  background: var(--bg);
+  color: var(--text-black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  padding: var(--sp-1) var(--sp-2);
+  height: 32px;
+  min-height: 32px;
+}
+
+.p-datepicker-prev,
+.p-datepicker-next {
+  background: var(--bg);
+  color: var(--text-black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  width: 2rem;
+  height: 2rem;
+}
+
+.p-datepicker-prev:enabled:hover,
+.p-datepicker-next:enabled:hover {
+  background: var(--bg-light);
+  color: var(--text-black);
+  border-color: var(--border);
+}
+
+.p-datepicker-group,
+.p-datepicker-group-container {
+  background: var(--bg);
+  color: var(--text-black);
+  text-align: center;
+  font-size: var(--fs-xs);
+}
+
+.p-datepicker table {
+  background: var(--bg);
+  margin: var(--sp-2) 0;
+}
+
+.p-datepicker table th {
+  background: var(--bg);
+  color: var(--text-medium);
+}
+
+.p-datepicker table th > span,
+.p-datepicker table td > span {
+  background: var(--bg);
+  color: var(--text-black);
+}
+
+.p-datepicker table td > span.p-highlight {
+  background: var(--bg-light);
+  color: var(--text-black);
+}
+
+.p-datepicker table td.p-datepicker-today > span {
+  background: var(--bg);
+  color: var(--text-black);
+  border: 1px solid var(--border);
+}
+
+.p-datepicker-monthpicker,
+.p-datepicker .p-monthpicker {
+  background: var(--bg);
+  padding: var(--sp-2);
+}
+
+.p-datepicker .p-monthpicker .p-monthpicker-month {
+  background: var(--bg);
+  color: var(--text-black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.p-datepicker .p-monthpicker .p-monthpicker-month:hover {
+  background: var(--bg-light);
+  color: var(--text-black);
+}
+
+.p-datepicker .p-monthpicker .p-monthpicker-month.p-highlight {
+  background: var(--bg-light);
+  color: var(--text-black);
+  border-color: var(--border);
+}
+
+.p-datepicker .p-yearpicker {
+  background: var(--bg);
+  padding: var(--sp-2);
+}
+
+.p-datepicker .p-yearpicker .p-yearpicker-year {
+  background: var(--bg);
+  color: var(--text-black);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.p-datepicker .p-yearpicker .p-yearpicker-year:hover {
+  background: var(--bg-light);
+  color: var(--text-black);
+}
+
+.p-datepicker .p-yearpicker .p-yearpicker-year.p-highlight {
+  background: var(--bg-light);
+  color: var(--text-black);
+  border-color: var(--border);
+}
+
+.p-datepicker .p-datepicker-buttonbar {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: var(--sp-2);
+}
+
+/* ── Additional responsive fixes ─────────────────────────── */
+@media (max-width: 1024px) {
+  .category-section {
+    grid-template-columns: 1fr 1fr;
+  }
+  .insurance-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .product-mgmt-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .mgmt-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .add-product-btn,
+  .bulk-upload-btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .insurance-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .pm-form-card {
+    padding: var(--sp-4);
+  }
+  .edit-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-3);
+  }
+  .edit-header .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-section {
+    grid-template-columns: 1fr;
+  }
+  /* .header-actions {
+    flex-direction: column;
+  } */
+  .add-product-btn,
+  .bulk-upload-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.table-scroll .responsive-datatable .p-datatable-table {
+  min-width: 36rem;
 }

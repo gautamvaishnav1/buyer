@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { matchesSearch } from '../../shared/utils/filterList'
 // import { FaFileExport, FaPlus } from 'react-icons/fa'
 import { GrView } from 'react-icons/gr'
 // import { LiaEdit } from 'react-icons/lia'
@@ -68,6 +69,7 @@ const InquiryManagement = () => {
   const [priorityFilter, setPriorityFilter] = useState('')
   const [dateRange, setDateRange] = useState<Date[] | null>(null)
   const [activeTab, setActiveTab] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const statusValues = ['All', 'New', 'Replied', 'Negotiation', 'Confirmed', 'Closed']
   const priorityValues = ['All', 'High', 'Medium', 'Low']
@@ -81,16 +83,25 @@ const InquiryManagement = () => {
 
   // ── Filtered data ──────────────────────────────────────────────────────────
   const filteredInquiries = mockInquiries.filter(inq => {
-    // Tab filter
     if (activeTab !== 'all' && inq.status.toLowerCase() !== activeTab) return false
-    // Dropdown filters
     const matchStatus = !statusFilter || statusFilter === 'All' || inq.status === statusFilter
     const matchPriority = !priorityFilter || priorityFilter === 'All' || inq.priority === priorityFilter
     let matchDate = true
     if (dateRange && dateRange.length === 2 && dateRange[0] && dateRange[1]) {
       matchDate = inq.rawDate >= dateRange[0] && inq.rawDate <= dateRange[1]
     }
-    return matchStatus && matchPriority && matchDate
+    const matchSearchTerm = matchesSearch(
+      searchQuery,
+      inq.id,
+      inq.buyerName,
+      inq.company,
+      inq.product,
+      inq.status,
+      inq.priority,
+      inq.budget,
+      inq.lastMessage
+    )
+    return matchStatus && matchPriority && matchDate && matchSearchTerm
   })
 
   // ── Body Templates ─────────────────────────────────────────────────────────
@@ -233,7 +244,11 @@ const InquiryManagement = () => {
       <section className='table-section'>
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
-          <SearchBar placeholder='search inquires' />
+          <SearchBar
+            placeholder="Search inquiries"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
 
           {/* ================= STATUS DROPDOWN ================= */}
           <div>

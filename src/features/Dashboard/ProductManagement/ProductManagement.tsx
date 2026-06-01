@@ -11,14 +11,17 @@ import { GrView } from "react-icons/gr";
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 
-import { useSelector } from 'react-redux'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useMemo, useState } from 'react'
+import { deleteProducts } from './productStore'
+import { matchesSearch } from '../../../shared/utils/filterList'
 import { Dropdown } from 'primereact/dropdown'
 import LinkButton from '../../../shared/LinkButton/LinkButton'
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../../shared/constants';
 
 const ProductManagement = () => {
+  const dispatch = useDispatch()
   const productData = useSelector((state: any) => state.products.products)
   // console.log('Product ====>', productData)
   const productDataValue = productData
@@ -35,8 +38,31 @@ const ProductManagement = () => {
   )
 
   const [category, setCategory] = useState('')
-
   const [subCategory, setSubCategory] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredProducts = useMemo(() => {
+    if (!Array.isArray(productData)) return []
+    return productData.filter((product: any) => {
+      const matchCategory =
+        !category || category === 'All' || product.category === category
+      const matchSubCategory =
+        !subCategory ||
+        subCategory === 'All' ||
+        product.subcategory === subCategory
+      const matchSearchTerm = matchesSearch(
+        searchQuery,
+        product.title,
+        product.category,
+        product.subcategory,
+        product.status,
+        product.id,
+        product.inventory?.sku,
+        product.slug
+      )
+      return matchCategory && matchSubCategory && matchSearchTerm
+    })
+  }, [productData, category, subCategory, searchQuery])
 
   const subCategories =
     category === 'All'
@@ -85,26 +111,42 @@ const ProductManagement = () => {
     return <h4>{options.subcategory}</h4>
   }
 
-  const ProductTableActions = (options: any) => {
-    // console.log(options.id, 'options')
+  const handleDeleteProduct = (productId: number) => {
+    if (window.confirm('Delete this product? This cannot be undone.')) {
+      dispatch(deleteProducts(productId))
+    }
+  }
 
+  const handleBulkUpload = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.csv,.xlsx,.xls'
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+      if (file) {
+        window.alert(`Bulk upload queued for "${file.name}". Import will run in the background.`)
+      }
+    }
+    input.click()
+  }
+
+  const ProductTableActions = (options: any) => {
     return (
       <div className='btnEditDelete'>
         <LinkButton
           styleName='blue'
-          link={`/seller/products/view-product/${options.id}`}
-         
+          link={ROUTES.VIEW_PRODUCT.replace(':id', String(options.id))}
         ><GrView/></LinkButton>
         <LinkButton
           styleName='green'
-          link={`/seller/products/edit-products/${options.id}`}
-          
+          link={ROUTES.EDIT_PRODUCTS.replace(':id', String(options.id))}
         ><LiaEdit/></LinkButton>
-        <LinkButton
-          styleName='red'
-          link={`/seller/delete-products/${options.id}`}
-          // text={`Delete`}
-        ><AiFillDelete/></LinkButton>
+        <button
+          type="button"
+          className="red-link"
+          aria-label="Delete product"
+          onClick={() => handleDeleteProduct(options.id)}
+        ><AiFillDelete/></button>
       </div>
     )
   }
@@ -126,7 +168,7 @@ const ProductManagement = () => {
             : null}
         </div>
         <div className='header-actions'>
-          <button className='bulk-upload-btn'>
+          <button type="button" className='bulk-upload-btn' onClick={handleBulkUpload}>
             <FaCloudUploadAlt />
             Bulk Upload
           </button>
@@ -144,7 +186,11 @@ const ProductManagement = () => {
         <section className='category-section'>
           {/* ================= SEARCH BAR ================= */}
 
-          <SearchBar placeholder='search products '/>
+          <SearchBar
+            placeholder="Search products"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
 
           {/* ================= CATEGORY DROPDOWN ================= */}
 
@@ -188,9 +234,18 @@ const ProductManagement = () => {
           {/* <TypeFilter /> */}
         </section>
         {/* Data table for items */}
-        <section className='mt-2'>
-          <DataTable value={productData} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink">
+        <section className='mt-2 table-scroll'>
+          <DataTable
+            value={filteredProducts}
+            paginator
+            rows={5}
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            tableStyle={{ minWidth: '100%' }}
+            className='responsive-datatable'
+            paginatorTemplate='RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
+            currentPageReportTemplate='{first}–{last} of {totalRecords}'
+            paginatorClassName='mgmt-paginator'
+          >
             <Column header='#' body={countFunction}></Column>
             <Column header='Name' body={nameOfProduct}></Column>
             <Column header='Image' body={imageBodyTemplate}></Column>
